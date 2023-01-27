@@ -5,6 +5,7 @@
     <template id="Login">
         <div class="card">
             <div class="card-body">
+                <h1>LOGIN FORM</h1>
                 <div class="form-group">
                     <label>Username</label>
                     <input class="form-control" v-model="user.username"/>
