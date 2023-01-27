@@ -1,10 +1,8 @@
 <header class="header">
     <div class="page-brand">
         <a class="link" href="/">
-                    <span class="brand">Admin
-                        <span class="brand-tip">CAST</span>
-                    </span>
-            <span class="brand-mini">AC</span>
+                    <span class="brand">CMS TTS</span>
+            <span class="brand-mini">CMS</span>
         </a>
     </div>
     <div class="flexbox flex-1">
@@ -150,7 +148,7 @@
             <li class="dropdown dropdown-user">
                 @if(Auth::check())
                     <a class="nav-link dropdown-toggle link" data-toggle="dropdown">
-                        <img src="./assets/img/admin-avatar.png"/>
+                        <img src="{{asset('backend/img/admin-avatar.png')}}"/>
                         <span></span>Admin<i class="fa fa-angle-down m-l-5"></i></a>
                     <ul class="dropdown-menu dropdown-menu-right">
                         <a class="dropdown-item" href="/"><i class="fa fa-user"></i>Account</a>

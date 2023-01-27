@@ -1,48 +1,46 @@
 <?php
 
 return [
-    [
-        'name' => 'Dashboard',
-        'icon' => '',
-        'link' => '/'
-    ],
-    [
-        'name' => 'Product',
-        'icon' => '',
-        'link' => '/',
-        'items' => [
-            [
-                'name' => 'All products',
-                'link' => '',
-            ],
-            [
-                'name' => 'Categories',
-                'link' => '',
-            ],
-            [
-                'name' => 'Attribute',
-                'link' => '',
-            ],
-        ]
-    ],
-    [
-        'name' => 'Accounts',
-        'icon' => '',
-        'link' => '/',
-        'items' => [
-            [
-                'name' => 'Accounts',
-                'link' => '',
-            ],
-            [
-                'name' => 'Role & Permission',
-                'link' => '',
-            ],
-        ]
-    ],
-    [
-        'name' => 'Settings',
-        'icon' => '',
-        'link' => '/'
-    ],
+    'admin' => [
+        [
+            'name' => 'Dashboard',
+            'icon' => 'ti-dashboard',
+            'link' => '/'
+        ],
+        [
+            'name' => 'Product',
+            'icon' => 'ti-dropbox-alt',
+            'link' => '/',
+            'items' => [
+                [
+                    'name' => 'All products',
+                    'link' => '/products',
+                ],
+                [
+                    'name' => 'Categories',
+                    'link' => '/products/category',
+                ],
+            ]
+        ],
+        [
+            'name' => 'Accounts',
+            'icon' => 'fa-user',
+            'link' => '/',
+            'items' => [
+                [
+                    'name' => 'Accounts',
+                    'link' => '/accounts',
+                ],
+                [
+                    'name' => 'Role & Permission',
+                    'link' => '/account/role',
+                ],
+            ]
+        ],
+        [
+            'name' => 'Settings',
+            'icon' => 'ti-settings',
+            'link' => '/settings'
+        ],
+    ]
 ];

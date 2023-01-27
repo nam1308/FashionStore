@@ -25,6 +25,17 @@ const SERVER = axios.create({
 
 
 const API = {
+    CATEGORY: {
+        CREATE: async () => {
+
+        }
+    },
+    PRODUCT: {
+        CREATE: async () => {
+        },
+        DELETE: async (productId) => {
+        }
+    },
     AUTH: {
         LOGIN: async (user) => {
             try {
