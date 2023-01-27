@@ -1,5 +1,7 @@
 # INIT PROJECT
-
+1. Create new .env
+2. Install redis
+3. Fill info database .env
 ## Setup & Run
 
 ```
