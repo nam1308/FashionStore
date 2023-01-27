@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width initial-scale=1.0">
-    <title>backendcast bootstrap 4 &amp; angular 5 backend template, Шаблон админки | Dashboard</title>
+    <title>CMS Project</title>
     <!-- GLOBAL MAINLY STYLES-->
     <link href="{{asset('backend/vendors/bootstrap/dist/css/bootstrap.min.css')}}" rel="stylesheet"/>
     <link href="{{asset('backend/vendors/font-awesome/css/font-awesome.min.css')}}" rel="stylesheet"/>
@@ -16,7 +16,6 @@
     <link href="{{asset('backend/css/main.min.css')}}" rel="stylesheet"/>
     <!-- PAGE LEVEL STYLES-->
 </head>
-@viteReactRefresh
 <body class="fixed-navbar">
 <div class="page-wrapper">
     <!-- START HEADER-->

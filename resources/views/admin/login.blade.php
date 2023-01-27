@@ -1,22 +1,38 @@
 @extends('admin.layouts.empty')
-@section('content')
-    <div class="d-flex align-content-center w-100 h-100 align-items-center">
-        <div class="card">
-            <form method="POST" action="{{route('admin.login')}}">
-                @csrf
-                <div class="card-body">
-                    <div class="form-group">
-                        <label>Username</label>
-                        <input value="admin" name="username" class="form-control"/>
-                    </div>
-                    <div class="form-group">
-                        <label>Password</label>
-                        <input value="123456" name="password" class="form-control"/>
-                    </div>
 
-                    <button type="submit" class="btn btn-primary">Login</button>
+@section('content')
+    <div id="login-content"></div>
+    <template id="Login">
+        <div class="card">
+            <div class="card-body">
+                <div class="form-group">
+                    <label>Username</label>
+                    <input class="form-control" v-model="user.username"/>
                 </div>
-            </form>
+                <div class="form-group">
+                    <label>Password</label>
+                    <input class="form-control" v-model="user.password"/>
+                </div>
+                <button class="btn btn-success" @click="onSubmit">Submit</button>
+            </div>
         </div>
-    </div>
+    </template>
 @stop
+
+@push('vue')
+    <script>
+        Vue.createApp({
+            template: '#Login',
+            data() {
+                return {
+                    user: {password: '123456', username: 'admin', _token: '{{csrf_token()}}'}
+                }
+            },
+            methods: {
+                async onSubmit() {
+                    await API.AUTH.LOGIN(this.user)
+                }
+            }
+        }).mount('#login-content')
+    </script>
+@endpush

@@ -10,6 +10,11 @@ const axiosCatch = (error) => {
     throw error.message;
 }
 const token = localStorage.getItem('token');
+const GUEST = axios.create({
+    headers: {
+        'Content-Type': 'application/json',
+    },
+});
 const SERVER = axios.create({
     baseURL: '/api',
     headers: {
@@ -23,9 +28,10 @@ const API = {
     AUTH: {
         LOGIN: async (user) => {
             try {
-                const response = await SERVER.post('/login', user).catch(axiosCatch);
+                const response = await GUEST.post('/login', user).catch(axiosCatch);
                 const token = response.data.access_token;
                 const userData = response.data.user;
+                console.log("RES", response)
                 localStorage.setItem('token', token);
                 localStorage.setItem('user', JSON.stringify(userData));
                 window.location.replace('/admin');

@@ -14,10 +14,7 @@
     <link href="{{asset('backend/css/main.css')}}" rel="stylesheet"/>
     <!-- PAGE LEVEL STYLES-->
     <link href="{{asset('backend/css/pages/auth-light.css')}}" rel="stylesheet"/>
-    <link href="{{ asset('css/app.css') }}" rel="stylesheet">
-
 </head>
-
 <body class="bg-white-300">
 <div class="content">
     <div id="app"></div>
@@ -40,7 +37,6 @@
 <script src="{{asset('common/axios.js')}}" type="text/javascript"></script>
 <script src="{{asset('common/api.js')}}?v={{time()}}" type="text/javascript"></script>
 <script src="{{asset('backend/js/app.js')}}" type="text/javascript"></script>
-<script src="{{ asset('js/app.js') }}" defer></script>
 
 @stack('vue')
 
