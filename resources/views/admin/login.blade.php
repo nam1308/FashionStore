@@ -30,7 +30,8 @@
             },
             methods: {
                 async onSubmit() {
-                    await API.AUTH.LOGIN(this.user)
+                    const response = await API.AUTH.LOGIN(this.user);
+                    console.log("RES", response)
                 }
             }
         }).mount('#login-content')

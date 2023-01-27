@@ -47,7 +47,7 @@ const API = {
                 localStorage.setItem('user', JSON.stringify(userData));
                 window.location.replace('/admin');
             } catch (e) {
-                throw e.message;
+                throw e
             }
         }
     }
