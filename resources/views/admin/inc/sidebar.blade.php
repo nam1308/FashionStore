@@ -1,11 +1,19 @@
+<?php
+
+use Illuminate\Support\Facades\Auth;
+$menu = Auth::user();
+
+?>
+
 <nav class="page-sidebar" id="sidebar">
     <div id="sidebar-collapse">
         <div class="admin-block d-flex">
             <div>
-                <img src="./assets/img/admin-avatar.png" width="45px" />
+                <img src="{{asset('backend/img/admin-avatar.png')}}" width="45px"/>
             </div>
             <div class="admin-info">
-                <div class="font-strong">James Brown</div><small>Administrator</small></div>
+                <div class="font-strong">Admin</div>
+                <small>supper admin</small></div>
         </div>
         <ul class="side-menu metismenu">
             <li>
