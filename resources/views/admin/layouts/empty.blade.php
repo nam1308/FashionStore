@@ -12,6 +12,7 @@
     <link href="{{asset('backend/vendors/themify-icons/css/themify-icons.css')}}" rel="stylesheet"/>
     <!-- THEME STYLES-->
     <link href="{{asset('backend/css/main.css')}}" rel="stylesheet"/>
+    <link href="{{asset('backend/css/nam.css')}}?v={{date('d')}}.{{time()}}" rel="stylesheet"/>
     <!-- PAGE LEVEL STYLES-->
     <link href="{{asset('backend/css/pages/auth-light.css')}}" rel="stylesheet"/>
 </head>
@@ -39,6 +40,6 @@
 <script src="{{asset('backend/js/app.js')}}" type="text/javascript"></script>
 
 @stack('vue')
-
+@stack('js')
 </body>
 </html>

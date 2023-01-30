@@ -1,14 +1,26 @@
 const axiosCatch = (error) => {
-    const data = error.response.data;
-    if (error.response.status === 422) {
-        const valid = Object.entries(data);
-        throw valid.shift().toString();
+    // const data = error.response.data;
+    // console.log("Error", error)
+    // console.log(error.response.statusText)
+    // if (error.response.status === 422) {
+    //     const valid = Object.entries(data);
+    //     throw valid.shift().toString();
+    // }
+    // if ([404, 500, 401].includes(error.response.status)) {
+    //     throw error.response.statusText;
+    // }
+    // throw error.message;
+
+    if (error.response) {
+        throw error.request.statusText;
+    } else if (error.request) {
+        throw error.message;
+    } else {
+        throw "opps! something went wrong while setting up request";
     }
-    if ([404, 500, 401].includes(error.response.status)) {
-        throw error.response.statusText;
-    }
-    throw error.message;
+
 }
+
 const token = localStorage.getItem('token');
 const GUEST = axios.create({
     headers: {
@@ -37,6 +49,9 @@ const API = {
         }
     },
     AUTH: {
+        // CHECK_EMAIL: async () => {
+        //
+        // },
         LOGIN: async (user) => {
             try {
                 const response = await GUEST.post('/login', user).catch(axiosCatch);
@@ -45,7 +60,7 @@ const API = {
                 console.log("RES", response)
                 localStorage.setItem('token', token);
                 localStorage.setItem('user', JSON.stringify(userData));
-                window.location.replace('/admin');
+                // window.location.replace('/admin');
             } catch (e) {
                 throw e
             }

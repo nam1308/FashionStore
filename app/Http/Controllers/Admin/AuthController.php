@@ -31,6 +31,9 @@ class AuthController extends Controller
             Auth::login(auth()->user());
             return $this->createNewToken($token);
         }
+        if(Auth::check()){
+            return redirect()->route('admin.home');
+        }
         return view('admin.login');
     }
 
@@ -60,8 +63,8 @@ class AuthController extends Controller
     public function logout()
     {
         auth()->logout();
-
-        return response()->json(['message' => 'User successfully signed out']);
+//        return response()->json(['message' => 'User successfully signed out']);
+        return redirect()->route('admin.login');
     }
 
     public function refresh()
