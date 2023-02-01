@@ -7,6 +7,7 @@ use App\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Http\Request;
+use Tymon\JWTAuth\Facades\JWTAuth;
 
 class AuthController extends Controller
 {
@@ -25,7 +26,7 @@ class AuthController extends Controller
             if ($validator->fails()) {
                 return response()->json($validator->errors(), 422);
             }
-            if (!$token = Auth::attempt($request->only(['username', 'password']))) {
+            if (!$token = JWTAuth::attempt($validator->validated())) {
                 return response()->json(['error' => 'Unauthorized'], 401);
             }
             Auth::login(auth()->user());
@@ -63,7 +64,6 @@ class AuthController extends Controller
     public function logout()
     {
         auth()->logout();
-
 //        return response()->json(['message' => 'User successfully signed out']);
         return redirect()->route('admin.login');
     }
@@ -84,7 +84,7 @@ class AuthController extends Controller
         return response()->json([
             'access_token' => $token,
             'token_type' => 'bearer',
-            'expires_in' => 3600,
+            'expires_in' => auth('api')->factory()->getTTL() * 60,
             'user' => auth()->user()
         ]);
     }
