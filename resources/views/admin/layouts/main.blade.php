@@ -19,12 +19,14 @@
     <link href="{{asset('backend/vendors/bootstrap-datepicker/dist/css/bootstrap-datepicker3.min.css')}}" rel="stylesheet" />
     <link href="{{asset('backend/vendors/bootstrap-timepicker/css/bootstrap-timepicker.min.css')}}" rel="stylesheet" />
     <link href="{{asset('backend/vendors/jquery-minicolors/jquery.minicolors.css')}}" rel="stylesheet" />
+    <link href="{{asset('css/toaster.min.css')}}" rel="stylesheet" />
 
     <!-- THEME STYLES-->
     <link href="{{asset('backend/css/main.min.css')}}" rel="stylesheet"/>
 
-
     <!-- PAGE LEVEL STYLES-->
+    <link href="{{asset('backend/css/nam.css')}}?v={{date('d')}}.{{time()}}" rel="stylesheet"/>
+
 </head>
 <body class="fixed-navbar">
 <div class="page-wrapper">
@@ -54,7 +56,6 @@
 <!-- CORE PLUGINS-->
 !-- CORE SCRIPTS-->
 <script src="{{asset('common/axios.js')}}" type="text/javascript"></script>
-<script src="{{asset('common/api.js')}}?v={{time()}}" type="text/javascript"></script>
 <script src="{{asset('common/vue3.js')}}"></script>
 
 <script src="{{asset('backend/vendors/jquery/dist/jquery.min.js')}}" type="text/javascript"></script>
@@ -68,7 +69,9 @@
 <script src="{{asset('backend/vendors/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js')}}" type="text/javascript"></script>
 <script src="{{asset('backend/vendors/bootstrap-timepicker/js/bootstrap-timepicker.min.js')}}" type="text/javascript"></script>
 <script src="{{asset('backend/vendors/jquery-minicolors/jquery.minicolors.min.js')}}" type="text/javascript"></script>
+<script src="{{asset('js/toaster.js')}}" type="text/javascript"></script>
 
+<script src="{{asset('common/api.js')}}?v={{time()}}" type="text/javascript"></script>
 <script src="{{asset('backend/js/admin.js')}}?v={{time()}}" type="text/javascript"></script>
 <script src="{{asset('backend/js/app.min.js')}}" type="text/javascript"></script>
 @stack('vue')

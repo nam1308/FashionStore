@@ -4,5 +4,7 @@
 
         <h1 class="h3 mb-3"><strong>Wellcome</strong> Project</h1>
 
+        <x-upload name="image" multiple="false"/>
+
     </div>
 @stop

@@ -39,7 +39,7 @@
                             <a class="list-group-item">
                                 <div class="media">
                                     <div class="media-img">
-                                        <img src="./assets/img/users/u1.jpg"/>
+                                        <img src="{{asset('assets/img/users/u1.jpg')}}"/>
                                     </div>
                                     <div class="media-body">
                                         <div class="font-strong"></div>
@@ -51,7 +51,7 @@
                             <a class="list-group-item">
                                 <div class="media">
                                     <div class="media-img">
-                                        <img src="./assets/img/users/u2.jpg"/>
+                                        <img src="{{ asset('assets/img/users/u2.jpg') }}">
                                     </div>
                                     <div class="media-body">
                                         <div class="font-strong"></div>
@@ -63,7 +63,7 @@
                             <a class="list-group-item">
                                 <div class="media">
                                     <div class="media-img">
-                                        <img src="./assets/img/users/u3.jpg"/>
+                                        <img src="{{ asset('assets/img/users/u3.jpg') }}">
                                     </div>
                                     <div class="media-body">
                                         <div class="font-strong"></div>
@@ -75,7 +75,7 @@
                             <a class="list-group-item">
                                 <div class="media">
                                     <div class="media-img">
-                                        <img src="./assets/img/users/u4.jpg"/>
+                                        <img src="{{ asset('assets/img/users/u4.jpg') }}">
                                     </div>
                                     <div class="media-body">
                                         <div class="font-strong"></div>

@@ -18,6 +18,7 @@ const axiosCatch = (error) => {
     } else {
         throw "opps! something went wrong while setting up request";
     }
+    throw error.message;
 
 }
 
@@ -34,9 +35,40 @@ const SERVER = axios.create({
         'Authorization': `Bearer ${token}`
     },
 });
-
+const MESSAGE = {
+    SUCCESS: (content = '', title = '') => {
+        toastr.success(content , title);
+    },
+    INFO: (content = '', title = '') => {
+        toastr.info(content , title);
+    },
+    WARN: (content = '', title = '') => {
+        toastr.warning(content , title);
+    },
+    ERROR: (content = '', title = '') => {
+        toastr.error(content , title);
+    }
+}
 
 const API = {
+    MEDIA: {
+        MOVEFILE: async (data) => {
+            try {
+                let response = await SERVER.post('media/getImagePath', data, {
+                    headers: {
+                        'Content-Type': 'multipart/form-data',
+                        'Authorization': `Bearer ${token}`
+                    }
+                });
+                return response.data;
+            }catch (e){
+                 throw e.response.data.message;
+            }
+        },
+        DELETE: async (path) => {
+            await SERVER.post('media/deleteImage', {path});
+        }
+    },
     CATEGORY: {
         CREATE: async () => {
 
@@ -57,10 +89,9 @@ const API = {
                 const response = await GUEST.post('/login', user).catch(axiosCatch);
                 const token = response.data.access_token;
                 const userData = response.data.user;
-                console.log("RES", response)
                 localStorage.setItem('token', token);
                 localStorage.setItem('user', JSON.stringify(userData));
-                // window.location.replace('/admin');
+                window.location.replace('/admin');
             } catch (e) {
                 throw e
             }
