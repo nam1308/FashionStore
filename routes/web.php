@@ -4,8 +4,6 @@ use App\Http\Controllers\Admin\AuthController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\ProductController;
 use App\Http\Controllers\Frontend\HomeController;
-use App\View\Components\UploadMedia;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -18,7 +16,9 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
 */
+
 Route::match(['POST', 'GET'], 'login', [AuthController::class, 'login'])->name('admin.login');
+Route::match(['POST', 'GET'], 'reset_password', [AuthController::class, 'resetPassword'])->name('admin.resetPassword');
 
 Route::middleware(['middleware' => 'auth'])->group(function () {
     Route::group(['prefix' => 'admin'], function () {

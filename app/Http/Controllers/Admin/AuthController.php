@@ -110,4 +110,30 @@ class AuthController extends Controller
             'user' => $user,
         ], 201);
     }
+
+    public function resetPassword(Request $request)
+    {
+        if ($request->isMethod('POST')) {
+            $validator = Validator::make(
+                $request->all(),
+                [
+                    'password' => 'required',
+                    'repassword' => 'same:password',
+                ],
+                [
+                    'password' => [
+                        'required' => 'Mật khẩu không được trống',
+                    ],
+                    'repassword' => [
+                        'same' => 'Mật khẩu không khớp',
+                    ]
+                ]
+            );
+            if ($validator->fails()) {
+                return response()->json($validator->errors(), 422);
+            }
+            return response()->json(['status' => 'success', 'mess' => 'success']);
+        }
+        return View('admin.reset_pass');
+    }
 }

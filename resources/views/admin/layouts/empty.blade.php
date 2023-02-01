@@ -15,6 +15,7 @@
     <link href="{{asset('backend/css/nam.css')}}?v={{date('d')}}.{{time()}}" rel="stylesheet"/>
     <!-- PAGE LEVEL STYLES-->
     <link href="{{asset('backend/css/pages/auth-light.css')}}" rel="stylesheet"/>
+    @stack('styles')
 </head>
 <body class="bg-white-300">
 <div class="content">
