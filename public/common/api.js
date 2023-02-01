@@ -19,66 +19,102 @@ const axiosCatch = (error) => {
         throw "opps! something went wrong while setting up request";
     }
     throw error.message;
-
-}
-
-const token = localStorage.getItem('token');
+};
+const token = localStorage.getItem("token");
 const GUEST = axios.create({
     headers: {
-        'Content-Type': 'application/json',
+        "Content-Type": "application/json",
     },
 });
 const SERVER = axios.create({
-    baseURL: '/api',
+    baseURL: "/api",
     headers: {
-        'Content-Type': 'application/json',
-        'Authorization': `Bearer ${token}`
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
     },
 });
 const MESSAGE = {
-    SUCCESS: (content = '', title = '') => {
-        toastr.success(content , title);
+    SUCCESS: (content = "", title = "") => {
+        toastr.success(content, title);
     },
-    INFO: (content = '', title = '') => {
-        toastr.info(content , title);
+    INFO: (content = "", title = "") => {
+        toastr.info(content, title);
     },
-    WARN: (content = '', title = '') => {
-        toastr.warning(content , title);
+    WARN: (content = "", title = "") => {
+        toastr.warning(content, title);
     },
-    ERROR: (content = '', title = '') => {
-        toastr.error(content , title);
-    }
-}
+    ERROR: (content = "", title = "") => {
+        toastr.error(content, title);
+    },
+};
 
 const API = {
     MEDIA: {
         MOVEFILE: async (data) => {
             try {
-                let response = await SERVER.post('media/getImagePath', data, {
+                let response = await SERVER.post("media/getImagePath", data, {
                     headers: {
-                        'Content-Type': 'multipart/form-data',
-                        'Authorization': `Bearer ${token}`
-                    }
+                        "Content-Type": "multipart/form-data",
+                        Authorization: `Bearer ${token}`,
+                    },
                 });
                 return response.data;
-            }catch (e){
-                 throw e.response.data.message;
+            } catch (e) {
+                throw e.response.data.message;
             }
         },
         DELETE: async (path) => {
-            await SERVER.post('media/deleteImage', {path});
-        }
+            await SERVER.post("media/deleteImage", { path });
+        },
     },
     CATEGORY: {
-        CREATE: async () => {
-
-        }
+        CREATE: async (category) => {
+            try {
+                const response = await SERVER.post(
+                    "/product-category",
+                    category
+                ).catch(axiosCatch);
+                console.log(response);
+            } catch (error) {
+                throw error;
+            }
+        },
+        INDEX: async () => {
+            try {
+                const response = await SERVER.get("/product-category").catch(
+                    axiosCatch
+                );
+                // console.log(response);
+                return response;
+            } catch (error) {
+                throw error;
+            }
+        },
+        SHOW: async (id) => {
+            try {
+                const response = await SERVER.get(
+                    "/product-category/" + id
+                ).catch(axiosCatch);
+                return response;
+            } catch (error) {
+                throw error;
+            }
+        },
+        UPDATE: async (id, data) => {
+            try {
+                const response = await SERVER.put(
+                    "/product-category/" + id,
+                    data
+                ).catch(axiosCatch);
+                return response;
+            } catch (error) {
+                throw error;
+            }
+        },
     },
     PRODUCT: {
-        CREATE: async () => {
-        },
-        DELETE: async (productId) => {
-        }
+        CREATE: async () => {},
+        DELETE: async (productId) => {},
     },
     AUTH: {
         // CHECK_EMAIL: async () => {
@@ -86,15 +122,17 @@ const API = {
         // },
         LOGIN: async (user) => {
             try {
-                const response = await GUEST.post('/login', user).catch(axiosCatch);
+                const response = await GUEST.post("/login", user).catch(
+                    axiosCatch
+                );
                 const token = response.data.access_token;
                 const userData = response.data.user;
-                localStorage.setItem('token', token);
-                localStorage.setItem('user', JSON.stringify(userData));
-                window.location.replace('/admin');
+                localStorage.setItem("token", token);
+                localStorage.setItem("user", JSON.stringify(userData));
+                window.location.replace("/admin");
             } catch (e) {
-                throw e
+                throw e;
             }
-        }
-    }
-}
+        },
+    },
+};

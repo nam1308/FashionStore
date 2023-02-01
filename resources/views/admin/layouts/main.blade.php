@@ -19,7 +19,11 @@
     <link href="{{asset('backend/vendors/bootstrap-datepicker/dist/css/bootstrap-datepicker3.min.css')}}" rel="stylesheet" />
     <link href="{{asset('backend/vendors/bootstrap-timepicker/css/bootstrap-timepicker.min.css')}}" rel="stylesheet" />
     <link href="{{asset('backend/vendors/jquery-minicolors/jquery.minicolors.css')}}" rel="stylesheet" />
+<<<<<<< HEAD
     <link href="{{asset('css/toaster.min.css')}}" rel="stylesheet" />
+=======
+    @stack('styles')
+>>>>>>> 76492bf (commit)
 
     <!-- THEME STYLES-->
     <link href="{{asset('backend/css/main.min.css')}}" rel="stylesheet"/>

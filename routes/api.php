@@ -1,7 +1,5 @@
 <?php
 
-use App\Http\Controllers\Admin\AuthController;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\UploadController;
 
@@ -15,12 +13,19 @@ use App\Http\Controllers\Api\UploadController;
 | is assigned the "api" middleware group. Enjoy building your API!
 |
 */
+
 Route::post('login', [AuthController::class, 'login']);
+Route::get('product-category', [ProductCategoryController::class, 'list'])->name('index');
+Route::get('product-category/{category}', [ProductCategoryController::class, 'show'])->name('show');
+Route::post('product-category', [ProductCategoryController::class, 'store'])->name('store');
+Route::put('product-category/{category}', [ProductCategoryController::class, 'update'])->name('update');
+Route::delete('product-category/{category}', [ProductCategoryController::class, 'destroy'])->name('destroy');
+
 
 Route::middleware('auth:api')->group(function () {
     Route::post('register', [AuthController::class, 'register']);
 
-    Route::group(['prefix' => 'media'], function (){
+    Route::group(['prefix' => 'media'], function () {
         Route::post('getImagePath', [UploadController::class, 'getImagePath']);
         Route::post('deleteImage', [UploadController::class, 'deleteImage']);
     });

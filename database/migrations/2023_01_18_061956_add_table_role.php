@@ -26,8 +26,9 @@ class AddTableRole extends Migration
         });
         Schema::create('user_role', function (Blueprint $table) {
             $table->id();
-            $table->integer('user_id', 255)->unique();
-            $table->string('role_id')->nullable();
+            $table->integer('user_id')->unique();
+            $table->integer('role_id')->unique();
+            $table->timestamps();
         });
     }
 

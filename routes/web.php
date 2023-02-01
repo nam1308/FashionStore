@@ -18,8 +18,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::match(['POST', 'GET'], 'login', [AuthController::class, 'login'])->name('admin.login');
-Route::match(['POST', 'GET'], 'reset_password', [AuthController::class, 'resetPassword'])->name('admin.resetPassword');
-
+Route::match(['POST', 'GET'], 'reset-password', [AuthController::class, 'resetPassword'])->name('admin.resetPassword');
 Route::middleware(['middleware' => 'auth'])->group(function () {
     Route::group(['prefix' => 'admin'], function () {
         Route::get('', [DashboardController::class, 'index'])->name('admin.home');
