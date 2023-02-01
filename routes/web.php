@@ -19,6 +19,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 Route::match(['POST', 'GET'], 'login', [AuthController::class, 'login'])->name('admin.login');
+
 Route::middleware(['middleware' => 'auth'])->group(function () {
     Route::group(['prefix' => 'admin'], function () {
         Route::get('', [DashboardController::class, 'index'])->name('admin.home');
