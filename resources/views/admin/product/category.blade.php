@@ -177,13 +177,19 @@
                 },
                 getData(){
                     const that = this
-                        API.CATEGORY.INDEX().then(res => {
+                    API.CATEGORY.INDEX().then(res => {
                         that.data = res.data
                     })
+                }
+                getParent(id){
+                    return this.data && this.data[id].parent;
                 }
             },
             computed() {
                 console.log("COMPUTED")
+                parent(){
+                    that.getParent(parseInt(that.$refs('id').value));
+                }
             },
             mounted() {
                 PLUGIN.INIT();
@@ -191,6 +197,7 @@
                 $('#exampleModal').on('hidden.bs.modal',function (e) {
                     that.resetData();
                 })
+
                 this.getData()
             },
         }).mount('#categories')

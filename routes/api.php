@@ -17,6 +17,7 @@ use App\Http\Controllers\Api\UploadController;
 Route::post('login', [AuthController::class, 'login']);
 Route::get('product-category', [ProductCategoryController::class, 'list'])->name('index');
 Route::get('product-category/{category}', [ProductCategoryController::class, 'show'])->name('show');
+Route::get('product-category/parent/{category}', [ProductCategoryController::class, 'getParent'])->name('get-parent');
 Route::post('product-category', [ProductCategoryController::class, 'store'])->name('store');
 Route::put('product-category/{category}', [ProductCategoryController::class, 'update'])->name('update');
 Route::delete('product-category/{category}', [ProductCategoryController::class, 'destroy'])->name('destroy');

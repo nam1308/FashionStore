@@ -111,6 +111,16 @@ const API = {
                 throw error;
             }
         },
+        PARENT: async (id) => {
+            try {
+                const response = await SERVER.get(
+                    "/product-category/" + id
+                ).catch(axiosCatch);
+                return response;
+            } catch (error) {
+                throw error;
+            }
+        },
     },
     PRODUCT: {
         CREATE: async () => {},

@@ -17,7 +17,12 @@ class ProductCategoryController extends Controller
 
     public function list()
     {
-        return ProductCategory::all();
+        $data = ProductCategory::all()->toArray();
+        foreach ($data as &$item) {
+            $category = ProductCategory::find($item['id']);
+            $item['parent'] = $category->getParent($category->id)->toArray();
+        }
+        return $data;
     }
 
     public  function store(Request $request)
@@ -62,9 +67,15 @@ class ProductCategoryController extends Controller
         $category->update($validator->validated());
         return response(['status' => 'success', 'message' => 'Success'], 201);
     }
+
     public function destroy(ProductCategory $category)
     {
         $category->delete();
         return response(['status' => 'success', 'message' => 'Success'], 201);
+    }
+
+    public function getParent(ProductCategory $category)
+    {
+        return $category ? $category->getParent($category->id) : response(['message' => 'not found'], 404);
     }
 }
