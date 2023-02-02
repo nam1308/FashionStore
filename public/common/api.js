@@ -73,8 +73,10 @@ const API = {
                 const response = await SERVER.post(
                     "/product-category",
                     category
-                ).catch(axiosCatch);
-                console.log(response);
+                ).catch((error) => {
+                    throw error;
+                });
+                return response;
             } catch (error) {
                 throw error;
             }
@@ -82,7 +84,9 @@ const API = {
         INDEX: async () => {
             try {
                 const response = await SERVER.get("/product-category").catch(
-                    axiosCatch
+                    (error) => {
+                        throw error;
+                    }
                 );
                 // console.log(response);
                 return response;
@@ -94,7 +98,9 @@ const API = {
             try {
                 const response = await SERVER.get(
                     "/product-category/" + id
-                ).catch(axiosCatch);
+                ).catch((error) => {
+                    throw error;
+                });
                 return response;
             } catch (error) {
                 throw error;
@@ -105,17 +111,21 @@ const API = {
                 const response = await SERVER.put(
                     "/product-category/" + id,
                     data
-                ).catch(axiosCatch);
+                ).catch((error) => {
+                    throw error;
+                });
                 return response;
             } catch (error) {
                 throw error;
             }
         },
-        PARENT: async (id) => {
+        DESTROY: async (id) => {
             try {
-                const response = await SERVER.get(
+                const response = await SERVER.delete(
                     "/product-category/" + id
-                ).catch(axiosCatch);
+                ).catch((error) => {
+                    throw error;
+                });
                 return response;
             } catch (error) {
                 throw error;
