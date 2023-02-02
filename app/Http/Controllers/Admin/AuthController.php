@@ -26,7 +26,7 @@ class AuthController extends Controller
             if ($validator->fails()) {
                 return response()->json($validator->errors(), 422);
             }
-            if (!$token = Auth::attempt($request->only(['username', 'password']))) {
+            if (!$token = JWTAuth::attempt($request->only(['username', 'password']))) {
                 return response()->json(['error' => 'Unauthorized'], 401);
             }
             Auth::login(auth()->user());

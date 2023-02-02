@@ -14,6 +14,7 @@
                 <div class="ibox">
                     <div class="ibox-head">
                         <h4 class="ibox-title">Categories list</h4>
+                        <input type="text" class="border border-dark rounded p-1" v-model="search" placeholder="Search">
                     </div>
                     <div class="ibox-body">
                         <button @click="showCreate" type="button" class="my-2 btn btn-success" data-toggle="modal" data-target="#exampleModal">
@@ -46,6 +47,33 @@
                                 </tr>
                             </tbody>
                         </table>
+                        <nav aria-label="Page navigation example">
+                            <ul class="pagination justify-content-end">
+                              <li 
+                              @click="gotoPage($event,'first')"
+                              class="page-item" 
+                              :class="{disabled: page===1}"><a class="page-link" href="#">First</a></li>
+                              <li 
+                              @click="gotoPage($event,'prev')"
+                              class="page-item" 
+                              :class="{disabled: page===1}"><a class="page-link" href="#">Previous</a></li>
+                              <li 
+                              :key="i" 
+                              v-for="i in getCountPage(page)" 
+                              class="page-item"
+                              :class="{active: page===i}"
+                              @click="gotoNumPage"
+                              ><a class="page-link" href="#">@{{i}}</a></li>
+                              <li class="page-item" 
+                              :class="{disabled: page===countPage}"
+                              @click="gotoPage($event,'next')"
+                              ><a class="page-link" href="#">Next</a></li>
+                              <li class="page-item" 
+                              :class="{disabled: page===countPage}"
+                              @click="gotoPage($event,'last')"
+                              ><a class="page-link" href="#">Last</a></li>
+                            </ul>
+                        </nav>
                     </div>
                 </div>
             </div>
@@ -150,7 +178,11 @@
                     description: '',
                     show_home: 1,
                     parents: null,
-                    error: null
+                    error: null,
+                    search: '',
+                    page: 1,
+                    length: 1,
+                    countPage: 0,
                 }
             },
             methods: {
@@ -161,6 +193,7 @@
                     this.sort_order = 1
                     this.description = ''
                     this.show_home = 1
+                    this.error = null
                 },
                 handleSubmit(){
                     const category = {
@@ -218,8 +251,10 @@
                 getData(){
                     const that = this
                     try {
-                        API.CATEGORY.INDEX().then(res => {
-                            that.data = res.data
+                        const start = (this.page - 1) * length
+                        API.CATEGORY.INDEX(start,this.length).then(res => {
+                            that.data = res.data.data
+                            that.countPage = Math.ceil(res.data.total / that.length)
                         })
                     } catch (error) {
                         throw error
@@ -253,6 +288,61 @@
                 generateSlug(e){
                     const input = e.target;
                     this.slug = input.value && input.value.split(' ').join('-') + '-' + new Date().getTime()
+                },
+                gotoPage(e,action){
+                    //handle next and previous page
+                    switch (action) {
+                        case 'prev':
+                            if (this.page === 1){
+                                return;
+                            }
+                            this.page--
+                            break;
+                        case 'next':
+                            if (this.page === this.countPage){
+                                return;
+                            }
+                            this.page++
+                            break;
+                        case 'first':
+                            this.page = 1
+                            break;
+                        case 'last':
+                            this.page = this.countPage
+                            break;
+                        default:
+                            break;
+                    }
+                    
+                },
+                gotoNumPage(e){
+                    this.page = parseInt(e.target.textContent)
+                },
+                getCountPage(currentPage) {
+                    if (this.countPage < 6){
+                        return this.countPage;
+                    }
+
+                    const res = []
+
+                    if (currentPage - 2 <= 0 ){ // vs so luong trang hien thi la 5
+                        for (let index = 1; index <= 5; index++) {
+                            res.push(index);
+                        }
+                        return res;
+                    }
+
+                    if (currentPage + 2 >= this.countPage){
+                        for (let index = this.countPage - 4; index <= this.countPage; index++) {
+                            res.push(index);
+                        }
+                        return res;
+                    }
+                    
+                    for (let index = currentPage - 2; index <= currentPage + 2; index++) {
+                            res.push(index);
+                    }
+                    return res;
                 }
             },
             mounted() {
@@ -263,6 +353,25 @@
                 })
 
                 this.getData()
+            },
+            watch: {
+                search(newValue, oldValue) {
+                    const response = API.CATEGORY.SEARCH(newValue);
+                    response.then(res => {
+                        console.log(res);
+                        this.data = res.data
+                    })
+                },
+                page(newValue,oldValue){
+                    console.log(newValue,this.pageCount);
+                    const start = (newValue-1) * this.length
+                    const length = this.length
+                    const response = API.CATEGORY.INDEX(start,length);
+                    response.then(res => {
+                        console.log(res);
+                        this.data = res.data.data
+                    })
+                }
             },
         }).mount('#categories')
     </script>

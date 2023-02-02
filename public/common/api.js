@@ -81,13 +81,13 @@ const API = {
                 throw error;
             }
         },
-        INDEX: async () => {
+        INDEX: async (start = 0, length = 10) => {
             try {
-                const response = await SERVER.get("/product-category").catch(
-                    (error) => {
-                        throw error;
-                    }
-                );
+                const response = await SERVER.get(
+                    `/product-category?start=${start}&length=${length}`
+                ).catch((error) => {
+                    throw error;
+                });
                 // console.log(response);
                 return response;
             } catch (error) {
@@ -124,6 +124,18 @@ const API = {
                 const response = await SERVER.delete(
                     "/product-category/" + id
                 ).catch((error) => {
+                    throw error;
+                });
+                return response;
+            } catch (error) {
+                throw error;
+            }
+        },
+        SEARCH: async (search) => {
+            try {
+                const response = await SERVER.post("/product-category/search", {
+                    search,
+                }).catch((error) => {
                     throw error;
                 });
                 return response;
