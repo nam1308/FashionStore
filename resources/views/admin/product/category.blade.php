@@ -248,18 +248,6 @@
                     })
 
                 },
-                getData(){
-                    const that = this
-                    try {
-                        const start = (this.page - 1) * length
-                        API.CATEGORY.INDEX(start,this.length).then(res => {
-                            that.data = res.data.data
-                            that.countPage = Math.ceil(res.data.total / that.length)
-                        })
-                    } catch (error) {
-                        throw error
-                    }
-                },
                 getParent(){
                     const id = parseInt(this.$refs.id.value)
                     console.log(id);
@@ -305,9 +293,15 @@
                             this.page++
                             break;
                         case 'first':
+                            if (this.page === 1){
+                                return;
+                            }
                             this.page = 1
                             break;
                         case 'last':
+                            if (this.page === this.countPage){
+                                return;
+                            }
                             this.page = this.countPage
                             break;
                         default:
@@ -352,21 +346,29 @@
                     that.resetData();
                 })
 
-                this.getData()
+                // this.getData()
             },
             watch: {
-                search(newValue, oldValue) {
-                    const response = API.CATEGORY.SEARCH(newValue);
-                    response.then(res => {
-                        console.log(res);
-                        this.data = res.data
-                    })
+                search: {
+                    immediate: true,
+                    handler (newValue, oldValue) {
+                        this.page = 1
+                        const start = (this.page-1) * this.length
+                        const length = this.length
+                        const response = API.CATEGORY.SEARCH(newValue,start,length);
+                        const that = this
+                        response.then(res => {
+                            console.log(res);
+                            this.data = res.data.data
+                            this.countPage = Math.ceil(res.data.total/that.length)
+                        })
+                    }
                 },
                 page(newValue,oldValue){
                     console.log(newValue,this.pageCount);
                     const start = (newValue-1) * this.length
                     const length = this.length
-                    const response = API.CATEGORY.INDEX(start,length);
+                    const response = API.CATEGORY.SEARCH(this.search,start,length);
                     response.then(res => {
                         console.log(res);
                         this.data = res.data.data
@@ -376,5 +378,3 @@
         }).mount('#categories')
     </script>
 @endpush
-
-{{--todo: xu ly them giao dien validation --}}

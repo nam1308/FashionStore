@@ -131,10 +131,12 @@ const API = {
                 throw error;
             }
         },
-        SEARCH: async (search) => {
+        SEARCH: async (search, start = 0, length = 10) => {
             try {
                 const response = await SERVER.post("/product-category/search", {
                     search,
+                    start,
+                    length,
                 }).catch((error) => {
                     throw error;
                 });

@@ -77,8 +77,20 @@ class ProductCategoryController extends Controller
     public function search(Request $request)
     {
         $search = $request->post('search');
-        return ProductCategory::where("name", 'like', "%$search%")
-            ->orWhere('slug', 'like', "%$search%")->orderBy('sort_order', 'asc')->get();
+        $length = $request->post('length', 10);
+        $start  = $request->post('start', 0);
+        $total = ProductCategory::where("name", 'like', "%$search%")
+            ->orWhere('slug', 'like', "%$search%")
+            ->orderBy('sort_order', 'asc')->count();
+
+        $categories = ProductCategory::where("name", 'like', "%$search%")
+            ->orWhere('slug', 'like', "%$search%")->orderBy('sort_order', 'asc')
+            ->offset($start)->limit($length)->get();
+
+        return [
+            'data' => $categories,
+            'total' => $total
+        ];
     }
 
     // public function getParent(ProductCategory $category)
