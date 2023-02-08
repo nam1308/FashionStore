@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Admin\AuthController;
+use App\Http\Controllers\Api\SettingController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\UploadController;
@@ -20,8 +21,13 @@ Route::post('login', [AuthController::class, 'login']);
 Route::middleware('auth:api')->group(function () {
     Route::post('register', [AuthController::class, 'register']);
 
-    Route::group(['prefix' => 'media'], function (){
+    Route::group(['prefix' => 'media'], function () {
         Route::post('getImagePath', [UploadController::class, 'getImagePath']);
         Route::post('deleteImage', [UploadController::class, 'deleteImage']);
+    });
+
+    Route::group(['prefix' => 'setting'], function () {
+        Route::post('save', [SettingController::class, 'save']);
+        Route::get('', [SettingController::class, 'index']);
     });
 });
