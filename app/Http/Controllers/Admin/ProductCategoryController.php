@@ -76,9 +76,9 @@ class ProductCategoryController extends Controller
 
     public function search(Request $request)
     {
-        $search = $request->post('search');
-        $length = $request->post('length', 10);
-        $start  = $request->post('start', 0);
+        $search = $request->get('search');
+        $length = $request->get('length', 10);
+        $start  = $request->get('start', 0);
         $total = ProductCategory::where("name", 'like', "%$search%")
             ->orWhere('slug', 'like', "%$search%")
             ->orderBy('sort_order', 'asc')->count();

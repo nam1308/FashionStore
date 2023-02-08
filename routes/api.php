@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Admin\ProductCategoryController;
+use App\Http\Controllers\Admin\SettingController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\UploadController;
 
@@ -29,10 +30,15 @@ Route::middleware('auth:api')->group(function () {
 
     Route::group(['as' => 'product-category.'], function () {
         Route::get('product-category', [ProductCategoryController::class, 'list'])->name('index');
-        Route::post('product-category/search/', [ProductCategoryController::class, 'search'])->name('search');
+        Route::get('product-category/search/', [ProductCategoryController::class, 'search'])->name('search');
         Route::get('product-category/{category}', [ProductCategoryController::class, 'show'])->name('show');
         Route::post('product-category', [ProductCategoryController::class, 'store'])->name('store');
         Route::put('product-category/{category}', [ProductCategoryController::class, 'update'])->name('update');
         Route::delete('product-category/{category}', [ProductCategoryController::class, 'destroy'])->name('destroy');
+    });
+
+    Route::group(['as' => 'setting.'], function () {
+        Route::get('setting', [SettingController::class, 'show'])->name('show');
+        Route::post('setting', [SettingController::class, 'save'])->name('save');
     });
 });

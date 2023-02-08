@@ -274,7 +274,7 @@
                 },
                 generateSlug(e){
                     const input = e.target;
-                    this.slug = input.value && input.value.split(' ').join('-')
+                    this.slug = input.value && input.value.toLowerCase().split(' ').join('-')
                 },
                 gotoPage(e,action){
                     //handle next and previous page

@@ -133,10 +133,12 @@ const API = {
         },
         SEARCH: async (search, start = 0, length = 10) => {
             try {
-                const response = await SERVER.post("/product-category/search", {
-                    search,
-                    start,
-                    length,
+                const response = await SERVER.get("/product-category/search", {
+                    params: {
+                        search,
+                        start,
+                        length,
+                    },
                 }).catch((error) => {
                     throw error;
                 });
@@ -149,6 +151,28 @@ const API = {
     PRODUCT: {
         CREATE: async () => {},
         DELETE: async (productId) => {},
+    },
+    SETTING: {
+        SAVE: async (data) => {
+            try {
+                const response = await SERVER.post("/setting", data);
+                return response;
+            } catch (e) {
+                throw e;
+            }
+        },
+        SHOW: async (key) => {
+            try {
+                const response = await SERVER.get("/setting", {
+                    params: {
+                        key,
+                    },
+                });
+                return response;
+            } catch (e) {
+                throw e;
+            }
+        },
     },
     AUTH: {
         // CHECK_EMAIL: async () => {
