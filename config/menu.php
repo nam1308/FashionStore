@@ -43,9 +43,13 @@ return [
             'link' => '/',
             'items' => [
                 [
-                    'name' => 'Menu',
+                    'name' => 'Basic info',
                     'link' => '/settings'
-                ]
+                ],
+                  [
+                                    'name' => 'Menu',
+                                    'link' => '/settings/menu'
+                                ]
             ]
         ],
     ]

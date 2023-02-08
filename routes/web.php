@@ -35,6 +35,8 @@ Route::middleware(['middleware' => 'auth'])->group(function () {
         //Settings
         Route::group(['prefix' => 'settings'], function () {
             Route::get('', [SettingController::class, 'index']);
+            Route::get('menu', [SettingController::class, 'menu']);
+
         });
     });
 });

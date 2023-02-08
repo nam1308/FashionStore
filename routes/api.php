@@ -1,13 +1,9 @@
 <?php
 
-<<<<<<< HEAD
 use App\Http\Controllers\Admin\ProductCategoryController;
-use App\Http\Controllers\Admin\SettingController;
-=======
-use App\Http\Controllers\Admin\AuthController;
 use App\Http\Controllers\Api\SettingController;
+use App\Http\Controllers\Admin\AuthController;
 use Illuminate\Http\Request;
->>>>>>> main
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\UploadController;
 
@@ -36,6 +32,5 @@ Route::middleware('auth:api')->group(function () {
     Route::group(['prefix' => 'setting'], function () {
         Route::post('save', [SettingController::class, 'save']);
         Route::get('', [SettingController::class, 'index']);
-        Route::get('menu', [SettingController::class, 'menu']);
     });
 });
