@@ -11,7 +11,12 @@ class SettingController extends Controller
 {
     public function index()
     {
-        return view('admin.settings.index');
+        return view('admin.setting.index');
+    }
+
+    public function menu()
+    {
+        return view('admin.setting.menu');
     }
 
     public function save(Request $request)

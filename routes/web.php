@@ -24,6 +24,7 @@ Route::middleware(['middleware' => 'auth'])->group(function () {
     Route::group(['prefix' => 'admin'], function () {
         Route::get('', [DashboardController::class, 'index'])->name('admin.home');
         Route::get('logout', [AuthController::class, 'logout'])->name('admin.logout');
+        Route::get('settings', [SettingController::class, 'index'])->name('admin.setting');
 
         // Products
         Route::group(['prefix' => 'products'], function () {
