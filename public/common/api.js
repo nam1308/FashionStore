@@ -1,7 +1,5 @@
 const axiosCatch = (error) => {
     // const data = error.response.data;
-    // console.log("Error", error)
-    // console.log(error.response.statusText)
     // if (error.response.status === 422) {
     //     const valid = Object.entries(data);
     //     throw valid.shift().toString();
@@ -67,7 +65,7 @@ const API = {
         },
         DELETE: async (path) => {
             await SERVER.post('media/deleteImage', {path});
-        }
+        },
     },
     CATEGORY: {
         CREATE: async () => {
@@ -79,6 +77,68 @@ const API = {
         },
         DELETE: async (productId) => {
         }
+    },
+    BLOG:{
+        CREATE: async (blog) => {
+            try {
+                const response = await SERVER.post('/blog', blog).catch((error) => {
+                    throw error;
+                })
+                return response;
+            }catch (error){
+                throw error;
+            }
+        },
+        INDEX: async (start = 0, length = 10) => {
+            try {
+                const response = await SERVER.get(`/blog?start=${start}&length=${length}`).catch((error) => {
+                   throw error;
+                });
+                return response;
+            }catch (error){
+                throw error;
+            }
+        },
+        SHOW: async (id) => {
+            try {
+                const response = await SERVER.get('/blog/' + id).catch((error) => {
+                    throw error;
+                });
+                return response;
+            }catch (error){
+                throw error;
+            }
+        },
+        UPDATE: async (id, data) => {
+            try {
+                const response = await SERVER.put('/blog/' + id, data).catch((error) => {
+                   throw error;
+                });
+                return response;
+            }catch (error){
+                throw error;
+            }
+        },
+        DELETE: async (id) => {
+            try {
+                const response = await SERVER.delete('/blog/' + id).catch((error) => {
+                   throw error;
+                });
+                return response;
+            }catch (error){
+                throw response;
+            }
+        },
+        SEARCH: async (search, start = 0, length = 10) =>{
+            try {
+                const response = await SERVER.post('/blog/search/',{search, start, length}).catch((error) => {
+                    throw error;
+                })
+                return response;
+            }catch (error){
+                throw error;
+            }
+        },
     },
     AUTH: {
         // CHECK_EMAIL: async () => {

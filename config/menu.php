@@ -23,6 +23,11 @@ return [
             ]
         ],
         [
+            'name' => 'Blog',
+            'icon' => 'ti-dropbox-alt',
+            'link' => '/blog',
+        ],
+        [
             'name' => 'Accounts',
             'icon' => 'fa-user',
             'link' => '/',

@@ -5,6 +5,7 @@ use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\ProductController;
 use App\Http\Controllers\Frontend\HomeController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Admin\BlogController;
 
 /*
 |--------------------------------------------------------------------------
@@ -25,11 +26,22 @@ Route::middleware(['middleware' => 'auth'])->group(function () {
         Route::get('', [DashboardController::class, 'index'])->name('admin.home');
         Route::get('logout', [AuthController::class, 'logout'])->name('admin.logout');
 
+        // Test
+        Route::post('', [DashboardController::class, 'test'])->name('admin.test');
+
         // Products
         Route::group(['prefix' => 'products'], function () {
             Route::get('', [ProductController::class, 'index']);
             Route::get('category', [ProductController::class, 'category']);
         });
+
+        // Blog
+        Route::group(['prefix' => 'blog'], function () {
+            Route::get('', [BlogController::class, 'index'])->name('index');
+            Route::get('create', [BlogController::class, 'create'])->name('create');
+            Route::get('{id}/edit', [BlogController::class, 'edit']);
+        });
+
     });
 });
 

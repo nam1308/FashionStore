@@ -9,13 +9,15 @@ use Illuminate\Validation\Rules\File;
 
 class UploadController extends Controller
 {
+
     public function getImagePath(Request $request)
     {
         $request->validate([
             'file' => 'required|image|max:5120'
         ]);
         $image = $request->file('file');
-        $new_name = $image->getClientOriginalName();
+        // $new_name = $image->getClientOriginalName();
+        $new_name = time().'.'.$image->getClientOriginalExtension();
         $image->move(public_path('medias'), $new_name);
         return [
             'path' => "/medias/$new_name",

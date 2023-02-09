@@ -15,17 +15,21 @@
     <link href="{{asset('backend/vendors/font-awesome/css/font-awesome.min.css')}}" rel="stylesheet"/>
     <link href="{{asset('backend/vendors/themify-icons/css/themify-icons.css')}}" rel="stylesheet"/>
     <!-- PLUGINS STYLES-->
-    <link href="{{asset('backend/vendors/select2/dist/css/select2.min.css')}}" rel="stylesheet" />
-    <link href="{{asset('backend/vendors/bootstrap-datepicker/dist/css/bootstrap-datepicker3.min.css')}}" rel="stylesheet" />
-    <link href="{{asset('backend/vendors/bootstrap-timepicker/css/bootstrap-timepicker.min.css')}}" rel="stylesheet" />
-    <link href="{{asset('backend/vendors/jquery-minicolors/jquery.minicolors.css')}}" rel="stylesheet" />
-    <link href="{{asset('css/toaster.min.css')}}" rel="stylesheet" />
+    <link href="{{asset('backend/vendors/select2/dist/css/select2.min.css')}}" rel="stylesheet"/>
+    <link href="{{asset('backend/vendors/bootstrap-datepicker/dist/css/bootstrap-datepicker3.min.css')}}"
+          rel="stylesheet"/>
+    <link href="{{asset('backend/vendors/bootstrap-timepicker/css/bootstrap-timepicker.min.css')}}" rel="stylesheet"/>
+    <link href="{{asset('backend/vendors/jquery-minicolors/jquery.minicolors.css')}}" rel="stylesheet"/>
+    <link href="{{asset('css/toaster.min.css')}}" rel="stylesheet"/>
 
     <!-- THEME STYLES-->
     <link href="{{asset('backend/css/main.min.css')}}" rel="stylesheet"/>
 
     <!-- PAGE LEVEL STYLES-->
     <link href="{{asset('backend/css/nam.css')}}?v={{date('d')}}.{{time()}}" rel="stylesheet"/>
+
+    <!-- include summernote -->
+    <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.css" rel="stylesheet">
 
 </head>
 <body class="fixed-navbar">
@@ -66,14 +70,23 @@
 <script src="{{asset('backend/vendors/select2/dist/js/select2.full.min.js')}}" type="text/javascript"></script>
 <script src="{{asset('backend/vendors/jquery-knob/dist/jquery.knob.min.js')}}" type="text/javascript"></script>
 <script src="{{asset('backend/vendors/moment/min/moment.min.js')}}" type="text/javascript"></script>
-<script src="{{asset('backend/vendors/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js')}}" type="text/javascript"></script>
-<script src="{{asset('backend/vendors/bootstrap-timepicker/js/bootstrap-timepicker.min.js')}}" type="text/javascript"></script>
+<script src="{{asset('backend/vendors/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js')}}"
+        type="text/javascript"></script>
+<script src="{{asset('backend/vendors/bootstrap-timepicker/js/bootstrap-timepicker.min.js')}}"
+        type="text/javascript"></script>
 <script src="{{asset('backend/vendors/jquery-minicolors/jquery.minicolors.min.js')}}" type="text/javascript"></script>
 <script src="{{asset('js/toaster.js')}}" type="text/javascript"></script>
 
 <script src="{{asset('common/api.js')}}?v={{time()}}" type="text/javascript"></script>
 <script src="{{asset('backend/js/admin.js')}}?v={{time()}}" type="text/javascript"></script>
 <script src="{{asset('backend/js/app.min.js')}}" type="text/javascript"></script>
+
+<!-- include summernote -->
+<script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.js"></script>
+<script>
+    PLUGIN.INIT();
+</script>
+
 @stack('vue')
 
 <!-- PAGE LEVEL SCRIPTS-->
