@@ -66,8 +66,8 @@ const API = {
                     }
                 });
                 return response.data;
-            } catch (e) {
-                throw e.response.data.message;
+            }catch (e){
+                 throw e.response.data.message;
             }
         },
         DELETE: async (path) => {
