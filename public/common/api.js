@@ -13,7 +13,7 @@ const axiosCatch = (error) => {
         console.error(error.request);
     } else {
         // Something happened in setting up the request that triggered an Error
-        console.error('Error', error.message);
+        console.error("Error", error.message);
     }
     console.error(error.config);
     // if (error.response) {
@@ -24,46 +24,45 @@ const axiosCatch = (error) => {
     //     throw "opps! something went wrong while setting up request";
     // }
     // throw error.message;
+};
 
-}
-
-const token = localStorage.getItem('token');
+const token = localStorage.getItem("token");
 const GUEST = axios.create({
     headers: {
-        'Content-Type': 'application/json',
+        "Content-Type": "application/json",
     },
 });
 const SERVER = axios.create({
-    baseURL: '/api',
+    baseURL: "/api",
     headers: {
-        'Content-Type': 'application/json',
-        'Authorization': `Bearer ${token}`
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
     },
 });
 const MESSAGE = {
-    SUCCESS: (content = '', title = '') => {
+    SUCCESS: (content = "", title = "") => {
         toastr.success(content, title);
     },
-    INFO: (content = '', title = '') => {
+    INFO: (content = "", title = "") => {
         toastr.info(content, title);
     },
-    WARN: (content = '', title = '') => {
+    WARN: (content = "", title = "") => {
         toastr.warning(content, title);
     },
-    ERROR: (content = '', title = '') => {
+    ERROR: (content = "", title = "") => {
         toastr.error(content, title);
-    }
-}
+    },
+};
 
 const API = {
     MEDIA: {
         MOVEFILE: async (data) => {
             try {
-                let response = await SERVER.post('media/getImagePath', data, {
+                let response = await SERVER.post("media/getImagePath", data, {
                     headers: {
-                        'Content-Type': 'multipart/form-data',
-                        'Authorization': `Bearer ${token}`
-                    }
+                        "Content-Type": "multipart/form-data",
+                        Authorization: `Bearer ${token}`,
+                    },
                 });
                 return response.data;
             } catch (e) {
@@ -71,13 +70,89 @@ const API = {
             }
         },
         DELETE: async (path) => {
-            await SERVER.post('media/deleteImage', {path});
-        }
+            await SERVER.post("media/deleteImage", { path });
+        },
     },
     CATEGORY: {
-        CREATE: async () => {
-
-        }
+        CREATE: async (category) => {
+            try {
+                const response = await SERVER.post(
+                    "/product-category",
+                    category
+                ).catch((error) => {
+                    throw error;
+                });
+                return response;
+            } catch (error) {
+                throw error;
+            }
+        },
+        INDEX: async (start = 0, length = 10) => {
+            try {
+                const response = await SERVER.get(
+                    `/product-category?start=${start}&length=${length}`
+                ).catch((error) => {
+                    throw error;
+                });
+                // console.log(response);
+                return response;
+            } catch (error) {
+                throw error;
+            }
+        },
+        SHOW: async (id) => {
+            try {
+                const response = await SERVER.get(
+                    "/product-category/" + id
+                ).catch((error) => {
+                    throw error;
+                });
+                return response;
+            } catch (error) {
+                throw error;
+            }
+        },
+        UPDATE: async (id, data) => {
+            try {
+                const response = await SERVER.put(
+                    "/product-category/" + id,
+                    data
+                ).catch((error) => {
+                    throw error;
+                });
+                return response;
+            } catch (error) {
+                throw error;
+            }
+        },
+        DESTROY: async (id) => {
+            try {
+                const response = await SERVER.delete(
+                    "/product-category/" + id
+                ).catch((error) => {
+                    throw error;
+                });
+                return response;
+            } catch (error) {
+                throw error;
+            }
+        },
+        SEARCH: async (search, start = 0, length = 10) => {
+            try {
+                const response = await SERVER.get("/product-category/search", {
+                    params: {
+                        search,
+                        start,
+                        length,
+                    },
+                }).catch((error) => {
+                    throw error;
+                });
+                return response;
+            } catch (error) {
+                throw error;
+            }
+        },
     },
     PRODUCT: {
         CREATE: async () => {},
@@ -111,35 +186,39 @@ const API = {
         // },
         LOGIN: async (user) => {
             try {
-                const response = await GUEST.post('/login', user).catch(axiosCatch);
+                const response = await GUEST.post("/login", user).catch(
+                    axiosCatch
+                );
                 const token = response.data.access_token;
                 const userData = response.data.user;
-                localStorage.setItem('token', token);
-                localStorage.setItem('user', JSON.stringify(userData));
-                window.location.replace('/admin');
+                localStorage.setItem("token", token);
+                localStorage.setItem("user", JSON.stringify(userData));
+                window.location.replace("/admin");
             } catch (e) {
-                throw e
+                throw e;
             }
-        }
+        },
     },
 
     SETTING: {
-        GET: async (params = {lang: 'vi'}) => {
+        GET: async (params = { lang: "vi" }) => {
             try {
-                return await SERVER.get('/setting', {params}).catch(axiosCatch);
+                return await SERVER.get("/setting", { params }).catch(
+                    axiosCatch
+                );
             } catch (e) {
-                console.log("E", e)
-                MESSAGE.ERROR(e.message)
+                console.log("E", e);
+                MESSAGE.ERROR(e.message);
             }
         },
         SAVE: async (data) => {
             try {
-                await SERVER.post('/setting/save', data).catch(axiosCatch);
-                MESSAGE.SUCCESS('Save setting success!');
+                await SERVER.post("/setting/save", data).catch(axiosCatch);
+                MESSAGE.SUCCESS("Save setting success!");
             } catch (e) {
-                console.log("E", e)
-                MESSAGE.ERROR(e.message)
+                console.log("E", e);
+                MESSAGE.ERROR(e.message);
             }
-        }
-    }
-}
+        },
+    },
+};
