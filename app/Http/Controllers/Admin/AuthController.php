@@ -26,7 +26,7 @@ class AuthController extends Controller
             if ($validator->fails()) {
                 return response()->json($validator->errors(), 422);
             }
-            if (!$token = JWTAuth::attempt($validator->validated())) {
+            if (!$token = JWTAuth::attempt($request->only(['username', 'password']))) {
                 return response()->json(['error' => 'Unauthorized'], 401);
             }
             Auth::login(auth()->user());
@@ -64,7 +64,7 @@ class AuthController extends Controller
     public function logout()
     {
         auth()->logout();
-//        return response()->json(['message' => 'User successfully signed out']);
+        //        return response()->json(['message' => 'User successfully signed out']);
         return redirect()->route('admin.login');
     }
 

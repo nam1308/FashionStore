@@ -66,8 +66,8 @@ const API = {
                     }
                 });
                 return response.data;
-            } catch (e) {
-                throw e.response.data.message;
+            }catch (e){
+                 throw e.response.data.message;
             }
         },
         DELETE: async (path) => {
@@ -75,15 +75,87 @@ const API = {
         }
     },
     CATEGORY: {
-        CREATE: async () => {
-
-        }
+        CREATE: async (category) => {
+            try {
+                const response = await SERVER.post(
+                    "/product-category",
+                    category
+                ).catch((error) => {
+                    throw error;
+                });
+                return response;
+            } catch (error) {
+                throw error;
+            }
+        },
+        INDEX: async (start = 0, length = 10) => {
+            try {
+                const response = await SERVER.get(
+                    `/product-category?start=${start}&length=${length}`
+                ).catch((error) => {
+                    throw error;
+                });
+                // console.log(response);
+                return response;
+            } catch (error) {
+                throw error;
+            }
+        },
+        SHOW: async (id) => {
+            try {
+                const response = await SERVER.get(
+                    "/product-category/" + id
+                ).catch((error) => {
+                    throw error;
+                });
+                return response;
+            } catch (error) {
+                throw error;
+            }
+        },
+        UPDATE: async (id, data) => {
+            try {
+                const response = await SERVER.put(
+                    "/product-category/" + id,
+                    data
+                ).catch((error) => {
+                    throw error;
+                });
+                return response;
+            } catch (error) {
+                throw error;
+            }
+        },
+        DESTROY: async (id) => {
+            try {
+                const response = await SERVER.delete(
+                    "/product-category/" + id
+                ).catch((error) => {
+                    throw error;
+                });
+                return response;
+            } catch (error) {
+                throw error;
+            }
+        },
+        SEARCH: async (search, start = 0, length = 10) => {
+            try {
+                const response = await SERVER.post("/product-category/search", {
+                    search,
+                    start,
+                    length,
+                }).catch((error) => {
+                    throw error;
+                });
+                return response;
+            } catch (error) {
+                throw error;
+            }
+        },
     },
     PRODUCT: {
-        CREATE: async () => {
-        },
-        DELETE: async (productId) => {
-        }
+        CREATE: async () => {},
+        DELETE: async (productId) => {},
     },
     AUTH: {
         // CHECK_EMAIL: async () => {

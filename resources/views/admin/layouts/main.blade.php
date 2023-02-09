@@ -20,12 +20,13 @@
     <link href="{{asset('backend/vendors/bootstrap-timepicker/css/bootstrap-timepicker.min.css')}}" rel="stylesheet" />
     <link href="{{asset('backend/vendors/jquery-minicolors/jquery.minicolors.css')}}" rel="stylesheet" />
     <link href="{{asset('css/toaster.min.css')}}" rel="stylesheet" />
+    @stack('styles')
 
     <!-- THEME STYLES-->
     <link href="{{asset('backend/css/main.min.css')}}" rel="stylesheet"/>
 
     <!-- PAGE LEVEL STYLES-->
-    <link href="{{asset('backend/css/nam.css')}}?v={{date('d')}}.{{time()}}" rel="stylesheet"/>
+    {{-- <link href="{{asset('backend/css/nam.css')}}?v={{date('d')}}.{{time()}}" rel="stylesheet"/> --}}
 
 </head>
 <body class="fixed-navbar">
