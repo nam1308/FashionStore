@@ -40,7 +40,17 @@ return [
         [
             'name' => 'Settings',
             'icon' => 'ti-settings',
-            'link' => '/settings'
+            'link' => '/',
+            'items' => [
+                [
+                    'name' => 'Basic info',
+                    'link' => '/settings'
+                ],
+                  [
+                                    'name' => 'Menu',
+                                    'link' => '/settings/menu'
+                                ]
+            ]
         ],
     ]
 ];

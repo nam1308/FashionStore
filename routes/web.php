@@ -31,6 +31,13 @@ Route::middleware(['middleware' => 'auth'])->group(function () {
             Route::get('', [ProductController::class, 'index']);
             Route::get('category', [ProductController::class, 'category']);
         });
+
+        //Settings
+        Route::group(['prefix' => 'settings'], function () {
+            Route::get('', [SettingController::class, 'index']);
+            Route::get('menu', [SettingController::class, 'menu']);
+
+        });
     });
 });
 

@@ -1,9 +1,9 @@
 <?php
 
+use App\Http\Controllers\Admin\ProductCategoryController;
 use App\Http\Controllers\Admin\AuthController;
 use App\Http\Controllers\Api\SettingController;
 use Illuminate\Http\Request;
-use App\Http\Controllers\Admin\ProductCategoryController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\UploadController;
 

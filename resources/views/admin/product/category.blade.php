@@ -147,7 +147,7 @@
         </div>
     </template>
 
-    <style id="style">
+    <style id="style" scoped>
         select.form-control{
             height: auto !important;
         }
@@ -155,7 +155,7 @@
 @stop
 
 @push('styles')
-<link rel='stylesheet' href="{{asset('backend/vendors/toastr/toastr.min.css')}}"/>
+    <link rel='stylesheet' href="{{asset('backend/vendors/toastr/toastr.min.css')}}"/>
 @endpush
 
 @push('vue')
@@ -167,7 +167,6 @@
     <script type="text/javascript">
         Vue.createApp({
             template: '#category-template',
-            style: '#style',
             data(){
                 return {
                     data: null,
@@ -181,7 +180,7 @@
                     error: null,
                     search: '',
                     page: 1,
-                    length: 1,
+                    length: 10,
                     countPage: 0,
                 }
             },
@@ -230,7 +229,7 @@
                             that.error = res.response.data
                         })
                     }
-                    this.getData()
+                    // this.getData()
                 },
                 getCategory(e){
                     console.dir(e.target.closest('button').dataset.id);
@@ -275,7 +274,7 @@
                 },
                 generateSlug(e){
                     const input = e.target;
-                    this.slug = input.value && input.value.split(' ').join('-') + '-' + new Date().getTime()
+                    this.slug = input.value && input.value.toLowerCase().split(' ').join('-')
                 },
                 gotoPage(e,action){
                     //handle next and previous page
