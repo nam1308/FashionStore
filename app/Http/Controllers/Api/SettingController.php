@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers\Api;
 
-use App\Model\Setting;
 use App\Services\SettingService;
 use Illuminate\Http\Request;
 
@@ -18,6 +17,11 @@ class SettingController
     public function index(Request $request)
     {
         return $this->service->getSetting($request->all());
+    }
+
+    public function single(Request $request)
+    {
+        return $this->service->findByKey($request->get('key'));
     }
 
     public function save(Request $request)

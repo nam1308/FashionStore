@@ -1,7 +1,7 @@
 @extends('admin.layouts.empty')
 
 @section('content')
-    <div id="login-content"></div>
+    <div id="login-content" class="login-wrap"></div>
     <template id="Login">
         <div class="container">
             <div class="img">

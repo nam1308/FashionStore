@@ -7,16 +7,28 @@ use Illuminate\Support\Arr;
 
 class SettingRepository implements ISettingRepository
 {
+    public $model;
+
+    public function __construct()
+    {
+        $this->model = resolve(Setting::class);
+    }
 
     public function save(array $data)
     {
         // TODO: Implement save() method.
-        return Setting::query()->updateOrCreate(['key' => Arr::get($data, 'key'), 'lang' => Arr::get($data, 'lang')], $data);
+        return $this->model::query()->updateOrCreate(['key' => Arr::get($data, 'key'), 'lang' => Arr::get($data, 'lang')], $data);
+    }
+
+    public function findByKey(string $key)
+    {
+        // TODO: Implement save() method.
+        return $this->model::query()->where(['key' => $key])->firstOrFail();
     }
 
     public function getSetting(array $params = [])
     {
         // TODO: Implement getSetting() method.
-        return Setting::query()->get();
+        return $this->model::query()->get();
     }
 }

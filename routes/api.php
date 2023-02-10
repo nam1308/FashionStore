@@ -29,6 +29,7 @@ Route::middleware('auth:api')->group(function () {
 
     Route::group(['prefix' => 'setting'], function () {
         Route::post('save', [SettingController::class, 'save']);
+        Route::get('single', [SettingController::class, 'single']);
         Route::get('', [SettingController::class, 'index']);
     });
 

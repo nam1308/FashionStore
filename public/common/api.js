@@ -66,8 +66,8 @@ const API = {
                     }
                 });
                 return response.data;
-            }catch (e){
-                 throw e.response.data.message;
+            } catch (e) {
+                throw e.response.data.message;
             }
         },
         DELETE: async (path) => {
@@ -80,29 +80,9 @@ const API = {
         }
     },
     PRODUCT: {
-        CREATE: async () => {},
-        DELETE: async (productId) => {},
-    },
-    SETTING: {
-        SAVE: async (data) => {
-            try {
-                const response = await SERVER.post("/setting", data);
-                return response;
-            } catch (e) {
-                throw e;
-            }
+        CREATE: async () => {
         },
-        SHOW: async (key) => {
-            try {
-                const response = await SERVER.get("/setting", {
-                    params: {
-                        key,
-                    },
-                });
-                return response;
-            } catch (e) {
-                throw e;
-            }
+        DELETE: async (productId) => {
         },
     },
     AUTH: {
@@ -122,8 +102,14 @@ const API = {
             }
         }
     },
-
     SETTING: {
+        SHOW: async (params = {}) => {
+            try {
+                return await SERVER.get("/setting/single", {params});
+            } catch (e) {
+                throw e;
+            }
+        },
         GET: async (params = {lang: 'vi'}) => {
             try {
                 return await SERVER.get('/setting', {params}).catch(axiosCatch);
@@ -134,7 +120,7 @@ const API = {
         },
         SAVE: async (data) => {
             try {
-                await SERVER.post('/setting/save', data).catch(axiosCatch);
+                await SERVER.post('/setting/save', [data]).catch(axiosCatch);
                 MESSAGE.SUCCESS('Save setting success!');
             } catch (e) {
                 console.log("E", e)
