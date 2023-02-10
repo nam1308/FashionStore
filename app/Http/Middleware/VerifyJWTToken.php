@@ -25,6 +25,7 @@ class VerifyJWTToken
         if (!Auth::check()) {
             return redirect(route('admin.login'));
         }
+        dd('success');
         return $next($request);
     }
 }

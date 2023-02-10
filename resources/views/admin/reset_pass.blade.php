@@ -279,7 +279,10 @@ a:hover{
                 return {
                     password: '',
                     confirmPassword: '',
-                    error: null
+                    error: {
+                        password: '',
+                        confirmPassword: '',
+                    }
                 }
             },
             methods: {
@@ -290,32 +293,32 @@ a:hover{
                 }
             },
             watch: {
-                password(newValue, oldValue) {
-                    if (!newValue){
-                        this.error = 
-                        {
-                            password: 'Bạn chưa nhập mật khẩu'
+                password: {
+                    deep: true,
+                    handler(newValue, oldValue) {
+                        if (!newValue){
+                            this.error = 
+                            {
+                                password: 'Bạn chưa nhập mật khẩu'
+                            }
                         }
-                    }
-                    else if (!/^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/.test(newValue)){
-                        this.error = 
-                        {
-                            password: 'Mật khẩu phải bao gồm chữ và số với độ dài lớn hơn 7 ký tự'
+                        else if (!/^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/.test(newValue)){
+                            this.error.password = 'Mật khẩu phải bao gồm chữ và số với độ dài lớn hơn 7 ký tự'
                         }
-                    }
-                    else{
-                        this.error.password = null
+                        else{
+                            this.error.password = null
+                        }
                     }
                 },
-                confirmPassword(newValue,oldValue){
-                    if (newValue!==this.password){
-                        this.error = 
-                        {
-                            confirmPassword: 'Hai mật khẩu không khớp'
+                confirmPassword: {
+                    deep: true,
+                    handler(newValue, oldValue) {
+                        if (newValue!==this.password){
+                            this.error.confirmPassword = 'Hai mật khẩu không khớp'
                         }
-                    }
-                    else{
-                        this.error.confirmPassword = null
+                        else{
+                            this.error.confirmPassword = null
+                        }
                     }
                 }
             },

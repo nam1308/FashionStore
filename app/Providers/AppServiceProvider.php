@@ -2,6 +2,8 @@
 
 namespace App\Providers;
 
+use App\Repositories\IUserRepository;
+use App\Services\UserService;
 use App\View\Components\UploadMedia;
 use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\ServiceProvider;
@@ -27,6 +29,6 @@ class AppServiceProvider extends ServiceProvider
     {
         //
 
-        Blade::component('upload',  UploadMedia::class);
+        Blade::component('upload', UploadMedia::class);
     }
 }

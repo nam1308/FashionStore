@@ -3,6 +3,7 @@
 use App\Http\Controllers\Admin\AuthController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\ProductController;
+use App\Http\Controllers\Admin\SettingController;
 use App\Http\Controllers\Frontend\HomeController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\BlogController;
@@ -19,12 +20,12 @@ use App\Http\Controllers\Admin\BlogController;
 */
 
 Route::match(['POST', 'GET'], 'login', [AuthController::class, 'login'])->name('admin.login');
-Route::match(['POST', 'GET'], 'reset_password', [AuthController::class, 'resetPassword'])->name('admin.resetPassword');
-
+Route::match(['POST', 'GET'], 'reset-password', [AuthController::class, 'resetPassword'])->name('admin.resetPassword');
 Route::middleware(['middleware' => 'auth'])->group(function () {
     Route::group(['prefix' => 'admin'], function () {
         Route::get('', [DashboardController::class, 'index'])->name('admin.home');
         Route::get('logout', [AuthController::class, 'logout'])->name('admin.logout');
+        Route::get('settings', [SettingController::class, 'index'])->name('admin.setting');
 
         // Test
         Route::post('', [DashboardController::class, 'test'])->name('admin.test');
@@ -33,6 +34,13 @@ Route::middleware(['middleware' => 'auth'])->group(function () {
         Route::group(['prefix' => 'products'], function () {
             Route::get('', [ProductController::class, 'index']);
             Route::get('category', [ProductController::class, 'category']);
+        });
+
+        //Settings
+        Route::group(['prefix' => 'settings'], function () {
+            Route::get('', [SettingController::class, 'index']);
+            Route::get('menu', [SettingController::class, 'menu']);
+
         });
 
         // Blog
