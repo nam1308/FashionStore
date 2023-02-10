@@ -87,19 +87,6 @@ const API = {
                 throw error;
             }
         },
-        INDEX: async (start = 0, length = 10) => {
-            try {
-                const response = await SERVER.get(
-                    `/product-category?start=${start}&length=${length}`
-                ).catch((error) => {
-                    throw error;
-                });
-                // console.log(response);
-                return response;
-            } catch (error) {
-                throw error;
-            }
-        },
         SHOW: async (id) => {
             try {
                 const response = await SERVER.get(
