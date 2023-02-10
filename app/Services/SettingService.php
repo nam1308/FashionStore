@@ -22,6 +22,11 @@ class SettingService
         return $this->interface->getSetting($params);
     }
 
+    public function findByKey($key)
+    {
+        return $this->interface->findByKey($key);
+    }
+
     public function save(Request $request)
     {
         try {
