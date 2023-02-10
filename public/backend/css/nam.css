@@ -1,67 +1,68 @@
-#Login {
+.login-wrap {
   /* https://Github.com/YasinDehfuli
        https://Codepen.io/YasinDehfuli */
   /* Upload image */ }
-  #Login * {
+  .login-wrap * {
     padding: 0;
     margin: 0;
     box-sizing: border-box; }
-  #Login body {
+  .login-wrap body {
     font-family: 'Poppins', sans-serif;
     overflow: hidden; }
-  #Login .wave {
+  .login-wrap .wave {
     position: fixed;
     bottom: 0;
     left: 0;
     height: 100%;
     z-index: -1; }
-  #Login .container {
+  .login-wrap .container {
     width: 100vw;
     height: 100vh;
     display: grid;
     grid-template-columns: repeat(2, 1fr);
     grid-gap: 7rem;
-    padding: 0 2rem; }
-  #Login .img {
+    padding: 0 2rem;
+    margin: auto; }
+  .login-wrap .img {
     display: flex;
     justify-content: flex-end;
     align-items: center; }
-  #Login .login-content {
+  .login-wrap .login-content {
     display: flex;
     justify-content: flex-start;
     align-items: center;
     text-align: center; }
-  #Login .img img {
+  .login-wrap .img img {
     width: 500px; }
-  #Login form {
+  .login-wrap form {
     width: 360px; }
-  #Login .login-content img {
+  .login-wrap .login-content img {
     height: 100px; }
-  #Login .login-content h2 {
+  .login-wrap .login-content h2 {
     margin: 15px 0;
     color: #333;
     text-transform: uppercase;
     font-size: 2.9rem; }
-  #Login .login-content .input-div {
+  .login-wrap .login-content .input-div {
     position: relative;
     display: grid;
     grid-template-columns: 7% 93%;
     margin: 25px 0;
     padding: 5px 0;
     border-bottom: 2px solid #d9d9d9; }
-  #Login .login-content .input-div.one {
+  .login-wrap .login-content .input-div.one {
     margin-top: 0; }
-  #Login .i {
+  .login-wrap .i {
     color: #d9d9d9;
     display: flex;
     justify-content: center;
     align-items: center; }
-  #Login .i i {
+  .login-wrap .i i {
     transition: .3s; }
-  #Login .input-div > div {
+  .login-wrap .input-div > div {
     position: relative;
     height: 45px; }
-  #Login .input-div > div > h5 {
+  .login-wrap .input-div > div > h5 {
     position: absolute;
     left: 10px;
     top: 50%;
@@ -69,7 +70,7 @@
     color: #999;
     font-size: 18px;
     transition: .3s; }
-  #Login .input-div:before, #Login .input-div:after {
+  .login-wrap .input-div:before, .login-wrap .input-div:after {
     content: '';
     position: absolute;
     bottom: -2px;
@@ -77,18 +78,18 @@
     height: 2px;
     background-color: #38d39f;
     transition: .4s; }
-  #Login .input-div:before {
+  .login-wrap .input-div:before {
     right: 50%; }
-  #Login .input-div:after {
+  .login-wrap .input-div:after {
     left: 50%; }
-  #Login .input-div.focus:before, #Login .input-div.focus:after {
+  .login-wrap .input-div.focus:before, .login-wrap .input-div.focus:after {
     width: 50%; }
-  #Login .input-div.focus > div > h5 {
+  .login-wrap .input-div.focus > div > h5 {
     top: -5px;
     font-size: 15px; }
-  #Login .input-div.focus > .i > i {
+  .login-wrap .input-div.focus > .i > i {
     color: #38d39f; }
-  #Login .input-div > div > input {
+  .login-wrap .input-div > div > input {
     position: absolute;
     left: 0;
     top: 0;
@@ -101,18 +102,18 @@
     font-size: 1.2rem;
     color: #555;
     font-family: 'poppins', sans-serif; }
-  #Login .input-div.pass {
+  .login-wrap .input-div.pass {
     margin-bottom: 4px; }
-  #Login a {
+  .login-wrap a {
     display: block;
     text-align: right;
     text-decoration: none;
     color: #999;
     font-size: 0.9rem;
     transition: .3s; }
-  #Login a:hover {
+  .login-wrap a:hover {
     color: #38d39f; }
-  #Login .btn {
+  .login-wrap .btn {
     display: block;
     width: 100%;
     height: 50px;
@@ -128,32 +129,32 @@
     margin: 1rem 0;
     cursor: pointer;
     transition: 777ms; }
-  #Login .btn:hover {
+  .login-wrap .btn:hover {
     background-position: right;
     display: block;
     background-image: linear-gradient(to left, aqua, #38d39f, lightcyan);
     transform: scale(104%); }
   @media screen and (max-width: 1050px) {
-    #Login .container {
+    .login-wrap .container {
       grid-gap: 5rem; } }
   @media screen and (max-width: 1000px) {
-    #Login form {
+    .login-wrap form {
       width: 290px; }
-    #Login .login-content h2 {
+    .login-wrap .login-content h2 {
       font-size: 2.4rem;
       margin: 8px 0; }
-    #Login .img img {
+    .login-wrap .img img {
       width: 400px; } }
   @media screen and (max-width: 900px) {
-    #Login .container {
+    .login-wrap .container {
       grid-template-columns: 1fr; }
-    #Login .img {
+    .login-wrap .img {
       display: none; }
-    #Login .wave {
+    .login-wrap .wave {
       display: none; }
-    #Login .login-content {
+    .login-wrap .login-content {
       justify-content: center; } }
-  #Login .thumb-item input[type="file"] {
+  .login-wrap .thumb-item input[type="file"] {
     opacity: 0;
     width: 100%;
     height: 100%;
@@ -161,7 +162,7 @@
     top: 0;
     left: 0;
     z-index: 2; }
-  #Login .thumb-item {
+  .login-wrap .thumb-item {
     border-radius: 10px;
     border: 2px dashed #ccc;
     position: relative;
@@ -172,9 +173,9 @@
     color: black;
     justify-content: center;
     margin-left: 15px; }
-  #Login .thumb-item:hover .action {
+  .login-wrap .thumb-item:hover .action {
     bottom: 0; }
-  #Login .thumb-item .action {
+  .login-wrap .thumb-item .action {
     position: absolute;
     width: 100%;
     height: 50px;
@@ -186,14 +187,14 @@
     transition: 0.5s all;
     border-radius: 10px;
     z-index: 3; }
-  #Login .thumb-item .action button {
+  .login-wrap .thumb-item .action button {
     background: none;
     width: 100%;
     height: 100%;
     color: white;
     cursor: pointer;
     border: none; }
-  #Login .loader {
+  .login-wrap .loader {
     border: 16px solid #f3f3f3;
     border-radius: 50%;
     border-top: 16px solid blue;

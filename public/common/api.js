@@ -180,6 +180,10 @@ const API = {
             }
         },
     },
+    PRODUCT: {
+        CREATE: async () => {},
+        DELETE: async (productId) => {},
+    },
     AUTH: {
         // CHECK_EMAIL: async () => {
         //
@@ -199,8 +203,14 @@ const API = {
             }
         },
     },
-
     SETTING: {
+        SHOW: async (params = {}) => {
+            try {
+                return await SERVER.get("/setting/single", { params });
+            } catch (e) {
+                throw e;
+            }
+        },
         GET: async (params = { lang: "vi" }) => {
             try {
                 return await SERVER.get("/setting", { params }).catch(
@@ -213,7 +223,7 @@ const API = {
         },
         SAVE: async (data) => {
             try {
-                await SERVER.post("/setting/save", data).catch(axiosCatch);
+                await SERVER.post("/setting/save", [data]).catch(axiosCatch);
                 MESSAGE.SUCCESS("Save setting success!");
             } catch (e) {
                 console.log("E", e);
