@@ -300,7 +300,7 @@
 @push('vue')
     <script>
         const ELEMENT = {
-            MENU_ITEM: $('.dd-list.metisMenu')
+            MENU_ITEM: '.dd-list.metisMenu' // dat ten class element do element chua mount nen khong the lay ra
         }
         const table = new Map()
 
@@ -507,10 +507,10 @@
                 })
             },
             updated() {
-                console.log('updated');
-                ELEMENT.MENU_ITEM.metisMenu();
-                ELEMENT.MENU_ITEM.metisMenu('dispose');
-                ELEMENT.MENU_ITEM.metisMenu();
+                console.log($(ELEMENT));
+                $(ELEMENT.MENU_ITEM).metisMenu();
+                $(ELEMENT.MENU_ITEM).metisMenu('dispose');
+                $(ELEMENT.MENU_ITEM).metisMenu();
             },
             components: {
                 CustomButton,
