@@ -30,13 +30,13 @@ Route::middleware(['middleware' => 'auth'])->group(function () {
         Route::group(['prefix' => 'products'], function () {
             Route::get('', [ProductController::class, 'index']);
             Route::get('category', [ProductController::class, 'category']);
+            Route::get('attribute', [ProductController::class, 'attribute']);
         });
 
         //Settings
         Route::group(['prefix' => 'settings'], function () {
             Route::get('', [SettingController::class, 'index']);
             Route::get('menu', [SettingController::class, 'menu']);
-
         });
     });
 });

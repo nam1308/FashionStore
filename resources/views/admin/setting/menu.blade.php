@@ -434,6 +434,7 @@
         const app = Vue.createApp({
             data() {
                 return {
+                    id: 0,
                     list: [],
                     customLink: {
                         label: '',
@@ -484,9 +485,12 @@
                     }
                 },
                 handleSaveMenu() {
+                    const that = this
                     const data = {
+                        id: that.id,
                         key: 'menu-header',
-                        value: $('.dd').nestable('serialize')
+                        value: $('.dd').nestable('serialize'),
+                        lang: 'vi'
                     };
                     API.SETTING.SAVE(data).then(
                         (res) => toastr.success(res.data.mess),
@@ -496,6 +500,7 @@
                 async getMenu() {
                     const response = await API.SETTING.SHOW({key: 'menu-header'});
                     this.list = response.data.value
+                    this.id = response.data.id
                 }
             },
             template: '#template',

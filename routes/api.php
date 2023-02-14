@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Admin\ProductCategoryController;
 use App\Http\Controllers\Admin\AuthController;
+use App\Http\Controllers\Api\AttributeController;
 use App\Http\Controllers\Api\SettingController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -41,5 +42,13 @@ Route::middleware('auth:api')->group(function () {
         Route::post('product-category', [ProductCategoryController::class, 'store'])->name('store');
         Route::put('product-category/{category}', [ProductCategoryController::class, 'update'])->name('update');
         Route::delete('product-category/{category}', [ProductCategoryController::class, 'destroy'])->name('destroy');
+    });
+
+    Route::group(['as' => 'attribute.', 'prefix' => 'product'], function () {
+        Route::post('attribute', [AttributeController::class, 'store']);
+        Route::get('attribute/search', [AttributeController::class, 'search']);
+        Route::get('attribute/{attribute}', [AttributeController::class, 'show']);
+        Route::put('attribute/{attribute}', [AttributeController::class, 'update']);
+        Route::delete('attribute/{attribute}', [AttributeController::class, 'destroy']);
     });
 });

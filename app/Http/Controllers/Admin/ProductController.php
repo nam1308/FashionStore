@@ -15,4 +15,9 @@ class ProductController extends Controller
     {
         return view('admin.product.category');
     }
+
+    public function attribute()
+    {
+        return view('admin.product.attribute');
+    }
 }
