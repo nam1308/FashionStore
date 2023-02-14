@@ -11,6 +11,6 @@ const PLUGIN = {
         $('.editor').summernote('code', value);
     },
     GETCONTENT:()=>{
-        return $(".editor").summernote("code");
+        return $('.editor').summernote("code");
     },
 }

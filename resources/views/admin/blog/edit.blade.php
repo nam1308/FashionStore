@@ -152,7 +152,6 @@
                 const response = await API.BLOG.SHOW(this.id);
                 this.blog = response.data;
                 PLUGIN.EDITOR(this.blog.content);
-                console.log(this.blog);
             },
             methods: {
                 async handleSubmit() {

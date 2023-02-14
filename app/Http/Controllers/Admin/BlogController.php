@@ -37,6 +37,7 @@ class BlogController extends Controller
             'name' => 'required',
             'slug' => 'required|unique:blog',
             'excerpt' => 'required',
+//            'image' => 'image|mimes:jpeg,jpg,png,gif|max:10000',
         ]);
 
         if ($validator->fails()) {
@@ -64,6 +65,7 @@ class BlogController extends Controller
             'name' => 'required',
             'slug' => 'required|unique:blog,slug,'.$blog->id,
             'excerpt' => 'required',
+//            'image' => 'image|mimes:jpeg,jpg,png,gif|max:10000',
         ]);
 
         if ($validator->fails()) {

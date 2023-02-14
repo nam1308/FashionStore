@@ -216,7 +216,7 @@
         }
 
         #metismenu .sub-menu:first-child {
-            margin-top: ;
+            margin-top: 3px;
         }
 
         #metismenu .group-checkbox:first-child {

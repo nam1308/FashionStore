@@ -1,15 +1,13 @@
 @extends('admin.layouts.main')
 @section('meta')
-    @include('admin.inc.meta', [
-        'title' => 'Blog list'
-    ])
+    @include('admin.inc.meta', ['title' => 'Category Blog'])
 @stop
 @section('content')
     <div class="container-fluid p-0">
-        @include('admin.inc.breadcrumb', ['items' => [['label' => 'All Blog']]])
-        <div id="blog"></div>
+        @include('admin.inc.breadcrumb', ['items' => [['label' => 'Category Blog']]])
+        <div id="category_blog"></div>
     </div>
-    <template id="blog-template">
+    <template id="categoryBlog-template">
         <div class="row">
             <div class="col">
                 <div class="ibox">
@@ -19,36 +17,36 @@
                                placeholder="Search ..."/>
                     </div>
                     <div class="ibox-body">
-                        <a href="{{ url('admin/blog/create') }}" type="button" class="my-2 btn btn-success">
+                        <a href="{{ url('admin/categoryBlog/create') }}" type="button" class="my-2 btn btn-success">
                             <i class="ti-plus"></i>
                         </a>
                         <table class="table">
                             <thead>
-                            <tr>
-                                <th>STT</th>
-                                <th>Name</th>
-                                <th>Slug</th>
-                                <th>Status</th>
-                                <th>Created At</th>
-                                <th width="100">Action</th>
-                            </tr>
+                                <tr>
+                                    <th>STT</th>
+                                    <th>Name</th>
+                                    <th>Slug</th>
+                                    <th>Status</th>
+                                    <th>Created At</th>
+                                    <th width="100">Action</th>
+                                </tr>
                             </thead>
                             <tbody v-if="data">
-                            <tr v-for="(item,index) in data" :key="item.id">
-                                <td>@{{ index + 1 }}</td>
-                                <td>@{{ item.name }}</td>
-                                <td>@{{ item.slug }}</td>
-                                <td>@{{ item.status }}</td>
-                                <td>@{{ item.create_at }}</td>
-                                <td class="d-flex justify-content-around">
-                                    <a :href="item.edit" class="btn btn-sm mr-3">
-                                        <i class="ti-pencil"></i>
-                                    </a>
-                                    <button @click="handleDelete($event,item)" class="btn btn-sm mr-3">
-                                        <i class="ti-trash"></i>
-                                    </button>
-                                </td>
-                            </tr>
+                                <tr v-for="(item,index) in data" :key="item.id">
+                                    <td>@{{ index + 1 }}</td>
+                                    <td>@{{ item.name }}</td>
+                                    <td>@{{ item.slug }}</td>
+                                    <td>@{{ item.status }}</td>
+                                    <td>@{{ item.create_at }}</td>
+                                    <td class="d-flex justify-content-around">
+                                        <a :href="item.edit" class="btn btn-sm mr-3">
+                                            <i class="ti-pencil"></i>
+                                        </a>
+                                        <button @click="handleDelete($event,item)" class="btn btn-sm mr-3">
+                                            <i class="ti-trash"></i>
+                                        </button>
+                                    </td>
+                                </tr>
                             </tbody>
                         </table>
                         <nav aria-label="Page navigation example">
@@ -98,22 +96,20 @@
 @push('vue')
     <script type="text/javascript">
         Vue.createApp({
-            template: "#blog-template",
+            template: "#categoryBlog-template",
             style: '#style',
-            data() {
+            data(){
                 return {
                     data: null,
                     name: '',
                     slug: '',
-                    excerpt: '',
-                    image: '',
-                    content: '',
-                    sort_order: 1,
-                    status: 1,
+                    description: '',
                     parent: null,
-                    is_popular: 0,
-                    author: '',
+                    thumbnail_url: '',
+                    banner_url: '',
                     lang: 'vi',
+                    sort_order: null,
+                    show_home: 0,
                     error: null,
                     search: '',
                     page: 1,
@@ -123,22 +119,18 @@
                     link: [],
                 }
             },
-            async mounted() {
+            async mounted(){
                 PLUGIN.INIT();
-                const that = this
-                $('#exampleModal').on('hidden.bs.modal', function (e) {
-                    that.resetData();
-                });
                 await this.rederBlog();
             },
-            watch: {
+            watch:{
                 search: {
                     immediate: true,
                     handler(newValue, oldValue) {
                         this.page = 1;
                         const start = (this.page - 1) * this.countItem;
                         const length = this.countItem;
-                        const response = API.BLOG.SEARCH(newValue, start, length);
+                        const response = API.CATEGORY_BLOG.SEARCH(newValue, start, length);
                         const that = this;
                         response.then(res => {
                             this.data = res.data.data
@@ -149,35 +141,34 @@
                 page(newValue, oldValue) {
                     const start = (newValue - 1) * this.countItem;
                     const length = this.countItem;
-                    const response = API.BLOG.INDEX(start, length);
+                    const response = API.CATEGORY_BLOG.LIST(start, length);
                     response.then(res => {
                         this.data = res.data.data;
                     })
                 }
             },
-            methods: {
+            methods:{
                 resetData() {
                     this.data = null
                     this.name = ''
                     this.slug = ''
-                    this.excerpt = ''
-                    this.image = ''
-                    this.content = ''
-                    this.sort_order = 1
-                    this.status = 1
+                    this.description = ''
                     this.parent = null
-                    this.is_popular = 0
-                    this.author = ''
+                    this.thumbnail_url = ''
+                    this.banner_url = ''
+                    this.lang = ''
+                    this.sort_order = null
+                    this.show_home = 0
                 },
                 async rederBlog() {
-                    const dataRender = await API.BLOG.INDEX(0, 10);
-                    this.data = dataRender.data.data.map((item => ({...item, edit: `/admin/blog/${item.id}/edit`})));
+                    const dataRender = await API.CATEGORY_BLOG.LIST(0, 10);
+                    this.data = dataRender.data.data.map((item => ({...item, edit: `/admin/categoryBlog/${item.id}/edit`})));
                     return this.data;
                 },
                 async handleDelete(e, item) {
                     try {
                         const isConf = confirm(`Do you delete blog ${item.name}?`);
-                        isConf && await API.BLOG.DELETE(item.id);
+                        isConf && await API.CATEGORY_BLOG.DELETE(item.id);
                         await this.rederBlog()
                     } catch (e) {
                         MESSAGE.ERROR(e.message)
@@ -228,7 +219,7 @@
                         return Math.floor(this.countPage / x) + 1;
                     }
                 },
-            }
-        }).mount('#blog');
+            },
+        }).mount('#category_blog');
     </script>
 @endpush

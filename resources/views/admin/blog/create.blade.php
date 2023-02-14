@@ -1,10 +1,10 @@
 @extends('admin.layouts.main')
 @section('meta')
-    @include('admin.inc.meta', ['title' => 'blogs'])
+    @include('admin.inc.meta', ['title' => 'Add Blog'])
 @stop
 @section('content')
     <div class="container-fluid p-0">
-        @include('admin.inc.breadcrumb', ['item' => [['label' => 'Blog', 'link' => '/blog'],['label' => 'Blogs']]])
+        @include('admin.inc.breadcrumb', ['items' => [['label' => 'Blog', 'link' => '/blog'],['label' => 'Add Blog']]])
         <div id="blog"></div>
     </div>
 

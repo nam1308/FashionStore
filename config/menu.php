@@ -25,7 +25,17 @@ return [
         [
             'name' => 'Blog',
             'icon' => 'ti-dropbox-alt',
-            'link' => '/blog',
+            'link' => '/',
+            'items' => [
+                [
+                    'name' => 'All Blog',
+                    'link' => '/blog',
+                ],
+                [
+                    'name' => 'Category Blog',
+                    'link' => '/categoryBlog',
+                ]
+            ],
         ],
         [
             'name' => 'Accounts',

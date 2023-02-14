@@ -7,6 +7,8 @@ use App\Repositories\IUserRepository;
 use App\Repositories\SettingRepository;
 use App\Repositories\UserRepository;
 use Carbon\Laravel\ServiceProvider;
+use App\Repositories\ProductRepositoryInterface;
+use App\Repositories\ProductRepository;
 
 class RepositoryProvider extends ServiceProvider
 {
@@ -20,6 +22,7 @@ class RepositoryProvider extends ServiceProvider
         //
         $this->app->bind(IUserRepository::class, UserRepository::class);
         $this->app->bind(ISettingRepository::class, SettingRepository::class);
+        $this->app->bind(ProductRepositoryInterface::class, ProductRepository::class);
     }
 
     /**

@@ -17,13 +17,13 @@ return new class extends Migration
             $table->id();
             $table->string('name',255);
             $table->string('slug',255)->unique();
-            $table->string('description',255)->nullable();
-            $table->integer('parent')->default(0);
+            $table->text('description')->nullable();
+            $table->integer('parent')->default(0)->comment('0 is original directory');
             $table->text('thumbnail_url')->nullable();
-            $table->text('banner_url');
+            $table->text('banner_url')->nullable();
             $table->string('lang',5)->default('vi');
             $table->integer('sort_order')->nullable();
-            $table->tinyInteger('show_home')->default(0);
+            $table->boolean('show_home')->default(0)->comment('0=hidden and true=visible');
             $table->timestamps();
         });
     }

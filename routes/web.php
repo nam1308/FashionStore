@@ -7,6 +7,7 @@ use App\Http\Controllers\Admin\SettingController;
 use App\Http\Controllers\Frontend\HomeController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\BlogController;
+use App\Http\Controllers\Admin\CategoryBlogController;
 
 /*
 |--------------------------------------------------------------------------
@@ -32,7 +33,11 @@ Route::middleware(['middleware' => 'auth'])->group(function () {
 
         // Products
         Route::group(['prefix' => 'products'], function () {
-            Route::get('', [ProductController::class, 'index']);
+            Route::get('',[ProductController::class, 'index'])->name('index');
+            Route::get('create',[ProductController::class, 'create'])->name('create');
+            Route::get('{id}/edit',[ProductController::class, 'edit'])->name('edit');
+            Route::get('{id}/duplicate',[ProductController::class, 'duplicate'])->name('duplicate');
+
             Route::get('category', [ProductController::class, 'category']);
         });
 
@@ -48,6 +53,13 @@ Route::middleware(['middleware' => 'auth'])->group(function () {
             Route::get('', [BlogController::class, 'index'])->name('index');
             Route::get('create', [BlogController::class, 'create'])->name('create');
             Route::get('{id}/edit', [BlogController::class, 'edit']);
+        });
+
+        // Category Blog
+        Route::group(['prefix' => 'categoryBlog'], function (){
+            Route::get('',[CategoryBlogController::class, 'index'])->name('index');
+            Route::get('create',[CategoryBlogController::class, 'create'])->name('create');
+            Route::get('{id}/edit',[CategoryBlogController::class, 'edit'])->name('edit');
         });
 
     });

@@ -80,9 +80,61 @@ const API = {
         }
     },
     PRODUCT: {
-        CREATE: async () => {
+        LIST: async (start = 0, length = 10) =>{
+            try {
+                return await SERVER.get(`/products?start=${start}&length=${length}`).catch((error) =>{
+                    throw error;
+                });
+            } catch (e){
+                throw e;
+            }
         },
-        DELETE: async (productId) => {
+        CREATE: async (data) => {
+            try {
+                return await SERVER.post('/products/',data).catch((error) => {
+                    throw error;
+                });
+            }catch (error){
+                throw error;
+            }
+        },
+        SHOW: async (id) => {
+            try {
+                return await SERVER.get('/products/'+id).catch((error) => {
+                    throw error;
+                });
+            } catch (e){
+                throw e;
+            }
+        },
+        UPDATE: async (id, data) =>{
+            try {
+                return await SERVER.put('/products/'+id,data).catch((error) => {
+                    throw error;
+                });
+            } catch (e){
+                throw e;
+            }
+        },
+        DELETE: async (id) => {
+            try {
+                const response = await SERVER.delete('/products/' + id).catch((error) => {
+                    throw error;
+                });
+                return response;
+            }catch (error){
+                throw response;
+            }
+        },
+        SEARCH: async (search, start = 0, length = 10) =>{
+            try {
+                const response = await SERVER.post('/products/search/',{search, start, length}).catch((error) => {
+                    throw error;
+                })
+                return response;
+            }catch (error){
+                throw error;
+            }
         },
     },
     BLOG:{
@@ -187,6 +239,62 @@ const API = {
             } catch (e) {
                 console.log("E", e)
                 MESSAGE.ERROR(e.message)
+            }
+        }
+    },
+    CATEGORY_BLOG: {
+        LIST: async (start = 0, length = 10) =>{
+            try {
+                return await SERVER.get(`/categoryBlog?start=${start}&length=${length}`).catch((error) =>{
+                    throw error;
+                });
+            } catch (e){
+                throw e;
+            }
+        },
+        SHOW: async (id) =>{
+            try {
+                return await SERVER.get('/categoryBlog/'+id).catch((error) => {
+                    throw error;
+                });
+            } catch (e){
+                throw e;
+            }
+        },
+        STORE: async (data) =>{
+            try {
+                return await SERVER.post('/categoryBlog',data).catch((error) => {
+                    throw error;
+                });
+            } catch (e){
+                throw e;
+            }
+        },
+        SEARCH: async (search, start= 0, length = 10) =>{
+            try {
+                return await SERVER.post('/categoryBlog/search/',{search,start,length}).catch((error) => {
+                    throw error;
+                });
+            } catch (e){
+                throw e;
+            }
+        },
+        UPDATE: async (id, data) =>{
+            try {
+                return await SERVER.put('/categoryBlog/'+id,data).catch((error) => {
+                    throw error;
+                });
+            } catch (e){
+                throw e;
+            }
+        },
+        DELETE: async (id) =>{
+            try {
+                return await SERVER.delete('/categoryBlog/'+id).catch((error) => {
+                    throw error;
+                });
+            } catch (e){
+                throw e;
             }
         }
     }
