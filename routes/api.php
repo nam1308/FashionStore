@@ -46,7 +46,7 @@ Route::middleware('auth:api')->group(function () {
 
     Route::group(['as' => 'attribute.', 'prefix' => 'product'], function () {
         Route::post('attribute', [AttributeController::class, 'store']);
-        Route::get('attribute/search', [AttributeController::class, 'search']);
+        Route::get('attribute', [AttributeController::class, 'search']);
         Route::get('attribute/{attribute}', [AttributeController::class, 'show']);
         Route::put('attribute/{attribute}', [AttributeController::class, 'update']);
         Route::delete('attribute/{attribute}', [AttributeController::class, 'destroy']);

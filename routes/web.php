@@ -27,10 +27,11 @@ Route::middleware(['middleware' => 'auth'])->group(function () {
         Route::get('settings', [SettingController::class, 'index'])->name('admin.setting');
 
         // Products
-        Route::group(['prefix' => 'products'], function () {
+        Route::group(['as' => 'web.product.', 'prefix' => 'products'], function () {
             Route::get('', [ProductController::class, 'index']);
             Route::get('category', [ProductController::class, 'category']);
             Route::get('attribute', [ProductController::class, 'attribute']);
+            Route::get('attribute/variation/{id}', [ProductController::class, 'variation'])->name('variation');
         });
 
         //Settings

@@ -49,26 +49,26 @@
                         </table>
                         <nav aria-label="Page navigation example">
                             <ul class="pagination justify-content-end">
-                              <li 
+                              <li
                               @click="gotoPage($event,'first')"
-                              class="page-item" 
+                              class="page-item"
                               :class="{disabled: page===1}"><a class="page-link" href="#">First</a></li>
-                              <li 
+                              <li
                               @click="gotoPage($event,'prev')"
-                              class="page-item" 
+                              class="page-item"
                               :class="{disabled: page===1}"><a class="page-link" href="#">Previous</a></li>
-                              <li 
-                              :key="i" 
-                              v-for="i in getCountPage(page)" 
+                              <li
+                              :key="i"
+                              v-for="i in getCountPage(page)"
                               class="page-item"
                               :class="{active: page===i}"
                               @click="gotoNumPage"
                               ><a class="page-link" href="#">@{{i}}</a></li>
-                              <li class="page-item" 
+                              <li class="page-item"
                               :class="{disabled: page===countPage}"
                               @click="gotoPage($event,'next')"
                               ><a class="page-link" href="#">Next</a></li>
-                              <li class="page-item" 
+                              <li class="page-item"
                               :class="{disabled: page===countPage}"
                               @click="gotoPage($event,'last')"
                               ><a class="page-link" href="#">Last</a></li>
@@ -94,7 +94,7 @@
                                 <div class="col">
                                     <div class="form-group">
                                         <label>Name</label>
-                                        <input v-model="name" class="form-control" 
+                                        <input v-model="name" class="form-control"
                                         :class="{border: error?.name,'border-danger': error?.name}"
                                         @input="generateSlug">
                                         <p v-if="error?.name" class="text-danger">@{{error.name.join(' ')}}</p>
@@ -143,7 +143,7 @@
                     </div>
                 </div>
             </Teleport>
-            
+
         </div>
     </template>
 
@@ -229,7 +229,7 @@
                             that.error = res.response.data
                         })
                     }
-                    // this.getData()
+                    this.getData()
                 },
                 getCategory(e){
                     console.dir(e.target.closest('button').dataset.id);
@@ -251,7 +251,7 @@
                     const id = parseInt(this.$refs.id.value)
                     console.log(id);
                     if (id){
-                        return this.data.filter((item) => item.id!==id); 
+                        return this.data.filter((item) => item.id!==id);
                     }
                     return this.data
                 },
@@ -271,6 +271,11 @@
                             })
                         }
                     })
+                },
+                async getData(){
+                    const start = (this.page - 1) * this.length
+                    const res = await API.CATEGORY.SEARCH('',start,this.length)
+                    this.data = res.data.data
                 },
                 generateSlug(e){
                     const input = e.target;
@@ -306,7 +311,7 @@
                         default:
                             break;
                     }
-                    
+
                 },
                 gotoNumPage(e){
                     this.page = parseInt(e.target.textContent)
@@ -331,7 +336,7 @@
                         }
                         return res;
                     }
-                    
+
                     for (let index = currentPage - 2; index <= currentPage + 2; index++) {
                             res.push(index);
                     }

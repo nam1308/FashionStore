@@ -131,6 +131,54 @@ const API = {
         CREATE: async () => {},
         DELETE: async (productId) => {},
     },
+    PRODUCT_ATTRIBUTE: {
+        SEARCH: async (search, start = 0, length = 10, parent = 0) => {
+            try {
+                const params = { search, start, length, parent };
+                const response = await SERVER.get("/product/attribute", {
+                    params,
+                });
+                return response;
+            } catch (e) {
+                throw e;
+            }
+        },
+        STORE: async (data) => {
+            try {
+                const response = await SERVER.post("/product/attribute", data);
+                return response;
+            } catch (error) {
+                throw error;
+            }
+        },
+        SHOW: async (id) => {
+            try {
+                const response = await SERVER.get("product/attribute/" + id);
+                return response;
+            } catch (error) {
+                throw error;
+            }
+        },
+        UPDATE: async (id, data) => {
+            try {
+                const response = await SERVER.put(
+                    "product/attribute/" + id,
+                    data
+                );
+                return response;
+            } catch (error) {
+                throw error;
+            }
+        },
+        DESTROY: async (id) => {
+            try {
+                const response = await SERVER.delete("product/attribute/" + id);
+                return response;
+            } catch (error) {
+                throw error;
+            }
+        },
+    },
     // SETTING: {
     //     SAVE: async (data) => {
     //         try {
@@ -153,10 +201,6 @@ const API = {
     //         }
     //     },
     // },
-    PRODUCT: {
-        CREATE: async () => {},
-        DELETE: async (productId) => {},
-    },
     AUTH: {
         // CHECK_EMAIL: async () => {
         //
