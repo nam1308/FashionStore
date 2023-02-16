@@ -128,8 +128,72 @@ const API = {
         },
     },
     PRODUCT: {
-        CREATE: async () => {},
-        DELETE: async (productId) => {},
+        LIST: async (start = 0, length = 10) => {
+            try {
+                return await SERVER.get(
+                    `/products?start=${start}&length=${length}`
+                ).catch((error) => {
+                    throw error;
+                });
+            } catch (e) {
+                throw e;
+            }
+        },
+        CREATE: async (data) => {
+            try {
+                return await SERVER.post("/products/", data).catch((error) => {
+                    throw error;
+                });
+            } catch (error) {
+                throw error;
+            }
+        },
+        SHOW: async (id) => {
+            try {
+                return await SERVER.get("/products/" + id).catch((error) => {
+                    throw error;
+                });
+            } catch (e) {
+                throw e;
+            }
+        },
+        UPDATE: async (id, data) => {
+            try {
+                return await SERVER.put("/products/" + id, data).catch(
+                    (error) => {
+                        throw error;
+                    }
+                );
+            } catch (e) {
+                throw e;
+            }
+        },
+        DELETE: async (id) => {
+            try {
+                const response = await SERVER.delete("/products/" + id).catch(
+                    (error) => {
+                        throw error;
+                    }
+                );
+                return response;
+            } catch (error) {
+                throw response;
+            }
+        },
+        SEARCH: async (search, start = 0, length = 10) => {
+            try {
+                const response = await SERVER.post("/products/search/", {
+                    search,
+                    start,
+                    length,
+                }).catch((error) => {
+                    throw error;
+                });
+                return response;
+            } catch (error) {
+                throw error;
+            }
+        },
     },
     PRODUCT_ATTRIBUTE: {
         SEARCH: async (search, start = 0, length = 10, parent = 0) => {
@@ -179,28 +243,82 @@ const API = {
             }
         },
     },
-    // SETTING: {
-    //     SAVE: async (data) => {
-    //         try {
-    //             const response = await SERVER.post("/setting", data);
-    //             return response;
-    //         } catch (e) {
-    //             throw e;
-    //         }
-    //     },
-    //     SHOW: async (key) => {
-    //         try {
-    //             const response = await SERVER.get("/setting", {
-    //                 params: {
-    //                     key,
-    //                 },
-    //             });
-    //             return response;
-    //         } catch (e) {
-    //             throw e;
-    //         }
-    //     },
-    // },
+    BLOG: {
+        CREATE: async (blog) => {
+            try {
+                const response = await SERVER.post("/blog", blog).catch(
+                    (error) => {
+                        throw error;
+                    }
+                );
+                return response;
+            } catch (error) {
+                throw error;
+            }
+        },
+        INDEX: async (start = 0, length = 10) => {
+            try {
+                const response = await SERVER.get(
+                    `/blog?start=${start}&length=${length}`
+                ).catch((error) => {
+                    throw error;
+                });
+                return response;
+            } catch (error) {
+                throw error;
+            }
+        },
+        SHOW: async (id) => {
+            try {
+                const response = await SERVER.get("/blog/" + id).catch(
+                    (error) => {
+                        throw error;
+                    }
+                );
+                return response;
+            } catch (error) {
+                throw error;
+            }
+        },
+        UPDATE: async (id, data) => {
+            try {
+                const response = await SERVER.put("/blog/" + id, data).catch(
+                    (error) => {
+                        throw error;
+                    }
+                );
+                return response;
+            } catch (error) {
+                throw error;
+            }
+        },
+        DELETE: async (id) => {
+            try {
+                const response = await SERVER.delete("/blog/" + id).catch(
+                    (error) => {
+                        throw error;
+                    }
+                );
+                return response;
+            } catch (error) {
+                throw response;
+            }
+        },
+        SEARCH: async (search, start = 0, length = 10) => {
+            try {
+                const response = await SERVER.post("/blog/search/", {
+                    search,
+                    start,
+                    length,
+                }).catch((error) => {
+                    throw error;
+                });
+                return response;
+            } catch (error) {
+                throw error;
+            }
+        },
+    },
     AUTH: {
         // CHECK_EMAIL: async () => {
         //
@@ -246,6 +364,76 @@ const API = {
             } catch (e) {
                 console.log("E", e);
                 MESSAGE.ERROR(e.message);
+            }
+        },
+    },
+    CATEGORY_BLOG: {
+        LIST: async (start = 0, length = 10) => {
+            try {
+                return await SERVER.get(
+                    `/categoryBlog?start=${start}&length=${length}`
+                ).catch((error) => {
+                    throw error;
+                });
+            } catch (e) {
+                throw e;
+            }
+        },
+        SHOW: async (id) => {
+            try {
+                return await SERVER.get("/categoryBlog/" + id).catch(
+                    (error) => {
+                        throw error;
+                    }
+                );
+            } catch (e) {
+                throw e;
+            }
+        },
+        STORE: async (data) => {
+            try {
+                return await SERVER.post("/categoryBlog", data).catch(
+                    (error) => {
+                        throw error;
+                    }
+                );
+            } catch (e) {
+                throw e;
+            }
+        },
+        SEARCH: async (search, start = 0, length = 10) => {
+            try {
+                return await SERVER.post("/categoryBlog/search/", {
+                    search,
+                    start,
+                    length,
+                }).catch((error) => {
+                    throw error;
+                });
+            } catch (e) {
+                throw e;
+            }
+        },
+        UPDATE: async (id, data) => {
+            try {
+                return await SERVER.put("/categoryBlog/" + id, data).catch(
+                    (error) => {
+                        throw error;
+                    }
+                );
+            } catch (e) {
+                throw e;
+            }
+        },
+        DELETE: async (id) => {
+            try {
+                return await SERVER.delete("/categoryBlog/" + id).catch(
+                    (error) => {
+                        throw error;
+                    }
+                );
+            } catch (e) {
+                throw e;
             }
         },
     },

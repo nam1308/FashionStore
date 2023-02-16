@@ -7,6 +7,10 @@ use App\Http\Controllers\Api\SettingController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\UploadController;
+use App\Http\Controllers\Admin\DashboardController;
+use App\Http\Controllers\Admin\BlogController;
+use App\Http\Controllers\Admin\CategoryBlogController;
+use App\Http\Controllers\Api\ProductController;
 
 /*
 |--------------------------------------------------------------------------
@@ -35,13 +39,42 @@ Route::middleware('auth:api')->group(function () {
         Route::get('', [SettingController::class, 'index']);
     });
 
+    Route::group(['prefix' => 'products'], function () {
+        Route::get('', [ProductController::class, 'list'])->name('list');
+        Route::get('/{id}', [ProductController::class, 'show'])->name('show');
+        Route::post('', [ProductController::class, 'create'])->name('products.create');
+        Route::post('/search', [ProductController::class, 'search'])->name('search');
+        Route::put('/{id}', [ProductController::class, 'update'])->name('update');
+        Route::delete('/{id}', [ProductController::class, 'delete'])->name('delete');
+    });
+
     Route::group(['as' => 'product-category.'], function () {
         Route::get('product-category', [ProductCategoryController::class, 'list'])->name('index');
-        Route::get('product-category/search/', [ProductCategoryController::class, 'search'])->name('search');
-        Route::get('product-category/{category}', [ProductCategoryController::class, 'show'])->name('show');
+        Route::post('product-category/search/', [ProductCategoryController::class, 'search'])->name('search');
+        Route::get('product-category/{id}', [ProductCategoryController::class, 'show'])->name('show');
         Route::post('product-category', [ProductCategoryController::class, 'store'])->name('store');
-        Route::put('product-category/{category}', [ProductCategoryController::class, 'update'])->name('update');
-        Route::delete('product-category/{category}', [ProductCategoryController::class, 'destroy'])->name('destroy');
+        Route::put('product-category/{id}', [ProductCategoryController::class, 'update'])->name('update');
+        Route::delete('product-category/{id}', [ProductCategoryController::class, 'destroy'])->name('destroy');
+    });
+
+    // Router Blog
+    Route::group(['as' => 'blog'], function () {
+        Route::get('blog', [BlogController::class, 'list'])->name('index');
+        Route::get('blog/{id}', [BlogController::class, 'show'])->name('show');
+        Route::post('blog', [BlogController::class, 'store'])->name('store');
+        Route::post('blog/search/', [BlogController::class, 'search'])->name('search');
+        Route::put('blog/{id}', [BlogController::class, 'update'])->name('update');
+        Route::delete('blog/{id}', [BlogController::class, 'delete'])->name('delete');
+    });
+
+    // Router Category_blog
+    Route::group(['as' => 'categoryBlog'], function () {
+        Route::get('categoryBlog', [CategoryBlogController::class, 'list'])->name('list');
+        Route::get('categoryBlog/{id}', [CategoryBlogController::class, 'show'])->name('show');
+        Route::post('categoryBlog', [CategoryBlogController::class, 'store'])->name('store');
+        Route::post('categoryBlog/search/', [CategoryBlogController::class, 'search'])->name('search');
+        Route::put('categoryBlog/{id}', [CategoryBlogController::class, 'update'])->name('update');
+        Route::delete('categoryBlog/{id}', [CategoryBlogController::class, 'delete'])->name('delete');
     });
 
     Route::group(['as' => 'attribute.', 'prefix' => 'product'], function () {

@@ -12,17 +12,20 @@ class UploadMedia extends Component
     public $multiple;
     public $width;
     public $height;
+    public $values;
+
     /**
      * Create a new component instance.
      *
      * @return void
      */
-    public function __construct($name = 'image', $multiple = true, $width = 200, $height = 200)
+    public function __construct($name = 'image', $multiple = true, $width = 200, $height = 200, $values = [])
     {
         $this->name = $name;
         $this->multiple = $multiple;
         $this->width = $width;
         $this->height = $height;
+        $this->values = $values;
     }
 
     /**

@@ -28,6 +28,9 @@
     <!-- PAGE LEVEL STYLES-->
     {{-- <link href="{{asset('backend/css/nam.css')}}?v={{date('d')}}.{{time()}}" rel="stylesheet"/> --}}
 
+    <!-- include summernote -->
+    <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.css" rel="stylesheet">
+
 </head>
 <body class="fixed-navbar">
 <div class="page-wrapper">
@@ -75,6 +78,13 @@
 <script src="{{asset('common/api.js')}}?v={{time()}}" type="text/javascript"></script>
 <script src="{{asset('backend/js/admin.js')}}?v={{time()}}" type="text/javascript"></script>
 <script src="{{asset('backend/js/app.min.js')}}" type="text/javascript"></script>
+
+<!-- include summernote -->
+<script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.js"></script>
+<script>
+    PLUGIN.INIT();
+</script>
+
 @stack('vue')
 
 <!-- PAGE LEVEL SCRIPTS-->
