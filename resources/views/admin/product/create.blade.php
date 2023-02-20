@@ -115,6 +115,70 @@
                     </div>
                 </div>
             </div>
+            <div class="attribute">
+                <div class="ibox">
+                    <div class="ibox-head">
+                        <h3 class="ibox-title">Attribute product</h3>
+                    </div>
+                    <div class="ibox-body">
+                        <form class="form-horizontal">
+                            <div class="form-group row">
+                                <label class="col-sm-2 col-form-label">Attributes: </label>
+                                <div class="col-sm-10">
+                                    <div v-for="item,index in options"
+                                     :key="index"
+                                     class="attributes__content mb-3 p-3 border border-secondary">
+                                        <button
+                                        @click="removeAttribute"
+                                        :data-id="index" type="button" class="btn btn-sm btn-danger float-right mb-2">
+                                            <i class="ti-trash"></i>
+                                        </button>
+                                        <label>Attribute</label>
+                                        <select class="attribute-select form-control mb-2">
+                                        </select>
+                                        <label>Variation</label>
+                                        <select class="variation-select form-control">
+                                        </select>
+                                    </div>
+                                    {{-- <div class="attributes__content mb-3 p-3 border border-secondary">
+                                        <label>Attribute</label>
+                                        <select class="key form-control mb-2"></select>
+                                        <label>Variation</label>
+                                        <select class="value form-control"></select>
+                                    </div> --}}
+                                    <button type="button" @click="addAttribute" class="btn">Add attribute</button>
+                                </div>
+                            </div>
+                            <div v-if="isShow" class="form-group row">
+                                <label class="col-sm-2 col-form-label">
+                                    <span class="text-danger">*</span>
+                                    Price
+                                </label>
+                                <div class="col-sm-2">
+                                    <input class="form-control" type="number" value="0" min="1">
+                                </div>
+                            </div>
+                            <div v-if="isShow"  class="form-group row">
+                                <label class="col-sm-2 col-form-label">
+                                    <span class="text-danger">*</span>
+                                    Stock
+                                </label>
+                                <div class="col-sm-2">
+                                    <input class="form-control" type="number" value="0" min="0">
+                                </div>
+                            </div>
+                            <div v-if="isShow"  class="form-group row">
+                                <label class="col-sm-2 col-form-label">
+                                    SKU
+                                </label>
+                                <div class="col-sm-2">
+                                    <input class="form-control">
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
             <div class="create_blog-footer">
                 <a href="{{ url('admin/products') }}" type="button" class="btn btn-secondary mr-4">Come back</a>
                 <button type="button" class="btn btn-primary" @click.prevent="handleSubmit">Save changes</button>
@@ -135,6 +199,8 @@
 
 @push('vue')
     <script type="text/javascript">
+        const table = new Set()
+
         Vue.createApp({
             template: "#create_product",
             data(){
@@ -159,10 +225,26 @@
                         error: null,
                     },
                     parents: [],
+                    options: [ //attribute_option
+                        // {
+                        //     variations: ['L','M','S'],
+                        //     price: 0,
+                        //     sku: '',
+                        //     stock: 10,
+                        //     thumb_url: ''
+                        // },
+                        // {
+                        //     variations: ['Red','Blue'],
+                        //     price: 0,
+                        //     sku: '',
+                        //     stock: 10,
+                        //     thumb_url: ''
+                        // },
+                    ],
+                    isShow: true //show price
                 }
             },
             async mounted() {
-                PLUGIN.INIT();
                 this.parents = @json($productCategories);
                 PLUGIN.EDITOR('');
             },
@@ -177,8 +259,78 @@
                     } catch (e) {
                         this.products.error = e.response.data;
                     }
+                },
+                addAttribute(){
+                    this.isShow = false
+                    this.options.push({
+                        variations: [],
+                        price: 0,
+                        sku: '',
+                        stock: 10,
+                        thumb_url: ''
+                    })
+                },
+                removeAttribute(e){
+                    const id = e.target.closest('button').dataset.id
+                    this.options.splice(id,1)
+                    if (this.options.length == 0){
+                        this.isShow = true
+                    }
+                },
+                initSelector(selector,option){
+                    PLUGIN.INIT(selector,option);
+                    //su kien khi chon item
+                    $('.attribute-select').on('select2:select',function name(e) {
+                        const id = $(this).val()
+                        $(this).data('prev',id)
+                        table.add(id)
+                        console.log(table);
+                    })
+                    //su kien khi bo chon
+                    $('.attribute-select').on('select2:unselect',function name(e) {
+                        const id = $(this).data('prev')
+                        table.delete(id)
+                    })
                 }
             },
+            updated(){
+                this.initSelector('.attribute-select',{
+                        placeholder: 'Attribute',
+                        allowClear: true,
+                        width: '100%',
+                        minimumResultsForSearch: Infinity,
+                        ajax: {
+                            url: "{{route('attribute.filter')}}",
+                            headers: {
+                                "Authorization": "Bearer " + localStorage.getItem("token"),
+                                "Content-Type": "application/json",
+                            },
+                            data: function (params) {
+                                filter = []
+
+                                for (item of table){
+                                    filter.push(item);
+                                }
+
+                                return {
+                                    filter
+                                }
+                            },
+                            processResults: function (res) {
+                                const items = res.map(item => {
+                                    return {
+                                        id: item.id,
+                                        text: item.name,
+                                    }
+                                })
+                                console.log(items);
+                                return {
+                                    results: items
+                                }
+                            }
+                        },
+                    })
+            }
         }).mount('#product')
     </script>
 

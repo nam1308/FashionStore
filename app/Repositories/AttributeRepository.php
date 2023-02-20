@@ -68,4 +68,10 @@ class AttributeRepository implements IAttributeRepository
         }
         throw new Exception('Not found');
     }
+
+    public function filter($items)
+    {
+        $items = $items ?? [];
+        return $this->model->where('parent', 0)->whereNotIn('id', $items)->get();
+    }
 }
