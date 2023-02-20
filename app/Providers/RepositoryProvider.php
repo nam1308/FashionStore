@@ -2,6 +2,8 @@
 
 namespace App\Providers;
 
+use App\Repositories\AttributeRepository;
+use App\Repositories\IAttributeRepository;
 use App\Repositories\ISettingRepository;
 use App\Repositories\IUserRepository;
 use App\Repositories\SettingRepository;
@@ -22,6 +24,7 @@ class RepositoryProvider extends ServiceProvider
         //
         $this->app->bind(IUserRepository::class, UserRepository::class);
         $this->app->bind(ISettingRepository::class, SettingRepository::class);
+        $this->app->bind(IAttributeRepository::class, AttributeRepository::class);
         $this->app->bind(ProductRepositoryInterface::class, ProductRepository::class);
     }
 

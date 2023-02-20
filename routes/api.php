@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Admin\ProductCategoryController;
 use App\Http\Controllers\Admin\AuthController;
+use App\Http\Controllers\Api\AttributeController;
 use App\Http\Controllers\Api\SettingController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -27,7 +28,7 @@ Route::post('login', [AuthController::class, 'login']);
 Route::middleware('auth:api')->group(function () {
     Route::post('register', [AuthController::class, 'register']);
 
-    Route::group(['prefix' => 'media'], function (){
+    Route::group(['prefix' => 'media'], function () {
         Route::post('getImagePath', [UploadController::class, 'getImagePath']);
         Route::post('deleteImage', [UploadController::class, 'deleteImage']);
     });
@@ -38,7 +39,7 @@ Route::middleware('auth:api')->group(function () {
         Route::get('', [SettingController::class, 'index']);
     });
 
-    Route::group(['prefix' => 'products'], function (){
+    Route::group(['prefix' => 'products'], function () {
         Route::get('', [ProductController::class, 'list'])->name('list');
         Route::get('/{id}', [ProductController::class, 'show'])->name('show');
         Route::post('', [ProductController::class, 'create'])->name('products.create');
@@ -57,7 +58,7 @@ Route::middleware('auth:api')->group(function () {
     });
 
     // Router Blog
-    Route::group(['as' => 'blog'], function (){
+    Route::group(['as' => 'blog'], function () {
         Route::get('blog', [BlogController::class, 'list'])->name('index');
         Route::get('blog/{id}', [BlogController::class, 'show'])->name('show');
         Route::post('blog', [BlogController::class, 'store'])->name('store');
@@ -67,7 +68,7 @@ Route::middleware('auth:api')->group(function () {
     });
 
     // Router Category_blog
-    Route::group(['as'=>'categoryBlog'],function (){
+    Route::group(['as' => 'categoryBlog'], function () {
         Route::get('categoryBlog', [CategoryBlogController::class, 'list'])->name('list');
         Route::get('categoryBlog/{id}', [CategoryBlogController::class, 'show'])->name('show');
         Route::post('categoryBlog', [CategoryBlogController::class, 'store'])->name('store');
@@ -76,7 +77,11 @@ Route::middleware('auth:api')->group(function () {
         Route::delete('categoryBlog/{id}', [CategoryBlogController::class, 'delete'])->name('delete');
     });
 
-    // Router Products
-
-
+    Route::group(['as' => 'attribute.', 'prefix' => 'product'], function () {
+        Route::post('attribute', [AttributeController::class, 'store']);
+        Route::get('attribute', [AttributeController::class, 'search']);
+        Route::get('attribute/{attribute}', [AttributeController::class, 'show']);
+        Route::put('attribute/{attribute}', [AttributeController::class, 'update']);
+        Route::delete('attribute/{attribute}', [AttributeController::class, 'destroy']);
+    });
 });

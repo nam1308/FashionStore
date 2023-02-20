@@ -20,6 +20,10 @@ return [
                     'name' => 'Categories',
                     'link' => '/products/category',
                 ],
+                [
+                    'name' => 'Attributes',
+                    'link' => '/products/attribute',
+                ],
             ]
         ],
         [
@@ -61,10 +65,10 @@ return [
                     'name' => 'Basic info',
                     'link' => '/settings'
                 ],
-                  [
-                                    'name' => 'Menu',
-                                    'link' => '/settings/menu'
-                                ]
+                [
+                    'name' => 'Menu',
+                    'link' => '/settings/menu'
+                ]
             ]
         ],
     ]

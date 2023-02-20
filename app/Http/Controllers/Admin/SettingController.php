@@ -19,31 +19,31 @@ class SettingController extends Controller
         return view('admin.setting.menu');
     }
 
-    public function save(Request $request)
-    {
-        $validator = Validator::make($request->all(), [
-            'key' => 'required', 'value' => 'required'
-        ]);
+    // public function save(Request $request)
+    // {
+    //     $validator = Validator::make($request->all(), [
+    //         'key' => 'required', 'value' => 'required'
+    //     ]);
 
-        if ($validator->fails()) {
-            return response($validator->errors(), 400);
-        }
+    //     if ($validator->fails()) {
+    //         return response($validator->errors(), 400);
+    //     }
 
-        $data = $validator->validated();
-        $setting = Setting::where('key', $data['key'])->first();
-        if ($setting) {
-            $setting->update(array_merge($data, ['value' => json_encode($data['value'])]));
-        } else {
-            Setting::create(array_merge($data, ['value' => json_encode($data['value'])]));
-        }
+    //     $data = $validator->validated();
+    //     $setting = Setting::where('key', $data['key'])->first();
+    //     if ($setting) {
+    //         $setting->update(array_merge($data, ['value' => json_encode($data['value'])]));
+    //     } else {
+    //         Setting::create(array_merge($data, ['value' => json_encode($data['value'])]));
+    //     }
 
-        return response(['status' => 'success', 'mess' => 'success'], 200);
-    }
+    //     return response(['status' => 'success', 'mess' => 'success'], 200);
+    // }
 
-    public function show(Request $request)
-    {
-        $key = $request->get('key');
-        $setting = Setting::where('key', $key)->first();
-        return $setting ?? response(['status' => 'error', 'message' => 'not found'], 404);
-    }
+    // public function show(Request $request)
+    // {
+    //     $key = $request->get('key');
+    //     $setting = Setting::where('key', $key)->first();
+    //     return $setting ?? response(['status' => 'error', 'message' => 'not found'], 404);
+    // }
 }

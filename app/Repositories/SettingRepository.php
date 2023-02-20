@@ -17,7 +17,7 @@ class SettingRepository implements ISettingRepository
     public function save(array $data)
     {
         // TODO: Implement save() method.
-        return $this->model::query()->updateOrCreate(['key' => Arr::get($data, 'key'), 'lang' => Arr::get($data, 'lang')], $data);
+        return $this->model::query()->updateOrCreate(['id' => data_get($data, 'id')], $data);
     }
 
     public function findByKey(string $key)
