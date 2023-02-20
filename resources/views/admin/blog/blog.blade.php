@@ -218,6 +218,7 @@
                     this.page = parseInt(e.target.textContent);
                 },
                 getCountPage(currentPage, x) {
+                    console.log(this.countPage);
                     if (this.countPage === 0) {
                         return 1;
                     }

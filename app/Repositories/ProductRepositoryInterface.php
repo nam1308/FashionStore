@@ -4,7 +4,6 @@ namespace App\Repositories;
 
 interface ProductRepositoryInterface
 {
-
     public function list($start = 0, $length = 0);
 
     public function totalList();

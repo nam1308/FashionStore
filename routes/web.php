@@ -8,6 +8,7 @@ use App\Http\Controllers\Frontend\HomeController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\BlogController;
 use App\Http\Controllers\Admin\CategoryBlogController;
+use App\Http\Controllers\Admin\TestimonialController;
 
 /*
 |--------------------------------------------------------------------------
@@ -45,7 +46,6 @@ Route::middleware(['middleware' => 'auth'])->group(function () {
         Route::group(['prefix' => 'settings'], function () {
             Route::get('', [SettingController::class, 'index']);
             Route::get('menu', [SettingController::class, 'menu']);
-
         });
 
         // Blog
@@ -62,9 +62,15 @@ Route::middleware(['middleware' => 'auth'])->group(function () {
             Route::get('{id}/edit',[CategoryBlogController::class, 'edit'])->name('edit');
         });
 
+        // Testimonials
+        Route::group(['prefix' => 'testimonial'], function (){
+            Route::get('',[TestimonialController::class, 'index'])->name('index');
+        });
+
     });
 });
 
 Route::group(['namespace' => 'Frontend'], function () {
     Route::get('', [HomeController::class, 'index']);
 });
+

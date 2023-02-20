@@ -3,7 +3,6 @@
 namespace App\Services;
 
 use App\Repositories\ProductRepositoryInterface;
-use App\Repositories\ISettingRepository;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;

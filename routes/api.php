@@ -10,7 +10,7 @@ use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\BlogController;
 use App\Http\Controllers\Admin\CategoryBlogController;
 use App\Http\Controllers\Api\ProductController;
-
+use App\Http\Controllers\Api\TestimonialController;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -76,7 +76,15 @@ Route::middleware('auth:api')->group(function () {
         Route::delete('categoryBlog/{id}', [CategoryBlogController::class, 'delete'])->name('delete');
     });
 
-    // Router Products
+    // Router testimonial
+    Route::group(['prefix' => 'testimonial'], function (){
+        Route::get('', [TestimonialController::class, 'list'])->name('list');
+        Route::get('/{id}', [TestimonialController::class, 'show'])->name('show');
+        Route::post('', [TestimonialController::class, 'create'])->name('create');
+        Route::post('/search', [TestimonialController::class, 'search'])->name('search');
+        Route::put('/{id}', [TestimonialController::class, 'update'])->name('update');
+        Route::delete('/{id}', [TestimonialController::class, 'delete'])->name('delete');
+    });
 
 
 });

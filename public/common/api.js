@@ -363,5 +363,61 @@ const API = {
                 throw e;
             }
         }
-    }
+    },
+    TESTIMONIAL: {
+        LIST: async (start = 0 , length = 7) =>{
+            try {
+                return await SERVER.get(`/testimonial?start=${start}&length=${length}`).catch((error) => {
+                    throw error;
+                });
+            } catch (e) {
+                throw e;
+            }
+        },
+        SHOW: async (id) =>{
+            try {
+                return await SERVER.get('/testimonial/'+id).catch((error) =>{
+                    throw error;
+                });
+            } catch (e) {
+                throw e;
+            }
+        },
+        CREATE: async (data) =>{
+            try {
+                return await SERVER.post('/testimonial/',data).catch((error) =>{
+                    throw error;
+                });
+            } catch (e) {
+                throw e;
+            }
+        },
+        SEARCH: async (search, start= 0, length = 7) =>{
+            try {
+                return await SERVER.post('/testimonial/search',{search,start,length}).catch((error) =>{
+                    throw error;
+                });
+            } catch (e) {
+                throw e;
+            }
+        },
+        UPDATE: async (id, data) =>{
+            try {
+                return await SERVER.put('/testimonial/'+id,data).catch((error) => {
+                    throw error;
+                });
+            } catch (e) {
+                throw e;
+            }
+        },
+        DELETE: async (id) =>{
+            try {
+                return await SERVER.delete('/testimonial/'+id).catch((error) => {
+                    throw error;
+                });
+            }catch (e) {
+                throw e;
+            }
+        }
+    },
 }

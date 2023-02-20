@@ -61,11 +61,16 @@ return [
                     'name' => 'Basic info',
                     'link' => '/settings'
                 ],
-                  [
-                                    'name' => 'Menu',
-                                    'link' => '/settings/menu'
-                                ]
+                [
+                    'name' => 'Menu',
+                    'link' => '/settings/menu'
+                ]
             ]
+        ],
+        [
+            'name' => 'Testimonial',
+            'icon' => 'ti-settings',
+            'link' => '/testimonial/'
         ],
     ]
 ];
