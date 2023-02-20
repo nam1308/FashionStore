@@ -20,6 +20,10 @@ return [
                     'name' => 'Categories',
                     'link' => '/products/category',
                 ],
+                [
+                    'name' => 'Attributes',
+                    'link' => '/products/attribute',
+                ],
             ]
         ],
         [

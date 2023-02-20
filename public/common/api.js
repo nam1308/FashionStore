@@ -79,9 +79,7 @@ const API = {
                 const response = await SERVER.post(
                     "/product-category",
                     category
-                ).catch((error) => {
-                    throw error;
-                });
+                );
                 return response;
             } catch (error) {
                 throw error;
@@ -89,11 +87,7 @@ const API = {
         },
         SHOW: async (id) => {
             try {
-                const response = await SERVER.get(
-                    "/product-category/" + id
-                ).catch((error) => {
-                    throw error;
-                });
+                const response = await SERVER.get("/product-category/" + id);
                 return response;
             } catch (error) {
                 throw error;
@@ -104,9 +98,7 @@ const API = {
                 const response = await SERVER.put(
                     "/product-category/" + id,
                     data
-                ).catch((error) => {
-                    throw error;
-                });
+                );
                 return response;
             } catch (error) {
                 throw error;
@@ -114,11 +106,7 @@ const API = {
         },
         DESTROY: async (id) => {
             try {
-                const response = await SERVER.delete(
-                    "/product-category/" + id
-                ).catch((error) => {
-                    throw error;
-                });
+                const response = await SERVER.delete("/product-category/" + id);
                 return response;
             } catch (error) {
                 throw error;
@@ -132,6 +120,72 @@ const API = {
                         start,
                         length,
                     },
+                });
+                return response;
+            } catch (error) {
+                throw error;
+            }
+        },
+    },
+    PRODUCT: {
+        LIST: async (start = 0, length = 10) => {
+            try {
+                return await SERVER.get(
+                    `/products?start=${start}&length=${length}`
+                ).catch((error) => {
+                    throw error;
+                });
+            } catch (e) {
+                throw e;
+            }
+        },
+        CREATE: async (data) => {
+            try {
+                return await SERVER.post("/products/", data).catch((error) => {
+                    throw error;
+                });
+            } catch (error) {
+                throw error;
+            }
+        },
+        SHOW: async (id) => {
+            try {
+                return await SERVER.get("/products/" + id).catch((error) => {
+                    throw error;
+                });
+            } catch (e) {
+                throw e;
+            }
+        },
+        UPDATE: async (id, data) => {
+            try {
+                return await SERVER.put("/products/" + id, data).catch(
+                    (error) => {
+                        throw error;
+                    }
+                );
+            } catch (e) {
+                throw e;
+            }
+        },
+        DELETE: async (id) => {
+            try {
+                const response = await SERVER.delete("/products/" + id).catch(
+                    (error) => {
+                        throw error;
+                    }
+                );
+                return response;
+            } catch (error) {
+                throw response;
+            }
+        },
+        SEARCH: async (search, start = 0, length = 10) => {
+            try {
+                const response = await SERVER.post("/products/search/", {
+                    search,
+                    start,
+                    length,
                 }).catch((error) => {
                     throw error;
                 });
@@ -141,122 +195,126 @@ const API = {
             }
         },
     },
-    PRODUCT: {
-        LIST: async (start = 0, length = 10) =>{
+    PRODUCT_ATTRIBUTE: {
+        SEARCH: async (search, start = 0, length = 10, parent = 0) => {
             try {
-                return await SERVER.get(`/products?start=${start}&length=${length}`).catch((error) =>{
-                    throw error;
+                const params = { search, start, length, parent };
+                const response = await SERVER.get("/product/attribute", {
+                    params,
                 });
-            } catch (e){
+                return response;
+            } catch (e) {
                 throw e;
             }
         },
-        CREATE: async (data) => {
+        STORE: async (data) => {
             try {
-                return await SERVER.post('/products/',data).catch((error) => {
-                    throw error;
-                });
-            }catch (error){
+                const response = await SERVER.post("/product/attribute", data);
+                return response;
+            } catch (error) {
                 throw error;
             }
         },
         SHOW: async (id) => {
             try {
-                return await SERVER.get('/products/'+id).catch((error) => {
-                    throw error;
-                });
-            } catch (e){
-                throw e;
-            }
-        },
-        UPDATE: async (id, data) =>{
-            try {
-                return await SERVER.put('/products/'+id,data).catch((error) => {
-                    throw error;
-                });
-            } catch (e){
-                throw e;
-            }
-        },
-        DELETE: async (id) => {
-            try {
-                const response = await SERVER.delete('/products/' + id).catch((error) => {
-                    throw error;
-                });
+                const response = await SERVER.get("product/attribute/" + id);
                 return response;
-            }catch (error){
-                throw response;
-            }
-        },
-        SEARCH: async (search, start = 0, length = 10) =>{
-            try {
-                const response = await SERVER.post('/products/search/',{search, start, length}).catch((error) => {
-                    throw error;
-                })
-                return response;
-            }catch (error){
-                throw error;
-            }
-        },
-    },
-    BLOG:{
-        CREATE: async (blog) => {
-            try {
-                const response = await SERVER.post('/blog', blog).catch((error) => {
-                    throw error;
-                })
-                return response;
-            }catch (error){
-                throw error;
-            }
-        },
-        INDEX: async (start = 0, length = 10) => {
-            try {
-                const response = await SERVER.get(`/blog?start=${start}&length=${length}`).catch((error) => {
-                   throw error;
-                });
-                return response;
-            }catch (error){
-                throw error;
-            }
-        },
-        SHOW: async (id) => {
-            try {
-                const response = await SERVER.get('/blog/' + id).catch((error) => {
-                    throw error;
-                });
-                return response;
-            }catch (error){
+            } catch (error) {
                 throw error;
             }
         },
         UPDATE: async (id, data) => {
             try {
-                const response = await SERVER.put('/blog/' + id, data).catch((error) => {
-                   throw error;
+                const response = await SERVER.put(
+                    "product/attribute/" + id,
+                    data
+                );
+                return response;
+            } catch (error) {
+                throw error;
+            }
+        },
+        DESTROY: async (id) => {
+            try {
+                const response = await SERVER.delete("product/attribute/" + id);
+                return response;
+            } catch (error) {
+                throw error;
+            }
+        },
+    },
+    BLOG: {
+        CREATE: async (blog) => {
+            try {
+                const response = await SERVER.post("/blog", blog).catch(
+                    (error) => {
+                        throw error;
+                    }
+                );
+                return response;
+            } catch (error) {
+                throw error;
+            }
+        },
+        INDEX: async (start = 0, length = 10) => {
+            try {
+                const response = await SERVER.get(
+                    `/blog?start=${start}&length=${length}`
+                ).catch((error) => {
+                    throw error;
                 });
                 return response;
-            }catch (error){
+            } catch (error) {
+                throw error;
+            }
+        },
+        SHOW: async (id) => {
+            try {
+                const response = await SERVER.get("/blog/" + id).catch(
+                    (error) => {
+                        throw error;
+                    }
+                );
+                return response;
+            } catch (error) {
+                throw error;
+            }
+        },
+        UPDATE: async (id, data) => {
+            try {
+                const response = await SERVER.put("/blog/" + id, data).catch(
+                    (error) => {
+                        throw error;
+                    }
+                );
+                return response;
+            } catch (error) {
                 throw error;
             }
         },
         DELETE: async (id) => {
             try {
-                const response = await SERVER.delete('/blog/' + id).catch((error) => {
-                   throw error;
-                });
+                const response = await SERVER.delete("/blog/" + id).catch(
+                    (error) => {
+                        throw error;
+                    }
+                );
                 return response;
-            }catch (error){
+            } catch (error) {
                 throw response;
             }
         },
-        SEARCH: async (search, start = 0, length = 10) =>{
+        SEARCH: async (search, start = 0, length = 10) => {
             try {
-                const response = await SERVER.post('/blog/search/',{search, start, length}).catch((error) => {
+                const response = await SERVER.post("/blog/search/", {
+                    search,
+                    start,
+                    length,
+                }).catch((error) => {
                     throw error;
-                })
+                });
                 return response;
-            }catch (error){
+            } catch (error) {
                 throw error;
             }
         },
@@ -285,7 +343,8 @@ const API = {
             try {
                 return await SERVER.get("/setting/single", { params });
             } catch (e) {
-                throw e;
+                console.log("E", e);
+                MESSAGE.ERROR(e.message);
             }
         },
         GET: async (params = { lang: "vi" }) => {
@@ -306,60 +365,74 @@ const API = {
                 console.log("E", e);
                 MESSAGE.ERROR(e.message);
             }
-        }
+        },
     },
     CATEGORY_BLOG: {
-        LIST: async (start = 0, length = 10) =>{
+        LIST: async (start = 0, length = 10) => {
             try {
-                return await SERVER.get(`/categoryBlog?start=${start}&length=${length}`).catch((error) =>{
+                return await SERVER.get(
+                    `/categoryBlog?start=${start}&length=${length}`
+                ).catch((error) => {
                     throw error;
                 });
-            } catch (e){
+            } catch (e) {
                 throw e;
             }
         },
-        SHOW: async (id) =>{
+        SHOW: async (id) => {
             try {
-                return await SERVER.get('/categoryBlog/'+id).catch((error) => {
-                    throw error;
-                });
-            } catch (e){
+                return await SERVER.get("/categoryBlog/" + id).catch(
+                    (error) => {
+                        throw error;
+                    }
+                );
+            } catch (e) {
                 throw e;
             }
         },
-        STORE: async (data) =>{
+        STORE: async (data) => {
             try {
-                return await SERVER.post('/categoryBlog',data).catch((error) => {
-                    throw error;
-                });
-            } catch (e){
+                return await SERVER.post("/categoryBlog", data).catch(
+                    (error) => {
+                        throw error;
+                    }
+                );
+            } catch (e) {
                 throw e;
             }
         },
-        SEARCH: async (search, start= 0, length = 10) =>{
+        SEARCH: async (search, start = 0, length = 10) => {
             try {
-                return await SERVER.post('/categoryBlog/search/',{search,start,length}).catch((error) => {
+                return await SERVER.post("/categoryBlog/search/", {
+                    search,
+                    start,
+                    length,
+                }).catch((error) => {
                     throw error;
                 });
-            } catch (e){
+            } catch (e) {
                 throw e;
             }
         },
-        UPDATE: async (id, data) =>{
+        UPDATE: async (id, data) => {
             try {
-                return await SERVER.put('/categoryBlog/'+id,data).catch((error) => {
-                    throw error;
-                });
-            } catch (e){
+                return await SERVER.put("/categoryBlog/" + id, data).catch(
+                    (error) => {
+                        throw error;
+                    }
+                );
+            } catch (e) {
                 throw e;
             }
         },
-        DELETE: async (id) =>{
+        DELETE: async (id) => {
             try {
-                return await SERVER.delete('/categoryBlog/'+id).catch((error) => {
-                    throw error;
-                });
-            } catch (e){
+                return await SERVER.delete("/categoryBlog/" + id).catch(
+                    (error) => {
+                        throw error;
+                    }
+                );
+            } catch (e) {
                 throw e;
             }
         }

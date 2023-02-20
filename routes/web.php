@@ -34,12 +34,14 @@ Route::middleware(['middleware' => 'auth'])->group(function () {
 
         // Products
         Route::group(['prefix' => 'products'], function () {
-            Route::get('',[ProductController::class, 'index'])->name('index');
-            Route::get('create',[ProductController::class, 'create'])->name('create');
-            Route::get('{id}/edit',[ProductController::class, 'edit'])->name('edit');
-            Route::get('{id}/duplicate',[ProductController::class, 'duplicate'])->name('duplicate');
+            Route::get('', [ProductController::class, 'index'])->name('index');
+            Route::get('create', [ProductController::class, 'create'])->name('create');
+            Route::get('{id}/edit', [ProductController::class, 'edit'])->name('edit');
+            Route::get('{id}/duplicate', [ProductController::class, 'duplicate'])->name('duplicate');
 
             Route::get('category', [ProductController::class, 'category']);
+            Route::get('attribute', [ProductController::class, 'attribute']);
+            Route::get('attribute/variation/{id}', [ProductController::class, 'variation'])->name('variation');
         });
 
         //Settings
@@ -56,10 +58,10 @@ Route::middleware(['middleware' => 'auth'])->group(function () {
         });
 
         // Category Blog
-        Route::group(['prefix' => 'categoryBlog'], function (){
-            Route::get('',[CategoryBlogController::class, 'index'])->name('index');
-            Route::get('create',[CategoryBlogController::class, 'create'])->name('create');
-            Route::get('{id}/edit',[CategoryBlogController::class, 'edit'])->name('edit');
+        Route::group(['prefix' => 'categoryBlog'], function () {
+            Route::get('', [CategoryBlogController::class, 'index'])->name('index');
+            Route::get('create', [CategoryBlogController::class, 'create'])->name('create');
+            Route::get('{id}/edit', [CategoryBlogController::class, 'edit'])->name('edit');
         });
 
         // Testimonials
