@@ -172,7 +172,7 @@
                     this.products.content = PLUGIN.GETCONTENT();
                     try {
                         await API.PRODUCT.UPDATE(this.products.id,this.products);
-                        MESSAGE.SUCCESS('Create blog success');
+                        MESSAGE.SUCCESS('Update products success');
                         window.location.replace('{{ url('admin/products') }}')
                     } catch (e) {
                         this.products.error = e.response.data;

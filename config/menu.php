@@ -71,5 +71,10 @@ return [
                 ]
             ]
         ],
+        [
+            'name' => 'Testimonial',
+            'icon' => 'ti-settings',
+            'link' => '/testimonial/'
+        ],
     ]
 ];

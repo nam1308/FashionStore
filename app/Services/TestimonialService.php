@@ -2,18 +2,18 @@
 
 namespace App\Services;
 
-use App\Repositories\ProductRepositoryInterface;
+use App\Repositories\TestimonialRepositoryInterface;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
 use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
-use App\Model\Product;
+use App\Model\Testimonial;
 
-class ProductsService
+class TestimonialService
 {
     protected $interface;
 
-    public function __construct(ProductRepositoryInterface $interface)
+    public function __construct(TestimonialRepositoryInterface $interface)
     {
         $this->interface = $interface;
     }
@@ -24,19 +24,19 @@ class ProductsService
         $start  = $request->get('start', 0);
 //        $this->interface->totalList();
 //        $this->interface->list($start,$length);
+
         $total = $this->interface->totalList();
-        $products = $this->interface->list($start,$length);
-        return ['data' => $products, 'total' => $total];
+        $testimonials = $this->interface->list($start,$length);
+        return ['data' => $testimonials, 'total' => $total];
     }
 
     public function create(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'name' => 'required',
-            'slug' => 'required|unique:products',
-            'regular_price' => 'required',
-//            'thumbs' => 'image|mimes:jpeg,jpg,png,gif|max:10000',
-//            'image' => 'image|mimes:jpeg,jpg,png,gif|max:10000',
+            'title' => 'required',
+            'sub_title' => 'required',
+            'content' => 'required',
+//            'avatar' => 'image|mimes:jpeg,jpg,png,gif|max:10000',
         ]);
 
         if($validator->fails()){
@@ -46,6 +46,7 @@ class ProductsService
         $this->interface->create($request->all());;
 
         return response(['status' => 'success', 'message' => 'success'], 201);
+
     }
 
     public function show($id)
@@ -53,15 +54,13 @@ class ProductsService
         return $this->interface->show($id) ?? response(['message' => 'not found'], 404);
     }
 
-
     public function update($id, Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'name' => 'required',
-            'slug' => 'required|unique:products,slug,'.$id,
-            'regular_price' => 'required',
-//            'thumbs' => 'image|mimes:jpeg,jpg,png,gif|max:10000',
-//            'image' => 'image|mimes:jpeg,jpg,png,gif|max:10000',
+            'title' => 'required',
+            'sub_title' => 'required',
+            'content' => 'required',
+//            'avatar' => 'image|mimes:jpeg,jpg,png,gif|max:10000',
         ]);
 
         if ($validator->fails())
@@ -85,12 +84,13 @@ class ProductsService
         $length = $request->post('length', 10);
         $start  = $request->post('start', 0);
         $total = $this->interface->totalSearch($search);
-        $products = $this->interface->search($start, $length, $search);
+        $testimonials = $this->interface->search($start, $length, $search);
 
         return [
-            'data' => $products,
+            'data' => $testimonials,
             'total' => $total
         ];
     }
 
 }
+

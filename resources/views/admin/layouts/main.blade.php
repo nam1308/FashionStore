@@ -13,6 +13,7 @@
     <!-- GLOBAL MAINLY STYLES-->
     <link href="{{asset('backend/vendors/bootstrap/dist/css/bootstrap.min.css')}}" rel="stylesheet"/>
     <link href="{{asset('backend/vendors/font-awesome/css/font-awesome.min.css')}}" rel="stylesheet"/>
+    <link rel='stylesheet' href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css">
     <link href="{{asset('backend/vendors/themify-icons/css/themify-icons.css')}}" rel="stylesheet"/>
     <!-- PLUGINS STYLES-->
     <link href="{{asset('backend/vendors/select2/dist/css/select2.min.css')}}" rel="stylesheet" />
