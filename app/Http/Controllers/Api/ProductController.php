@@ -41,6 +41,11 @@ class ProductController
         return $this->service->delete($id);
     }
 
+    public function deleteAttribute($id)
+    {
+        return $this->service->deleteAttribute($id);
+    }
+
     public function search(Request $request)
     {
         return $this->service->search($request);

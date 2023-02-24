@@ -26,8 +26,12 @@ class ProductController extends Controller
 
     public function create()
     {
+        $image = [
+            0 => "/medias/1675648139.jpg",
+            1 => "/medias/1675648145.png"
+        ];
         $productCategories = ProductCategory::all();
-        return view('admin.product.create', compact('productCategories'));
+        return view('admin.product.create', compact('productCategories', 'image'));
     }
 
     public function edit($id)

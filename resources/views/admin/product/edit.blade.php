@@ -112,6 +112,111 @@
                     </div>
                 </div>
             </div>
+            <div class="edit_attribute_details">
+                <div class="ibox">
+                    <div class="ibox-head">
+                        <h3 class="ibox-title">Danh sách phân loại hàng : </h3>
+                    </div>
+                    <div class="ibox-body">
+                        <form class="form-horizontal">
+                            <div class="row">
+                                <div class="col-3">
+                                    <div class="form-group">
+                                        <input type="number" min="0" placeholder="Price" class="form-control"
+                                               v-model="bulkData.price">
+                                    </div>
+                                </div>
+                                <div class="col-3">
+                                    <div class="form-group">
+                                        <input type="number" min="0" placeholder="Warehouse" class="form-control"
+                                               v-model="bulkData.stock">
+                                    </div>
+                                </div>
+                                <div class="col-3">
+                                    <div class="form-group">
+                                        <input type="text" placeholder="SKU Classification" class="form-control"
+                                               v-model="bulkData.sku">
+                                    </div>
+                                </div>
+                                <div class="col-3">
+                                    <div class="form-group">
+                                        <button type="button" :disabled="!statusbtn" class="btn w-100"
+                                                @click.prevent="upplyToAll">Upply to all
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                            <table class="table table-bordered">
+                                <thead>
+                                <tr>
+                                    <th class="text-center">Size</th>
+                                    <th class="text-center">Color</th>
+                                    <th class="text-center">Image</th>
+                                    <th>Price</th>
+                                    <th>Warehouse</th>
+                                    <th>SKU Classification
+                                    <th class="text-center">Action</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr v-for="(item, index) in attribute">
+                                    <td>
+                                        <div class="form-group text-center mb-1">
+                                            <label for=""> @{{ item.option['kich-thuoc'] }} </label>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="form-group text-center mb-1">
+                                            <label for=""> @{{ item.option['mau-sac'] }} </label>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="form-group d-flex justify-content-center align-center mb-1">
+                                            {{-- <x-upload name="image" :values="$image" multiple="false" /> --}}
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="form-group mb-1">
+                                            <input type="number" placeholder="Price" class="form-control"
+                                                   v-model="item.price" min="0" :class="{ 'border-danger': attrError[`attribute.${index}.price`] ? true : false }">
+                                            <p class="text-danger mt-1 mb-0">
+                                                @{{ errorIf(index, 'price')  }}
+                                            </p>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="form-group mb-1">
+                                            <input type="number" placeholder="Warehouse" class="form-control"
+                                                   v-model="item.stock" min="0" :class="{ 'border-danger': attrError[`attribute.${index}.stock`] ? true : false }">
+                                            <p class="text-danger mt-1 mb-0">
+                                                @{{ errorIf(index, 'stock') }}
+                                            </p>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="form-group mb-1">
+                                            <input type="text" placeholder="SKU Classification" class="form-control"
+                                                   v-model="item.sku" :class="{ 'border-danger': attrError[`attribute.${index}.sku`] ? true : false }">
+                                            <p class="text-danger mt-1 mb-0">
+                                                @{{ errorIf(index, 'sku') }}
+                                            </p>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="form-group d-flex justify-content-center align-center mb-1">
+                                            <button type="button" @click.prevent="DeleteAtribute(index,item)"
+                                                    class="btn btn-sm">
+                                                <i class="ti-trash"></i>
+                                            </button>
+                                        </div>
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </form>
+                    </div>
+                </div>
+            </div>
             <div class="create_blog-footer">
                 <a href="{{ asset('admin/products') }}" type="button" class="btn btn-secondary mr-4">Come back</a>
                 <button type="button" class="btn btn-primary" @click.prevent="handleSubmit">Save changes</button>
@@ -155,8 +260,14 @@
                         meta_keyword: '',
                         lang: 'vi',
                         error: null,
+                        attribute: [],
                     },
                     parents: [],
+                    attribute: [],
+                    attrError: [],
+                    isShow: true,
+                    statusbtn: false,
+                    bulkData: {price: 0, sku: null, stock: 0}
                 }
             },
             async mounted() {
@@ -164,12 +275,15 @@
                 this.parents = @json($productCategories);
                 this.id = {{ $products->id }};
                 const response = await API.PRODUCT.SHOW(this.id);
-                this.products = response.data;
+                this.products = response.data[0];
+                this.attribute = response.data[1];
                 PLUGIN.EDITOR(this.products.content);
             },
             methods: {
                 async handleSubmit() {
                     this.products.content = PLUGIN.GETCONTENT();
+                    this.products.attribute = this.attribute;
+                    console.log(this.products);
                     try {
                         await API.PRODUCT.UPDATE(this.products.id,this.products);
                         MESSAGE.SUCCESS('Create blog success');
@@ -177,6 +291,41 @@
                     } catch (e) {
                         this.products.error = e.response.data;
                     }
+                },
+                errorIf(index, key) {
+                    return this.attrError[`attribute.${index}.${key}`]?.shift();
+                },
+                async DeleteAtribute(e, item) {
+                    try {
+                        await API.PRODUCT.DELETEATTRIBUTE(item.id);
+                        this.attribute.splice(e, 1);
+                    } catch (e) {
+                        MESSAGE.ERROR(e.message)
+                    }
+                },
+                upplyToAll() {
+                    const price = this.bulkData.price;
+                    const stock = this.bulkData.stock;
+                    const sku = this.bulkData.sku;
+                    this.attribute.forEach(function (key, value) {
+                        if (price !== 0 ?? price !== '') {
+                            key.price = price;
+                        }
+                        if (stock !== 0 ?? stock !== '') {
+                            key.stock = stock;
+                        }
+                        if (sku !== '') {
+                            key.sku = sku;
+                        }
+                    });
+                },
+            },
+            watch: {
+                bulkData: {
+                    handler(oldVal, newVal) {
+                        this.statusbtn = Object.values(newVal).some(item => item > 0 || !!item);
+                    },
+                    deep: true
                 }
             },
         }).mount('#products')

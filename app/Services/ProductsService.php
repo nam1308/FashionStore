@@ -3,12 +3,10 @@
 namespace App\Services;
 
 use App\Repositories\ProductRepositoryInterface;
-use App\Repositories\ISettingRepository;
+use http\Message;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
-use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
-use App\Model\Product;
+use PHPUnit\Exception;
 
 class ProductsService
 {
@@ -32,21 +30,32 @@ class ProductsService
 
     public function create(Request $request)
     {
-        $validator = Validator::make($request->all(), [
-            'name' => 'required',
-            'slug' => 'required|unique:products',
-            'regular_price' => 'required',
+        try {
+            $validator = Validator::make($request->all(), [
+                'name' => 'required',
+                'slug' => 'required|unique:products',
+                'regular_price' => 'required',
 //            'thumbs' => 'image|mimes:jpeg,jpg,png,gif|max:10000',
 //            'image' => 'image|mimes:jpeg,jpg,png,gif|max:10000',
-        ]);
+//            'attribute.*.thumb_url' => 'image|mimes:jpeg,jpg,png,gif|max:10000',
+                'attribute.*.price' => 'required',
+                'attribute.*.sku' => 'required',
+                'attribute.*.stock' => 'required',
+            ], [
+                'attribute.*.thumb_url' => 'The image',
+                'attribute.*.sku' =>  'The sku',
+                'attribute.*.price' =>  'The price',
+                'attribute.*.stock' =>  'The stock',
+            ]);
 
-        if($validator->fails()){
-            return response($validator->errors(), 400);
+            if($validator->fails()){
+                return response($validator->errors(), 400);
+            }
+
+            return $this->interface->create($request);
+        } catch (\Exception $e) {
+            return $e->getMessage();
         }
-
-        $this->interface->create($request->all());;
-
-        return response(['status' => 'success', 'message' => 'success'], 201);
     }
 
     public function show($id)
@@ -63,14 +72,22 @@ class ProductsService
             'regular_price' => 'required',
 //            'thumbs' => 'image|mimes:jpeg,jpg,png,gif|max:10000',
 //            'image' => 'image|mimes:jpeg,jpg,png,gif|max:10000',
+//            'attribute.*.thumb_url' => 'image|mimes:jpeg,jpg,png,gif|max:10000',
+            'attribute.*.price' => 'required',
+            'attribute.*.sku' => 'required',
+            'attribute.*.stock' => 'required',
+        ], [
+            'attribute.*.thumb_url' => 'The image',
+            'attribute.*.sku' =>  'The sku',
+            'attribute.*.price' =>  'The price',
+            'attribute.*.stock' =>  'The stock',
         ]);
 
         if ($validator->fails())
         {
             return response($validator->errors(), 422);
         }
-
-        $this->interface->update($id,$request->all());
+        $this->interface->update($id,$request);
         return response(['status' => 'success', 'message' => 'Success'], 201);
     }
 
@@ -78,6 +95,15 @@ class ProductsService
     {
         $this->interface->delete($id);
         return response(['status' => 'success', 'message' => 'Success'], 201);
+    }
+
+    public function deleteAttribute($id)
+    {
+        try {
+            return $this->interface->deleteAttribute($id);
+        } catch (\Exception $e) {
+            return $e->getMessage();
+        }
     }
 
     public function search(Request $request)

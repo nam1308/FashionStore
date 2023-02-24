@@ -10,7 +10,6 @@
             <x-upload name="image[]" :values="$image" multiple="true" />
             <button type="submit">Submit</button>
         </form>
-
     </div>
 
 @stop
