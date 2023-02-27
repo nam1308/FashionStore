@@ -1,5 +1,5 @@
 const PLUGIN = {
-    INIT: (selector, option) => {
+    INIT: (selector = ".select2", option = {}) => {
         $(selector).select2(option);
     },
     EDITOR: (value = "") => {
