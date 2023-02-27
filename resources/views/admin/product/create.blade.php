@@ -169,7 +169,7 @@
                                     <input class="form-control" type="number" value="0" min="1">
                                 </div>
                             </div>
-                            <div v-if="isShow" class="form-group row">
+                            <div v-if="isShow"  class="form-group row">
                                 <label class="col-sm-2 col-form-label">
                                     <span class="text-danger">*</span>
                                     Stock
@@ -178,7 +178,7 @@
                                     <input class="form-control" type="number" value="0" min="0">
                                 </div>
                             </div>
-                            <div v-if="isShow" class="form-group row">
+                            <div v-if="isShow"  class="form-group row">
                                 <label class="col-sm-2 col-form-label">
                                     SKU
                                 </label>
@@ -186,111 +186,6 @@
                                     <input class="form-control">
                                 </div>
                             </div>
-                        </form>
-                    </div>
-                </div>
-            </div>
-            <div class="attribute_details">
-                <div class="ibox">
-                    <div class="ibox-head">
-                        <h3 class="ibox-title">Danh sách phân loại hàng : </h3>
-                    </div>
-                    <div class="ibox-body">
-                        <form class="form-horizontal">
-                            <div class="row">
-                                <div class="col-3">
-                                    <div class="form-group">
-                                        <input type="number" min="0" placeholder="Price" class="form-control"
-                                               v-model="bulkData.price">
-                                    </div>
-                                </div>
-                                <div class="col-3">
-                                    <div class="form-group">
-                                        <input type="number" min="0" placeholder="Warehouse" class="form-control"
-                                               v-model="bulkData.stock">
-                                    </div>
-                                </div>
-                                <div class="col-3">
-                                    <div class="form-group">
-                                        <input type="text" placeholder="SKU Classification" class="form-control"
-                                               v-model="bulkData.sku">
-                                    </div>
-                                </div>
-                                <div class="col-3">
-                                    <div class="form-group">
-                                        <button type="button" :disabled="!statusbtn" class="btn w-100"
-                                                @click.prevent="upplyToAll">Upply to all
-                                        </button>
-                                    </div>
-                                </div>
-                            </div>
-                            <table class="table table-bordered">
-                                <thead>
-                                <tr>
-                                    <th class="text-center">Size</th>
-                                    <th class="text-center">Color</th>
-                                    <th class="text-center">Image</th>
-                                    <th>Price</th>
-                                    <th>Warehouse</th>
-                                    <th>SKU Classification
-                                    <th class="text-center">Action</th>
-                                </tr>
-                                </thead>
-                                <tbody>
-                                <tr v-for="(item, index) in attribute">
-                                    <td>
-                                        <div class="form-group text-center mb-1">
-                                            <label for=""> @{{ item.option['kich-thuoc'] }} </label>
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <div class="form-group text-center mb-1">
-                                            <label for=""> @{{ item.option['mau-sac'] }} </label>
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <div class="form-group d-flex justify-content-center align-center mb-1">
-                                            {{-- <x-upload name="image" :values="$image" multiple="false" /> --}}
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <div class="form-group mb-1">
-                                            <input type="number" placeholder="Price" class="form-control"
-                                                   v-model="item.price" min="0" :class="{ 'border-danger': attrError[`attribute.${index}.price`] ? true : false }">
-                                            <p class="text-danger mt-1 mb-0">
-                                                @{{ errorIf(index, 'price')  }}
-                                            </p>
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <div class="form-group mb-1">
-                                            <input type="number" placeholder="Warehouse" class="form-control"
-                                                   v-model="item.stock" min="0" :class="{ 'border-danger': attrError[`attribute.${index}.stock`] ? true : false }">
-                                            <p class="text-danger mt-1 mb-0">
-                                                @{{ errorIf(index, 'stock') }}
-                                            </p>
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <div class="form-group mb-1">
-                                            <input type="text" placeholder="SKU Classification" class="form-control"
-                                                   v-model="item.sku" :class="{ 'border-danger': attrError[`attribute.${index}.sku`] ? true : false }">
-                                            <p class="text-danger mt-1 mb-0">
-                                                @{{ errorIf(index, 'sku') }}
-                                            </p>
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <div class="form-group d-flex justify-content-center align-center mb-1">
-                                            <button type="button" @click.prevent="DeleteAtribute(index)"
-                                                    class="btn btn-sm">
-                                                <i class="ti-trash"></i>
-                                            </button>
-                                        </div>
-                                    </td>
-                                </tr>
-                                </tbody>
-                            </table>
                         </form>
                     </div>
                 </div>
@@ -315,12 +210,12 @@
 
 @push('vue')
     <script type="text/javascript">
-
         const table = new Map()
         let indexAttribute = 0
+
         Vue.createApp({
             template: "#create_product",
-            data() {
+            data(){
                 return {
                     data: null,
                     products: {
@@ -356,42 +251,6 @@
                 this.parents = @json($productCategories);
                 const that = this
                 PLUGIN.EDITOR('');
-                console.log(this.attributes);
-
-                $('.attribute-container').on('select2:select','.attribute-select',function name(e) {
-                    const slug = $(this).val()
-                    const index = $(this).data('index')
-                    that.setAttribute(e)
-                })
-
-                // //event variation
-                // const added = new Map()
-                $('.attribute-container').on('select2:select','.variation-select',function name(e) {
-                    that.setVariant(e,$(this))
-                })
-                // //unselect
-                $('.attribute-container').on('select2:unselecting','.variation-select',function name(e) {
-                    const index = $(this).data('index')
-                    const parent = e.target.options[0].dataset.parent
-                    const value = $(this).val()
-
-                    that.options[index].variants.forEach((item,i) => {
-                        if (value.includes(item.variant.name)){
-                            that.options[index].variants[i].selected = false
-                        }
-                    })
-
-                })
-
-                $('.attribute-container').on('select2:unselect','.variation-select',function name(e) {
-                    const index = $(this).data('index')
-                    const parent = e.target.options[0].dataset.parent
-                    const value = $(this).val()
-
-                    that.list[index].option = {
-                        [parent]: value
-                    }
-                })
             },
             methods: {
                 async handleSubmit() {

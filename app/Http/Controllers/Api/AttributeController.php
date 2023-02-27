@@ -39,4 +39,9 @@ class AttributeController extends Controller
     {
         return $this->service->destroy($attribute);
     }
+
+    public function filter(Request $request)
+    {
+        return $this->service->filter($request);
+    }
 }
