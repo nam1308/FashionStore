@@ -127,6 +127,7 @@
                         <form class="form-horizontal">
                             <div class="form-group row">
                                 <label class="col-sm-2 col-form-label">Attributes: </label>
+<<<<<<< HEAD
                                 <div class="col-sm-10">
                                     <div v-for="item,index in options"
                                          :key="index"
@@ -135,13 +136,29 @@
                                             @click="removeAttribute"
                                             :data-id="index" type="button"
                                             class="btn btn-sm btn-danger float-right mb-2">
+=======
+                                <div class="attribute-container col-sm-10">
+                                    <div v-for="(item,index) in options"
+                                     :key="index"
+                                     class="attributes__content mb-3 p-3 border border-secondary">
+                                        <button
+                                        @click="removeAttribute($event,index)"
+                                        type="button" class="btn btn-sm btn-danger float-right mb-2">
+>>>>>>> b18566bb4055e0a74b584a409a7399a0141df1f5
                                             <i class="ti-trash"></i>
                                         </button>
                                         <label>Attribute</label>
-                                        <select class="attribute-select form-control mb-2">
+                                        <select class="attribute-select form-control mb-2" :data-index="index">
+                                            <option value=""></option>
+                                            <option v-for='attr in item.attributes'
+                                            :selected="attr.selected"
+                                            :value='attr.slug'>@{{attr.name}}</option>
                                         </select>
                                         <label>Variation</label>
-                                        <select class="variation-select form-control">
+                                        <select class="variation-select form-control" :data-index="index" multiple="multiple">
+                                            <option v-for='attr in item.variants'
+                                            :selected="attr.selected"
+                                            :data-parent="attr.parent" :value='attr.variant.name'>@{{attr.variant.name}}</option>
                                         </select>
                                     </div>
                                     {{-- <div class="attributes__content mb-3 p-3 border border-secondary">
@@ -150,7 +167,8 @@
                                         <label>Variation</label>
                                         <select class="value form-control"></select>
                                     </div> --}}
-                                    <button type="button" @click="addAttribute" class="btn">Add attribute</button>
+                                    <button v-if="options.length < 3" type="button" @click="addAttribute" class="btn mr-2">Add attribute</button>
+                                    <button v-if="options.length" type="button" @click="saveOption" class="btn btn-primary">Save</button>
                                 </div>
                             </div>
                             <div v-if="isShow" class="form-group row">
@@ -308,7 +326,12 @@
 
 @push('vue')
     <script type="text/javascript">
+<<<<<<< HEAD
         const table = new Set();
+=======
+        const table = new Map()
+        let indexAttribute = 0
+>>>>>>> b18566bb4055e0a74b584a409a7399a0141df1f5
 
         Vue.createApp({
             template: "#create_product",
@@ -335,6 +358,7 @@
                         attribute: [],
                     },
                     parents: [],
+<<<<<<< HEAD
                     attribute: [
                         { option: {'mau-sac': 'Red', 'kich-thuoc': 'L'}, price: 0, sku: '', stock: 0, thumb_url: '/medias/1675648139.jpg' },
                         { option: {'mau-sac': 'Blue', 'kich-thuoc': 'L'}, price: 0, sku: '', stock: 0, thumb_url: '/medias/1675648139.jpg' },
@@ -345,11 +369,57 @@
                     isShow: true,
                     statusbtn: false,
                     bulkData: {price: 0, sku: null, stock: 0}
+=======
+                    attributes: @json($attributes),// data attribute
+                    variants: [],
+                    options: [],//data option de render
+                    list: [],
+                    dataTable: [],
+                    isShow: true, //show price,
+>>>>>>> b18566bb4055e0a74b584a409a7399a0141df1f5
                 }
             },
+
             async mounted() {
                 this.parents = @json($productCategories);
+                const that = this
                 PLUGIN.EDITOR('');
+                console.log(this.attributes);
+
+                $('.attribute-container').on('select2:select','.attribute-select',function name(e) {
+                    const slug = $(this).val()
+                    const index = $(this).data('index')
+                    that.setAttribute(e)
+                })
+
+                // //event variation
+                // const added = new Map()
+                $('.attribute-container').on('select2:select','.variation-select',function name(e) {
+                    that.setVariant(e,$(this))
+                })
+                // //unselect
+                $('.attribute-container').on('select2:unselecting','.variation-select',function name(e) {
+                    const index = $(this).data('index')
+                    const parent = e.target.options[0].dataset.parent
+                    const value = $(this).val()
+
+                    that.options[index].variants.forEach((item,i) => {
+                        if (value.includes(item.variant.name)){
+                            that.options[index].variants[i].selected = false
+                        }
+                    })
+
+                })
+
+                $('.attribute-container').on('select2:unselect','.variation-select',function name(e) {
+                    const index = $(this).data('index')
+                    const parent = e.target.options[0].dataset.parent
+                    const value = $(this).val()
+
+                    that.list[index].option = {
+                        [parent]: value
+                    }
+                })
             },
             methods: {
                 async handleSubmit() {
@@ -365,6 +435,7 @@
                         this.attrError = e.response.data;
                     }
                 },
+<<<<<<< HEAD
                 errorIf(index, key) {
                     return this.attrError[`attribute.${index}.${key}`]?.shift();
                 },
@@ -382,9 +453,182 @@
                     const id = e.target.closest('button').dataset.id
                     this.options.splice(id, 1)
                     if (this.options.length == 0) {
+=======
+                saveOption(e){
+                    const length = this.list.length
+                    let n = 0
+                    let m = 0
+                    const res = []
+
+                    this.list.forEach(item => {
+                        if (!Object.keys(item.option).length){
+                            alert('Attribute not empty')
+                            throw new Error('Attribute not empty');
+                        }
+                    })
+
+                    for (const key in this.list[0].option) {
+                        const item = this.list[0]
+                        const tmp = item.option[key].map(item => {
+                            return length == 1 ?
+                            {
+                                option: {
+                                    [key]: item
+                                },
+                                price: 0,
+                                sku: '',
+                                stock: 0
+                            }
+                            :
+                            {
+                                [key]: item,
+                            }
+                        })
+                        res.push(tmp)
+                    }
+
+
+                    for (let i = 1; i < length; i++) {
+                        const elememt = this.list[i].option;
+                        const prev = res[i-1]
+                        let item = []
+                        let tmp = []
+
+                        for (const key in elememt) {
+                            item = elememt[key].map(o => {
+                                return{
+                                    [key]: o
+                                }
+                            })
+                        }
+
+                        for (let j = 0; j < prev.length; j++) {
+                            for (let k = 0; k < item.length; k++) {
+                                tmp.push({
+                                    option: {
+                                        ...prev[j],
+                                        ...item[k]
+                                    },
+                                    price: 0,
+                                    sku: '',
+                                    stock: 0
+                                })
+                            }
+                        }
+                        res.push(tmp)
+                    }
+                    this.dataTable = res[res.length-1]
+                    console.log(this.dataTable);
+                },
+                setAttribute(e){
+                    const value = e.target.value;
+                    const index = e.target.dataset.index;
+                    const attribute =  this.attributes.find((item) => item.slug === value);
+                    const variants = attribute?.children ?? []
+
+                    if (table.has(value) && table.get(value) !== index){
+                        const indexDup = table.get(value)
+
+                        this.options[indexDup].attributes.forEach((item,i) => {
+                            if(item.slug === value)
+                                this.options[indexDup].attributes[i].selected = false
+                        })
+
+                        $(`.attribute-select[data-index=${indexDup}]`).val(null).trigger('change')
+
+                        this.options[indexDup].variants = []
+
+                        PLUGIN.INIT(`.variation-select[data-index=${indexDup}]`,{
+                            placeholder: 'Variation',
+                            allowClear: true
+                        })
+
+                        this.list[indexDup] = {
+                            option: {},
+                        }
+
+                        // console.log(this.options);
+                    }
+
+                    table.set(value,index)
+
+                    this.options[index].attributes.forEach((item,i) => {
+                        if(item.slug === value)
+                        this.options[index].attributes[i].selected = true
+                    })
+
+                    this.options[index].variants = variants.map(item => {
+                        return {
+                            parent: value,
+                            variant: item,
+                            selected: false
+                        }
+                    })
+                    this.list[index] = {
+                        option: {...this.list[index]?.option ?? [], [attribute.slug]: []},
+                    }
+                    this.$nextTick(() => PLUGIN.INIT('.variation-select',{
+                        placeholder: 'Variation',
+                        allowClear: true
+                    }))
+                },
+                setVariant(e,elem){
+                    const value = elem.val();
+                    const parent = e.target.options[0].dataset.parent;
+                    const index = e.target.dataset.index;
+                    const dataIndex = this.list[index];
+                    this.options[index].variants.forEach((item,i) => {
+                        if(value.includes(item.variant.name)){
+                            this.options[index].variants[i].selected = true
+                        }
+                    })
+
+                    this.list[index] = {
+                        ...dataIndex,
+                        option: {...dataIndex.option, [parent]: [...value]}
+                    }
+                    // console.log(this.options);
+                },
+                addAttribute(){
+                    this.isShow = false;
+                    const attribute = this.attributes.map(item => {
+                        return {
+                            ...item,
+                            selected: false
+                        }
+                    })
+                    // const variant = attribute[indexAttribute++].children
+                    // console.log(this.attributes[indexAttribute++]);
+                    this.options = [...this.options,{attributes: attribute,variants: []}]
+
+                    this.list.push({})
+
+                    this.$nextTick(() => {
+                        PLUGIN.INIT('.attribute-select',{
+                            placeholder: 'Attribute',
+                            allowClear: true
+                        })
+                    })
+                },
+                removeAttribute(e,index){
+                    table.clear()
+                    this.options.splice(index,1)
+                    this.list.splice(index,1)
+                    // this.attributes.splice(index,1)
+                    // this.variants[index].length = 0
+                    if (this.options.length == 0){
+>>>>>>> b18566bb4055e0a74b584a409a7399a0141df1f5
                         this.isShow = true
                     }
+                    this.$nextTick(() => {
+                        $('.attribute-select').trigger('change')
+                        PLUGIN.INIT('.variation-select',{
+                            placeholder: 'Variation',
+                            allowClear: true
+                        })
+                    })
                 },
+<<<<<<< HEAD
                 initSelector(selector, option) {
                     PLUGIN.INIT(selector, option);
                     //su kien khi chon item
@@ -465,8 +709,10 @@
                         }
                     },
                 })
+=======
+>>>>>>> b18566bb4055e0a74b584a409a7399a0141df1f5
             }
-        }).mount('#product')
+        }).mount('#product');
     </script>
 
     <style scoped>
