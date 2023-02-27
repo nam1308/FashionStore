@@ -176,7 +176,7 @@
                     try {
                         const isConf = confirm(`Do you delete blog ${item.name}?`);
                         isConf && await API.PRODUCT.DELETE(item.id);
-                        await this.renderProduct();
+                        await this.renderProduct()
                     } catch (e) {
                         MESSAGE.ERROR(e.message)
                     }

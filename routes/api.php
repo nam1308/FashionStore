@@ -11,7 +11,6 @@ use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\BlogController;
 use App\Http\Controllers\Admin\CategoryBlogController;
 use App\Http\Controllers\Api\ProductController;
-use App\Http\Controllers\Api\ProductAttributeController;
 
 /*
 |--------------------------------------------------------------------------
@@ -47,7 +46,6 @@ Route::middleware('auth:api')->group(function () {
         Route::post('/search', [ProductController::class, 'search'])->name('search');
         Route::put('/{id}', [ProductController::class, 'update'])->name('update');
         Route::delete('/{id}', [ProductController::class, 'delete'])->name('delete');
-        Route::delete('/deleteAttribute/{id}', [ProductController::class, 'deleteAttribute'])->name('deleteAttribute');
     });
 
     Route::group(['as' => 'product-category.'], function () {
@@ -87,5 +85,4 @@ Route::middleware('auth:api')->group(function () {
         Route::put('attribute/{attribute}', [AttributeController::class, 'update']);
         Route::delete('attribute/{attribute}', [AttributeController::class, 'destroy']);
     });
-
 });

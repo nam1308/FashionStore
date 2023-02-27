@@ -17,9 +17,4 @@ class Product extends Model
     protected $casts = [
         'thumbs' => 'array',
     ];
-
-    public function attributes()
-    {
-        return $this->hasMany(ProductAttribute::class, 'product_id', 'id');
-    }
 }
