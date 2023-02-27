@@ -93,4 +93,9 @@ class AttributeService
             return response($th->getMessage(), 404);
         }
     }
+
+    public function filter(Request $request)
+    {
+        return $this->repository->filter(data_get($request->all(), 'filter'));
+    }
 }
