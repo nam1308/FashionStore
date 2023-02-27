@@ -13,6 +13,8 @@ use App\Repositories\ProductRepositoryInterface;
 use App\Repositories\ProductRepository;
 use App\Repositories\TestimonialRepositoryInterface;
 use App\Repositories\TestimonialRepository;
+use App\Repositories\BannerRepositoryInterface;
+use App\Repositories\BannerRepository;
 
 
 class RepositoryProvider extends ServiceProvider
@@ -30,6 +32,7 @@ class RepositoryProvider extends ServiceProvider
         $this->app->bind(IAttributeRepository::class, AttributeRepository::class);
         $this->app->bind(ProductRepositoryInterface::class, ProductRepository::class);
         $this->app->bind(TestimonialRepositoryInterface::class, TestimonialRepository::class);
+        $this->app->bind(BannerRepositoryInterface::class, BannerRepository::class);
     }
 
     /**

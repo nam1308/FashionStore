@@ -4,10 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Repositories\AttributeRepository;
-use App\Repositories\IAttributeRepository;
 use App\Model\Product;
-use Illuminate\Http\Request;
-use Illuminate\Validation\Validator;
 use App\Model\ProductCategory;
 
 class ProductController extends Controller

@@ -493,4 +493,60 @@ const API = {
             }
         }
     },
+    BANNER: {
+        LIST: async (start = 0 , length = 7) =>{
+            try {
+                return await SERVER.get(`/banner?start=${start}&length=${length}`).catch((error) => {
+                    throw error;
+                });
+            } catch (e) {
+                throw e;
+            }
+        },
+        SHOW: async (id) =>{
+            try {
+                return await SERVER.get('/banner/'+id).catch((error) =>{
+                    throw error;
+                });
+            } catch (e) {
+                throw e;
+            }
+        },
+        CREATE: async (data) =>{
+            try {
+                return await SERVER.post('/banner/',data).catch((error) =>{
+                    throw error;
+                });
+            } catch (e) {
+                throw e;
+            }
+        },
+        SEARCH: async (search, start= 0, length = 7) =>{
+            try {
+                return await SERVER.post('/banner/search',{search,start,length}).catch((error) =>{
+                    throw error;
+                });
+            } catch (e) {
+                throw e;
+            }
+        },
+        UPDATE: async (id, data) =>{
+            try {
+                return await SERVER.put('/banner/'+id,data).catch((error) => {
+                    throw error;
+                });
+            } catch (e) {
+                throw e;
+            }
+        },
+        DELETE: async (id) =>{
+            try {
+                return await SERVER.delete('/banner/'+id).catch((error) => {
+                    throw error;
+                });
+            }catch (e) {
+                throw e;
+            }
+        }
+    },
 }

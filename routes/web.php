@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\BlogController;
 use App\Http\Controllers\Admin\CategoryBlogController;
 use App\Http\Controllers\Admin\TestimonialController;
+use App\Http\Controllers\Admin\BannerController;
 
 /*
 |--------------------------------------------------------------------------
@@ -67,6 +68,11 @@ Route::middleware(['middleware' => 'auth'])->group(function () {
         // Testimonials
         Route::group(['prefix' => 'testimonial'], function (){
             Route::get('',[TestimonialController::class, 'index'])->name('index');
+        });
+
+        // Banner
+        Route::group(['prefix' => 'banner'], function (){
+            Route::get('',[BannerController::class, 'index'])->name('index');
         });
 
     });
