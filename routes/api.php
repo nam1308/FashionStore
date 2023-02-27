@@ -50,7 +50,7 @@ Route::middleware('auth:api')->group(function () {
 
     Route::group(['as' => 'product-category.'], function () {
         Route::get('product-category', [ProductCategoryController::class, 'list'])->name('index');
-        Route::post('product-category/search/', [ProductCategoryController::class, 'search'])->name('search');
+        Route::get('product-category/search/', [ProductCategoryController::class, 'search'])->name('search');
         Route::get('product-category/{id}', [ProductCategoryController::class, 'show'])->name('show');
         Route::post('product-category', [ProductCategoryController::class, 'store'])->name('store');
         Route::put('product-category/{id}', [ProductCategoryController::class, 'update'])->name('update');
@@ -79,7 +79,8 @@ Route::middleware('auth:api')->group(function () {
 
     Route::group(['as' => 'attribute.', 'prefix' => 'product'], function () {
         Route::post('attribute', [AttributeController::class, 'store']);
-        Route::get('attribute', [AttributeController::class, 'search']);
+        Route::get('attribute', [AttributeController::class, 'search'])->name('search');
+        Route::get('attribute/filter', [AttributeController::class, 'filter'])->name('filter');
         Route::get('attribute/{attribute}', [AttributeController::class, 'show']);
         Route::put('attribute/{attribute}', [AttributeController::class, 'update']);
         Route::delete('attribute/{attribute}', [AttributeController::class, 'destroy']);

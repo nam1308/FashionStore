@@ -1,16 +1,14 @@
 const PLUGIN = {
-    INIT: () => {
-        $(".select2").select2({
-            allowClear: true
-        });
+    INIT: (selector = ".select2", option = {}) => {
+        $(selector).select2(option);
     },
-    EDITOR: (value = '') => {
-        $('.editor').summernote({
+    EDITOR: (value = "") => {
+        $(".editor").summernote({
             height: 300,
         });
-        $('.editor').summernote('code', value);
+        $(".editor").summernote("code", value);
     },
-    GETCONTENT:()=>{
-        return $('.editor').summernote("code");
+    GETCONTENT: () => {
+        return $(".editor").summernote("code");
     },
-}
+};
