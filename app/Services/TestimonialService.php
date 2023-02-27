@@ -22,9 +22,6 @@ class TestimonialService
     {
         $length = $request->get('length', 10);
         $start  = $request->get('start', 0);
-//        $this->interface->totalList();
-//        $this->interface->list($start,$length);
-
         $total = $this->interface->totalList();
         $testimonials = $this->interface->list($start,$length);
         return ['data' => $testimonials, 'total' => $total];

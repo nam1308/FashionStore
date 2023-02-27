@@ -5,7 +5,6 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Services\TestimonialService;
 use Illuminate\Http\Request;
-use App\Model\Testimonial;
 
 class TestimonialController extends Controller
 {

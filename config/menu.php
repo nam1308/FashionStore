@@ -8,6 +8,11 @@ return [
             'link' => '/'
         ],
         [
+            'name' => 'Banner',
+            'icon' => 'ti-settings',
+            'link' => '/banner/'
+        ],
+        [
             'name' => 'Product',
             'icon' => 'ti-dropbox-alt',
             'link' => '/',
