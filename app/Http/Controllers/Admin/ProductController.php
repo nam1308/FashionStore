@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Model\Attribute;
 use App\Repositories\AttributeRepository;
 use App\Model\Product;
 use App\Model\ProductCategory;
@@ -23,8 +24,14 @@ class ProductController extends Controller
 
     public function create()
     {
+        $image = [
+            0 => "/medias/1675648139.jpg",
+            1 => "/medias/1675648145.png"
+        ];
         $productCategories = ProductCategory::all();
-        return view('admin.product.create', compact('productCategories'));
+        $attributes = Attribute::query()
+            ->with(['children'])->where('parent', '=', 0)->get();
+        return view('admin.product.create', compact('image','productCategories', 'attributes'));
     }
 
     public function edit($id)
