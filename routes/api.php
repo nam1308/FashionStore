@@ -12,6 +12,7 @@ use App\Http\Controllers\Admin\BlogController;
 use App\Http\Controllers\Admin\CategoryBlogController;
 use App\Http\Controllers\Api\ProductController;
 use App\Http\Controllers\Api\TestimonialController;
+use App\Http\Controllers\Api\BannerController;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -85,6 +86,7 @@ Route::middleware('auth:api')->group(function () {
         Route::put('attribute/{attribute}', [AttributeController::class, 'update']);
         Route::delete('attribute/{attribute}', [AttributeController::class, 'destroy']);
     });
+
     // Router testimonial
     Route::group(['prefix' => 'testimonial'], function (){
         Route::get('', [TestimonialController::class, 'list'])->name('list');
@@ -95,5 +97,14 @@ Route::middleware('auth:api')->group(function () {
         Route::delete('/{id}', [TestimonialController::class, 'delete'])->name('delete');
     });
 
+    // Router banner
+    Route::group(['prefix' => 'banner'], function (){
+        Route::get('', [BannerController::class, 'list'])->name('list');
+        Route::get('/{id}', [BannerController::class, 'show'])->name('show');
+        Route::post('', [BannerController::class, 'create'])->name('create');
+        Route::post('/search', [BannerController::class, 'search'])->name('search');
+        Route::put('/{id}', [BannerController::class, 'update'])->name('update');
+        Route::delete('/{id}', [BannerController::class, 'delete'])->name('delete');
+    });
 
 });

@@ -189,7 +189,6 @@
 
     </template>
 
-
     <style id="style">
         select.form-control {
             height: auto !important;

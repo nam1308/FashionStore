@@ -54,7 +54,7 @@ class TestimonialRepository implements TestimonialRepositoryInterface
     public function search($start = 0, $length = 0, $search = '')
     {
         // TODO: Implement search() method.
-        return $this->model::where("title", 'like', "$search")
+        return $this->model::where("title", 'like', "%$search%")
             ->orderBy('sort_order', 'asc')
             ->offset($start)->limit($length)->get();
     }
@@ -62,7 +62,7 @@ class TestimonialRepository implements TestimonialRepositoryInterface
     public function totalSearch($search)
     {
         // TODO: Implement totalSearch() method.
-        return $this->model::where("title", 'like', "$search")
+        return $this->model::where("title", 'like', "%$search%")
             ->orderBy('sort_order', 'asc')->count();
     }
 }

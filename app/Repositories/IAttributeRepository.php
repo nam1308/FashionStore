@@ -2,7 +2,6 @@
 
 namespace App\Repositories;
 
-
 interface IAttributeRepository
 {
     public function show(int $id);
