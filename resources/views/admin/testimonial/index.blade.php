@@ -143,14 +143,18 @@
                         <div class="modal-body">
                             <div class="form-group">
                                 <label>Title</label>
-                                <input v-model="testimonialsEdit.title" class="form-control" :class="{border: testimonialsEdit.error?.title,'border-danger': testimonialsEdit.error?.title}">
+                                <input v-model="testimonialsEdit.title" class="form-control"
+                                       @input="generateSlug"
+                                       :class="{border: testimonialsEdit.error?.title,'border-danger': testimonialsEdit.error?.title}">
                                 <p v-if="testimonialsEdit.error?.title" class="text-danger">
                                     @{{testimonialsEdit.error.title.join(' ')}}
                                 </p>
                             </div>
                             <div class="form-group">
                                 <label>Sub Title</label>
-                                <input v-model="testimonialsEdit.sub_title" class="form-control" :class="{border: testimonialsEdit.error?.sub_title,'border-danger': testimonialsEdit.error?.sub_title}">
+                                <input v-model="testimonialsEdit.sub_title" class="form-control"
+                                       disabled
+                                       :class="{border: testimonialsEdit.error?.sub_title,'border-danger': testimonialsEdit.error?.sub_title}">
                                 <p v-if="testimonialsEdit.error?.sub_title" class="text-danger">
                                     @{{testimonialsEdit.error.sub_title.join(' ')}}
                                 </p>
@@ -272,6 +276,9 @@
                 }
             },
             methods: {
+                generateSlug(e){
+                    this.testimonialsEdit.sub_title = this.testimonialsEdit.title.split(' ').join('-').toLowerCase();
+                },
                 resetData() {
                     this.data = null
                     this.testimonials = {

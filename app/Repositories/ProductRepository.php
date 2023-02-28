@@ -3,16 +3,22 @@
 namespace App\Repositories;
 
 use App\Model\Product;
+use App\Model\ProductAttribute;
+use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
-use \App\Repositories\ProductRepositoryInterface;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Validator;
+use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 
 class ProductRepository implements ProductRepositoryInterface
 {
-    public $model;
+    public Product $model;
+    public ProductAttribute $attribute;
 
     public function __construct()
     {
         $this->model = resolve(Product::class);
+        $this->attribute = resolve(ProductAttribute::class);
     }
 
     public function list($start = 0, $length = 0)
@@ -26,28 +32,78 @@ class ProductRepository implements ProductRepositoryInterface
         return $this->model::count();
     }
 
-    public function create($attributes = [])
+    public function create(Request $request)
     {
         // TODO: Implement store() method.
-        return $this->model::create($attributes);
+        try {
+            $data = $request->all();
+            $attributes = $request->post('attribute');
+            $product = $this->model->query()->create($data);
+            if (!empty($attributes)) {
+                foreach ($attributes as $attribute) {
+                    $attribute = Arr::add($attribute, 'product_id', $product->id);
+                    $this->attribute->query()->updateOrCreate(
+                        ['product_id' => $product->id, 'option' => json_encode(Arr::get($attribute, 'option'))],
+                        $attribute
+                    );
+                }
+            }
+            return $product->id;
+        } catch (\Exception $exception) {
+            throw new BadRequestHttpException($exception->getMessage());
+        }
     }
 
     public function show($id)
     {
         // TODO: Implement show() method.
-        return $this->model::find($id);
+        return [
+            $this->model::find($id),
+            $this->attribute->whereRaw('FIND_IN_SET(?, product_id)', [$id])->get()
+        ];
     }
 
-    public function update($id, $attributes = [])
+    public function update($id, Request $request)
     {
         // TODO: Implement update() method.
-        return $this->model::query()->findOrFail($id)->update($attributes);
+        try {
+            DB::beginTransaction();
+            $data = $request->all();
+            $attributes = $request->post('attribute');
+            $this->model->query()->find($id)->update($data);
+            if (!empty($attributes)) {
+                foreach ($attributes as $attribute) {
+                    $attribute = Arr::add($attribute, 'product_id', $id);
+                    $this->attribute->query()->updateOrCreate(
+                        ['product_id' => $id, 'option' => json_encode(Arr::get($attribute, 'option'))],
+                        $attribute
+                    );
+                }
+            }
+            DB::commit();
+        } catch (\Exception $e) {
+            DB::rollBack();
+            throw new BadRequestHttpException($e->getMessage());
+        }
     }
 
     public function delete($id)
     {
         // TODO: Implement delete() method.
-        return $this->model::where('id',$id)->delete();
+        try {
+            DB::beginTransaction();
+            $this->attribute->query()->where('product_id', $id)->delete();
+            $this->model->query()->find($id)->delete();
+            DB::commit();
+        } catch (\Exception $e) {
+            DB::rollBack();
+            throw new BadRequestHttpException($e->getMessage());
+        }return $this->model::where('id',$id)->delete();
+    }
+
+    public function deleteAttribute($id)
+    {
+        return $this->attribute::where('id', $id)->delete();
     }
 
     public function search($start = 0, $length = 0, $search = '')

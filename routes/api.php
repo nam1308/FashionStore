@@ -47,6 +47,7 @@ Route::middleware('auth:api')->group(function () {
         Route::post('/search', [ProductController::class, 'search'])->name('search');
         Route::put('/{id}', [ProductController::class, 'update'])->name('update');
         Route::delete('/{id}', [ProductController::class, 'delete'])->name('delete');
+        Route::delete('/deleteAttribute/{id}', [ProductController::class, 'deleteAttribute'])->name('deleteAttribute');
     });
 
     Route::group(['as' => 'product-category.'], function () {

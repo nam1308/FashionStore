@@ -15,14 +15,18 @@
                     <div class="col">
                         <div class="form-group">
                             <label>Name</label>
-                            <input v-model="blog.name" class="form-control" :class="{border: blog.error?.name,'border-danger': blog.error?.name}">
+                            <input v-model="blog.name" class="form-control"
+                                   @input="generateSlug"
+                                   :class="{border: blog.error?.name,'border-danger': blog.error?.name}">
                             <p v-if="blog.error?.name" class="text-danger">
                                 @{{blog.error.name.join(' ')}}
                             </p>
                         </div>
                         <div class="form-group">
                             <label>Slug</label>
-                            <input v-model="blog.slug" class="form-control" :class="{border: blog.error?.slug,'border-danger': blog.error?.slug}">
+                            <input v-model="blog.slug" class="form-control"
+                                   disabled
+                                   :class="{border: blog.error?.slug,'border-danger': blog.error?.slug}">
                             <p v-if="blog.error?.slug" class="text-danger">
                                 @{{blog.error.slug.join(' ')}}
                             </p>
@@ -146,6 +150,9 @@
                 PLUGIN.EDITOR('');
             },
             methods:{
+                generateSlug(e){
+                    this.blog.slug = this.blog.name.split(' ').join('-').toLowerCase();
+                },
                 async handleSubmit(){
                     this.blog.content = PLUGIN.GETCONTENT();
                     try {

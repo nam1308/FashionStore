@@ -29,8 +29,7 @@ class ProductController extends Controller
             1 => "/medias/1675648145.png"
         ];
         $productCategories = ProductCategory::all();
-        $attributes = Attribute::query()
-            ->with(['children'])->where('parent', '=', 0)->get();
+        $attributes = Attribute::query()->with(['children'])->where('parent', '=', 0)->get();
         return view('admin.product.create', compact('image','productCategories', 'attributes'));
     }
 

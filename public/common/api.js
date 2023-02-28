@@ -180,6 +180,15 @@ const API = {
                 throw response;
             }
         },
+        DELETEATTRIBUTE: async (id) => {
+            try {
+                const response = await SERVER.delete("/products/deleteAttribute/"+id).catch((error) => {
+                    throw error;
+                });
+            }  catch (error) {
+                throw response;
+            }
+        },
         SEARCH: async (search, start = 0, length = 10) => {
             try {
                 const response = await SERVER.post("/products/search/", {

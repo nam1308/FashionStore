@@ -14,16 +14,15 @@ return new class extends Migration
     public function up()
     {
         Schema::create('product_attributes', function (Blueprint $table) {
+            $table->id();
             $table->unsignedBigInteger('product_id');
-            $table->unsignedBigInteger('attribute_id');
+            $table->text('option');
             $table->double('price');
             $table->string('sku', 50);
             $table->integer('stock');
             $table->text('thumb_url');
             $table->timestamps();
-            $table->primary(['product_id', 'attribute_id']);
-            $table->foreign('product_id')->references('id')->on('products')->onDelete('cascade');
-            $table->foreign('attribute_id')->references('id')->on('attributes')->onDelete('cascade');
+            $table->foreign('product_id')->references('id')->on('products')->onDelete('restrict');
         });
     }
 

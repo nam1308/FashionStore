@@ -330,8 +330,6 @@
                 }
             }
         })
-
-
         app.mount('#attribute')
     </script>
 @endpush

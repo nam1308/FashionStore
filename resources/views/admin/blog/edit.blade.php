@@ -16,6 +16,7 @@
                         <div class="form-group">
                             <label>Name</label>
                             <input v-model="blog.name" class="form-control"
+                                   @input="generateSlug"
                                    :class="{border: blog.error?.name,'border-danger': blog.error?.name}">
                             <p v-if="blog.error?.name" class="text-danger">
                                 @{{blog.error.name.join(' ')}}
@@ -24,6 +25,7 @@
                         <div class="form-group">
                             <label>Slug</label>
                             <input v-model="blog.slug" class="form-control"
+                                   disabled
                                    :class="{border: blog.error?.slug,'border-danger': blog.error?.slug}">
                             <p v-if="blog.error?.slug" class="text-danger">
                                 @{{blog.error.slug.join(' ')}}
@@ -154,6 +156,9 @@
                 PLUGIN.EDITOR(this.blog.content);
             },
             methods: {
+                generateSlug(e){
+                    this.blog.slug = this.blog.name.split(' ').join('-').toLowerCase();
+                },
                 async handleSubmit() {
                     this.blog.content = PLUGIN.GETCONTENT();
                     try {

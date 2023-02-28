@@ -16,6 +16,7 @@
                         <div class="form-group">
                             <label>Name</label>
                             <input v-model="products.name" class="form-control"
+                                   @input="generateSlug"
                                    :class="{border: products.error?.name,'border-danger': products.error?.name}">
                             <p v-if="products.error?.name" class="text-danger">
                                 @{{products.error.name.join(' ')}}
@@ -24,6 +25,7 @@
                         <div class="form-group">
                             <label>Slug</label>
                             <input v-model="products.slug" class="form-control"
+                                   disabled
                                    :class="{border: products.error?.slug,'border-danger': products.error?.slug}">
                             <p v-if="products.error?.slug" class="text-danger">
                                 @{{products.error.slug.join(' ')}}
@@ -118,6 +120,7 @@
                     </div>
                 </div>
             </div>
+
             <div class="attribute">
                 <div class="ibox">
                     <div class="ibox-head">
@@ -129,11 +132,11 @@
                                 <label class="col-sm-2 col-form-label">Attributes: </label>
                                 <div class="attribute-container col-sm-10">
                                     <div v-for="(item,index) in options"
-                                     :key="index"
-                                     class="attributes__content mb-3 p-3 border border-secondary">
+                                         :key="index"
+                                         class="attributes__content mb-3 p-3 border border-secondary" >
                                         <button
-                                        @click="removeAttribute($event,index)"
-                                        type="button" class="btn btn-sm btn-danger float-right mb-2">
+                                            @click="removeAttribute($event,index)"
+                                            type="button" class="btn btn-sm btn-danger float-right mb-2">
                                             <i class="ti-trash"></i>
                                         </button>
                                         <label>Attribute</label>
@@ -190,6 +193,113 @@
                     </div>
                 </div>
             </div>
+
+            <div class="edit_attribute_details" v-if="dataTable.length > 0">
+                <div class="ibox">
+                    <div class="ibox-head">
+                        <h3 class="ibox-title">Danh sách phân loại hàng : </h3>
+                    </div>
+                    <div class="ibox-body">
+                        <form class="form-horizontal">
+                            <div class="row">
+                                <div class="col-3">
+                                    <div class="form-group">
+                                        <input type="number" min="0" placeholder="Price" class="form-control"
+                                               v-model="bulkData.price">
+                                    </div>
+                                </div>
+                                <div class="col-3">
+                                    <div class="form-group">
+                                        <input type="number" min="0" placeholder="Warehouse" class="form-control"
+                                               v-model="bulkData.stock">
+                                    </div>
+                                </div>
+                                <div class="col-3">
+                                    <div class="form-group">
+                                        <input type="text" placeholder="SKU Classification" class="form-control"
+                                               v-model="bulkData.sku">
+                                    </div>
+                                </div>
+                                <div class="col-3">
+                                    <div class="form-group">
+                                        <button type="button" :disabled="!statusbtn" class="btn w-100"
+                                                @click.prevent="upplyToAll">Upply to all
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                            <table class="table table-bordered">
+                                <thead>
+                                <tr>
+                                    <th class="text-center">Size</th>
+                                    <th class="text-center">Color</th>
+                                    <th class="text-center">Image</th>
+                                    <th>Price</th>
+                                    <th>Warehouse</th>
+                                    <th>SKU Classification
+                                    <th class="text-center">Action</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr v-for="(item, index) in dataTable">
+                                    <td>
+                                        <div class="form-group text-center mb-1">
+                                            <label for=""> @{{ item.option['size'] }} </label>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="form-group text-center mb-1">
+                                            <label for=""> @{{ item.option['color'] }} </label>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="form-group d-flex justify-content-center align-center mb-1">
+                                             <x-upload name="image" :values="$image" multiple="false" />
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="form-group mb-1">
+                                            <input type="number" placeholder="Price" class="form-control"
+                                                   v-model="item.price" min="0" :class="{ 'border-danger': attrError[`dataTable.${index}.price`] ? true : false }">
+                                            <p class="text-danger mt-1 mb-0">
+                                                @{{ errorIf(index, 'price')  }}
+                                            </p>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="form-group mb-1">
+                                            <input type="number" placeholder="Warehouse" class="form-control"
+                                                   v-model="item.stock" min="0" :class="{ 'border-danger': attrError[`dataTable.${index}.stock`] ? true : false }">
+                                            <p class="text-danger mt-1 mb-0">
+                                                @{{ errorIf(index, 'stock') }}
+                                            </p>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="form-group mb-1">
+                                            <input type="text" placeholder="SKU Classification" class="form-control"
+                                                   v-model="item.sku" :class="{ 'border-danger': attrError[`dataTable.${index}.sku`] ? true : false }">
+                                            <p class="text-danger mt-1 mb-0">
+                                                @{{ errorIf(index, 'sku') }}
+                                            </p>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="form-group d-flex justify-content-center align-center mb-1">
+                                            <button type="button" @click.prevent="DeleteAtribute(index,item)"
+                                                    class="btn btn-sm">
+                                                <i class="ti-trash"></i>
+                                            </button>
+                                        </div>
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
             <div class="create_blog-footer">
                 <a href="{{ url('admin/products') }}" type="button" class="btn btn-secondary mr-4">Come back</a>
                 <button type="button" class="btn btn-primary" @click.prevent="handleSubmit">Save changes</button>
@@ -239,24 +349,57 @@
                     },
                     parents: [],
                     attributes: @json($attributes),// data attribute
+                    attrError: [],
                     variants: [],
                     options: [],//data option de render
                     list: [],
                     dataTable: [],
                     isShow: true, //show price,
+                    statusbtn: false,
+                    bulkData: {price: 0, sku: null, stock: 0}
                 }
             },
 
             async mounted() {
                 this.parents = @json($productCategories);
-                const that = this
+                const that = this;
                 PLUGIN.EDITOR('');
+                $('.attribute-container').on('select2:select','.attribute-select',function name(e) {
+                    const slug = $(this).val()
+                    const index = $(this).data('index')
+                    that.setAttribute(e)
+                });
+                $('.attribute-container').on('select2:select','.variation-select',function name(e) {
+                    that.setVariant(e,$(this))
+                });
+                $('.attribute-container').on('select2:unselecting','.variation-select',function name(e) {
+                    const index = $(this).data('index')
+                    const parent = e.target.options[0].dataset.parent
+                    const value = $(this).val()
+                    that.options[index].variants.forEach((item,i) => {
+                        if (value.includes(item.variant.name)){
+                            that.options[index].variants[i].selected = false
+                        }
+                    })
+                });
+                $('.attribute-container').on('select2:unselect','.variation-select',function name(e) {
+                    const index = $(this).data('index')
+                    const parent = e.target.options[0].dataset.parent
+                    const value = $(this).val()
+                    that.list[index].option = {
+                        [parent]: value
+                    }
+                });
             },
             methods: {
+                generateSlug(e){
+                    this.products.slug = this.products.name.split(' ').join('-').toLowerCase();
+                },
+
                 async handleSubmit() {
                     this.products.content = PLUGIN.GETCONTENT();
                     this.products.thumbs = this.products.thumbs.toString();
-                    this.products.attribute = this.attribute;
+                    this.products.attribute = this.dataTable;
                     try {
                         await API.PRODUCT.CREATE(this.products);
                         MESSAGE.SUCCESS('Create products success');
@@ -266,6 +409,7 @@
                         this.attrError = e.response.data;
                     }
                 },
+
                 saveOption(e){
                     const length = this.list.length
                     let n = 0
@@ -289,7 +433,8 @@
                                 },
                                 price: 0,
                                 sku: '',
-                                stock: 0
+                                stock: 0,
+                                thumb_url: '/medias/1675648139.jpg',
                             }
                             :
                             {
@@ -298,7 +443,6 @@
                         })
                         res.push(tmp)
                     }
-
 
                     for (let i = 1; i < length; i++) {
                         const elememt = this.list[i].option;
@@ -323,7 +467,8 @@
                                     },
                                     price: 0,
                                     sku: '',
-                                    stock: 0
+                                    stock: 0,
+                                    thumb_url: '/medias/1675648139.jpg',
                                 })
                             }
                         }
@@ -332,6 +477,7 @@
                     this.dataTable = res[res.length-1]
                     console.log(this.dataTable);
                 },
+
                 setAttribute(e){
                     const value = e.target.value;
                     const index = e.target.dataset.index;
@@ -359,7 +505,6 @@
                             option: {},
                         }
 
-                        // console.log(this.options);
                     }
 
                     table.set(value,index)
@@ -384,6 +529,7 @@
                         allowClear: true
                     }))
                 },
+
                 setVariant(e,elem){
                     const value = elem.val();
                     const parent = e.target.options[0].dataset.parent;
@@ -399,8 +545,8 @@
                         ...dataIndex,
                         option: {...dataIndex.option, [parent]: [...value]}
                     }
-                    // console.log(this.options);
                 },
+
                 addAttribute(){
                     this.isShow = false;
                     const attribute = this.attributes.map(item => {
@@ -409,8 +555,6 @@
                             selected: false
                         }
                     })
-                    // const variant = attribute[indexAttribute++].children
-                    // console.log(this.attributes[indexAttribute++]);
                     this.options = [...this.options,{attributes: attribute,variants: []}]
 
                     this.list.push({})
@@ -422,12 +566,11 @@
                         })
                     })
                 },
+
                 removeAttribute(e,index){
                     table.clear()
                     this.options.splice(index,1)
                     this.list.splice(index,1)
-                    // this.attributes.splice(index,1)
-                    // this.variants[index].length = 0
                     if (this.options.length == 0){
                         this.isShow = true
                     }
@@ -439,14 +582,25 @@
                         })
                     })
                 },
-                DeleteAtribute(e) {
-                    this.attribute.splice(e, 1);
+
+                errorIf(index, key) {
+                    return this.attrError[`attribute.${index}.${key}`]?.shift();
                 },
+
+                async DeleteAtribute(e, item) {
+                    try {
+                        await API.PRODUCT.DELETEATTRIBUTE(item.id);
+                        this.dataTable.splice(e, 1);
+                    } catch (e) {
+                        MESSAGE.ERROR(e.message)
+                    }
+                },
+
                 upplyToAll() {
                     const price = this.bulkData.price;
                     const stock = this.bulkData.stock;
                     const sku = this.bulkData.sku;
-                    this.attribute.forEach(function (key, value) {
+                    this.dataTable.forEach(function (key, value) {
                         if (price !== 0 ?? price !== '') {
                             key.price = price;
                         }
