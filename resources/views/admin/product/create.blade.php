@@ -163,32 +163,6 @@
                                     <button v-if="options.length" type="button" @click="saveOption" class="btn btn-primary">Save</button>
                                 </div>
                             </div>
-                            <div v-if="isShow" class="form-group row">
-                                <label class="col-sm-2 col-form-label">
-                                    <span class="text-danger">*</span>
-                                    Price
-                                </label>
-                                <div class="col-sm-2">
-                                    <input class="form-control" type="number" value="0" min="1">
-                                </div>
-                            </div>
-                            <div v-if="isShow"  class="form-group row">
-                                <label class="col-sm-2 col-form-label">
-                                    <span class="text-danger">*</span>
-                                    Stock
-                                </label>
-                                <div class="col-sm-2">
-                                    <input class="form-control" type="number" value="0" min="0">
-                                </div>
-                            </div>
-                            <div v-if="isShow"  class="form-group row">
-                                <label class="col-sm-2 col-form-label">
-                                    SKU
-                                </label>
-                                <div class="col-sm-2">
-                                    <input class="form-control">
-                                </div>
-                            </div>
                         </form>
                     </div>
                 </div>
@@ -400,6 +374,7 @@
                     this.products.content = PLUGIN.GETCONTENT();
                     this.products.thumbs = this.products.thumbs.toString();
                     this.products.attribute = this.dataTable;
+                    // console.log(this.products);
                     try {
                         await API.PRODUCT.CREATE(this.products);
                         MESSAGE.SUCCESS('Create products success');
@@ -461,8 +436,11 @@
                         for (let j = 0; j < prev.length; j++) {
                             for (let k = 0; k < item.length; k++) {
                                 tmp.push({
-                                    option: {
+                                    option: i == 1 ? {
                                         ...prev[j],
+                                        ...item[k]
+                                    } : {
+                                        ...prev[j].option,
                                         ...item[k]
                                     },
                                     price: 0,

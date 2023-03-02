@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Model\Attribute;
 use App\Repositories\AttributeRepository;
 use App\Model\Product;
+use App\Model\ProductAttribute;
 use App\Model\ProductCategory;
 
 class ProductController extends Controller
@@ -30,14 +31,17 @@ class ProductController extends Controller
         ];
         $productCategories = ProductCategory::all();
         $attributes = Attribute::query()->with(['children'])->where('parent', '=', 0)->get();
-        return view('admin.product.create', compact('image','productCategories', 'attributes'));
+        return view('admin.product.create', compact('image', 'productCategories', 'attributes'));
     }
 
     public function edit($id)
     {
         $productCategories = ProductCategory::all();
         $products = Product::where('id', $id)->first();
-        return view('admin.product.edit', compact('productCategories', 'products'));
+        $attributes = Attribute::query()->with(['children'])->where('parent', '=', 0)->get();
+        $productAttribute = ProductAttribute::where('product_id', $id)->get();
+        $productAttribute = $this->convertOption($productAttribute);
+        return view('admin.product.edit', compact('productCategories', 'products', 'attributes', 'productAttribute'));
     }
 
     public function duplicate($id)
@@ -61,9 +65,31 @@ class ProductController extends Controller
     {
         try {
             $attribute = $this->repository->show($id);
+            dd($attribute);
             return view('admin.product.variation', ['data' => $attribute]);
         } catch (\Throwable $th) {
             return abort(404);
         }
+    }
+
+    private function convertOption($data)
+    {
+        $options = $data->toArray();
+
+        $res = array_reduce($options, function ($carry, $item) {
+            return array_merge($carry, (array)data_get($item, 'option'));
+        }, []);
+
+        foreach ($options as $each) {
+            foreach ($each['option'] as $key => $value) {
+                if (!is_array($res[$key])) {
+                    $res[$key] = [];
+                }
+                $res[$key][] = $value;
+                $res[$key] = array_unique($res[$key]);
+            }
+        }
+
+        return $res;
     }
 }
