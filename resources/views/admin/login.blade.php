@@ -72,9 +72,10 @@
                 async onSubmit() {
                     // console.log("RES", response)
                     this.showLoader();
-                    // this.hideLoader();
+                    this.hideLoader();
                     try {
                         const response = await API.AUTH.LOGIN(this.user);
+                        console.log(response);
                         this.hideLoader();
                     } catch (error) {
                         let err = "";

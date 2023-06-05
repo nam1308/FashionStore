@@ -24,7 +24,7 @@ use App\Http\Controllers\Admin\BannerController;
 
 Route::match(['POST', 'GET'], 'login', [AuthController::class, 'login'])->name('admin.login');
 Route::match(['POST', 'GET'], 'reset-password', [AuthController::class, 'resetPassword'])->name('admin.resetPassword');
-Route::middleware(['middleware' => 'auth'])->group(function () {
+//Route::middleware(['middleware' => 'auth'])->group(function () {
     Route::group(['prefix' => 'admin'], function () {
         Route::get('', [DashboardController::class, 'index'])->name('admin.home');
         Route::get('logout', [AuthController::class, 'logout'])->name('admin.logout');
@@ -76,7 +76,7 @@ Route::middleware(['middleware' => 'auth'])->group(function () {
         });
 
     });
-});
+//});
 
 Route::group(['namespace' => 'Frontend'], function () {
     Route::get('', [HomeController::class, 'index']);
